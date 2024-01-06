@@ -1,0 +1,524 @@
+Gramática
+
+    0 $accept: calculator $end
+
+    1 calculator: instructions
+
+    2 instructions: instructions instruction
+    3             | instruction
+
+    4 instruction: ARITHMETIC_ID ASIGN arithmetic_exp INTRO
+    5            | arithmetic_exp INTRO
+    6            | setup DO INTRO instructions DONE INTRO
+
+    7 setup: REPEAT arithmetic_exp
+
+    8 arithmetic_exp: arithmetic_exp arithmetic_op1 mul
+    9               | SUB VAR
+   10               | SUB ARITHMETIC_ID
+   11               | mul
+
+   12 mul: mul arithmetic_op2 pow
+   13    | pow
+
+   14 pow: pow POW basic_exp
+   15    | basic_exp
+
+   16 basic_exp: ARITHMETIC_ID
+   17          | POPEN arithmetic_exp PCLOSE
+   18          | VAR
+
+   19 arithmetic_op1: ADD
+   20               | SUB
+
+   21 arithmetic_op2: MUL
+   22               | DIV
+   23               | MOD
+
+
+Terminales con las reglas donde aparecen
+
+    $end (0) 0
+    error (256)
+    ASIGN (258) 4
+    POPEN (259) 17
+    PCLOSE (260) 17
+    DO (261) 6
+    DONE (262) 6
+    ADD <var> (263) 19
+    SUB <var> (264) 9 10 20
+    MUL <var> (265) 21
+    DIV <var> (266) 22
+    POW <var> (267) 14
+    MOD <var> (268) 23
+    VAR <var> (269) 9 18
+    ARITHMETIC_ID <var> (270) 4 10 16
+    INTRO <var> (271) 4 5 6
+    REPEAT <var> (272) 7
+
+
+No terminales con las reglas donde aparecen
+
+    $accept (18)
+        on left: 0
+    calculator <var> (19)
+        on left: 1
+        on right: 0
+    instructions <var> (20)
+        on left: 2 3
+        on right: 1 2 6
+    instruction <var> (21)
+        on left: 4 5 6
+        on right: 2 3
+    setup <var> (22)
+        on left: 7
+        on right: 6
+    arithmetic_exp <var> (23)
+        on left: 8 9 10 11
+        on right: 4 5 7 8 17
+    mul <var> (24)
+        on left: 12 13
+        on right: 8 11 12
+    pow <var> (25)
+        on left: 14 15
+        on right: 12 13 14
+    basic_exp <var> (26)
+        on left: 16 17 18
+        on right: 14 15
+    arithmetic_op1 <var> (27)
+        on left: 19 20
+        on right: 8
+    arithmetic_op2 <var> (28)
+        on left: 21 22 23
+        on right: 12
+
+
+Estado 0
+
+    0 $accept: • calculator $end
+
+    POPEN          desplazar e ir al estado 1
+    SUB            desplazar e ir al estado 2
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 4
+    REPEAT         desplazar e ir al estado 5
+
+    calculator      ir al estado 6
+    instructions    ir al estado 7
+    instruction     ir al estado 8
+    setup           ir al estado 9
+    arithmetic_exp  ir al estado 10
+    mul             ir al estado 11
+    pow             ir al estado 12
+    basic_exp       ir al estado 13
+
+
+Estado 1
+
+   17 basic_exp: POPEN • arithmetic_exp PCLOSE
+
+    POPEN          desplazar e ir al estado 1
+    SUB            desplazar e ir al estado 2
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 14
+
+    arithmetic_exp  ir al estado 15
+    mul             ir al estado 11
+    pow             ir al estado 12
+    basic_exp       ir al estado 13
+
+
+Estado 2
+
+    9 arithmetic_exp: SUB • VAR
+   10               | SUB • ARITHMETIC_ID
+
+    VAR            desplazar e ir al estado 16
+    ARITHMETIC_ID  desplazar e ir al estado 17
+
+
+Estado 3
+
+   18 basic_exp: VAR •
+
+    $default  reduce usando la regla 18 (basic_exp)
+
+
+Estado 4
+
+    4 instruction: ARITHMETIC_ID • ASIGN arithmetic_exp INTRO
+   16 basic_exp: ARITHMETIC_ID •
+
+    ASIGN  desplazar e ir al estado 18
+
+    $default  reduce usando la regla 16 (basic_exp)
+
+
+Estado 5
+
+    7 setup: REPEAT • arithmetic_exp
+
+    POPEN          desplazar e ir al estado 1
+    SUB            desplazar e ir al estado 2
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 14
+
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 11
+    pow             ir al estado 12
+    basic_exp       ir al estado 13
+
+
+Estado 6
+
+    0 $accept: calculator • $end
+
+    $end  desplazar e ir al estado 20
+
+
+Estado 7
+
+    1 calculator: instructions •
+    2 instructions: instructions • instruction
+
+    POPEN          desplazar e ir al estado 1
+    SUB            desplazar e ir al estado 2
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 4
+    REPEAT         desplazar e ir al estado 5
+
+    $default  reduce usando la regla 1 (calculator)
+
+    instruction     ir al estado 21
+    setup           ir al estado 9
+    arithmetic_exp  ir al estado 10
+    mul             ir al estado 11
+    pow             ir al estado 12
+    basic_exp       ir al estado 13
+
+
+Estado 8
+
+    3 instructions: instruction •
+
+    $default  reduce usando la regla 3 (instructions)
+
+
+Estado 9
+
+    6 instruction: setup • DO INTRO instructions DONE INTRO
+
+    DO  desplazar e ir al estado 22
+
+
+Estado 10
+
+    5 instruction: arithmetic_exp • INTRO
+    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+
+    ADD    desplazar e ir al estado 23
+    SUB    desplazar e ir al estado 24
+    INTRO  desplazar e ir al estado 25
+
+    arithmetic_op1  ir al estado 26
+
+
+Estado 11
+
+   11 arithmetic_exp: mul •
+   12 mul: mul • arithmetic_op2 pow
+
+    MUL  desplazar e ir al estado 27
+    DIV  desplazar e ir al estado 28
+    MOD  desplazar e ir al estado 29
+
+    $default  reduce usando la regla 11 (arithmetic_exp)
+
+    arithmetic_op2  ir al estado 30
+
+
+Estado 12
+
+   13 mul: pow •
+   14 pow: pow • POW basic_exp
+
+    POW  desplazar e ir al estado 31
+
+    $default  reduce usando la regla 13 (mul)
+
+
+Estado 13
+
+   15 pow: basic_exp •
+
+    $default  reduce usando la regla 15 (pow)
+
+
+Estado 14
+
+   16 basic_exp: ARITHMETIC_ID •
+
+    $default  reduce usando la regla 16 (basic_exp)
+
+
+Estado 15
+
+    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   17 basic_exp: POPEN arithmetic_exp • PCLOSE
+
+    PCLOSE  desplazar e ir al estado 32
+    ADD     desplazar e ir al estado 23
+    SUB     desplazar e ir al estado 24
+
+    arithmetic_op1  ir al estado 26
+
+
+Estado 16
+
+    9 arithmetic_exp: SUB VAR •
+
+    $default  reduce usando la regla 9 (arithmetic_exp)
+
+
+Estado 17
+
+   10 arithmetic_exp: SUB ARITHMETIC_ID •
+
+    $default  reduce usando la regla 10 (arithmetic_exp)
+
+
+Estado 18
+
+    4 instruction: ARITHMETIC_ID ASIGN • arithmetic_exp INTRO
+
+    POPEN          desplazar e ir al estado 1
+    SUB            desplazar e ir al estado 2
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 14
+
+    arithmetic_exp  ir al estado 33
+    mul             ir al estado 11
+    pow             ir al estado 12
+    basic_exp       ir al estado 13
+
+
+Estado 19
+
+    7 setup: REPEAT arithmetic_exp •
+    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+
+    ADD  desplazar e ir al estado 23
+    SUB  desplazar e ir al estado 24
+
+    $default  reduce usando la regla 7 (setup)
+
+    arithmetic_op1  ir al estado 26
+
+
+Estado 20
+
+    0 $accept: calculator $end •
+
+    $default  aceptar
+
+
+Estado 21
+
+    2 instructions: instructions instruction •
+
+    $default  reduce usando la regla 2 (instructions)
+
+
+Estado 22
+
+    6 instruction: setup DO • INTRO instructions DONE INTRO
+
+    INTRO  desplazar e ir al estado 34
+
+
+Estado 23
+
+   19 arithmetic_op1: ADD •
+
+    $default  reduce usando la regla 19 (arithmetic_op1)
+
+
+Estado 24
+
+   20 arithmetic_op1: SUB •
+
+    $default  reduce usando la regla 20 (arithmetic_op1)
+
+
+Estado 25
+
+    5 instruction: arithmetic_exp INTRO •
+
+    $default  reduce usando la regla 5 (instruction)
+
+
+Estado 26
+
+    8 arithmetic_exp: arithmetic_exp arithmetic_op1 • mul
+
+    POPEN          desplazar e ir al estado 1
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 14
+
+    mul        ir al estado 35
+    pow        ir al estado 12
+    basic_exp  ir al estado 13
+
+
+Estado 27
+
+   21 arithmetic_op2: MUL •
+
+    $default  reduce usando la regla 21 (arithmetic_op2)
+
+
+Estado 28
+
+   22 arithmetic_op2: DIV •
+
+    $default  reduce usando la regla 22 (arithmetic_op2)
+
+
+Estado 29
+
+   23 arithmetic_op2: MOD •
+
+    $default  reduce usando la regla 23 (arithmetic_op2)
+
+
+Estado 30
+
+   12 mul: mul arithmetic_op2 • pow
+
+    POPEN          desplazar e ir al estado 1
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 14
+
+    pow        ir al estado 36
+    basic_exp  ir al estado 13
+
+
+Estado 31
+
+   14 pow: pow POW • basic_exp
+
+    POPEN          desplazar e ir al estado 1
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 14
+
+    basic_exp  ir al estado 37
+
+
+Estado 32
+
+   17 basic_exp: POPEN arithmetic_exp PCLOSE •
+
+    $default  reduce usando la regla 17 (basic_exp)
+
+
+Estado 33
+
+    4 instruction: ARITHMETIC_ID ASIGN arithmetic_exp • INTRO
+    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+
+    ADD    desplazar e ir al estado 23
+    SUB    desplazar e ir al estado 24
+    INTRO  desplazar e ir al estado 38
+
+    arithmetic_op1  ir al estado 26
+
+
+Estado 34
+
+    6 instruction: setup DO INTRO • instructions DONE INTRO
+
+    POPEN          desplazar e ir al estado 1
+    SUB            desplazar e ir al estado 2
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 4
+    REPEAT         desplazar e ir al estado 5
+
+    instructions    ir al estado 39
+    instruction     ir al estado 8
+    setup           ir al estado 9
+    arithmetic_exp  ir al estado 10
+    mul             ir al estado 11
+    pow             ir al estado 12
+    basic_exp       ir al estado 13
+
+
+Estado 35
+
+    8 arithmetic_exp: arithmetic_exp arithmetic_op1 mul •
+   12 mul: mul • arithmetic_op2 pow
+
+    MUL  desplazar e ir al estado 27
+    DIV  desplazar e ir al estado 28
+    MOD  desplazar e ir al estado 29
+
+    $default  reduce usando la regla 8 (arithmetic_exp)
+
+    arithmetic_op2  ir al estado 30
+
+
+Estado 36
+
+   12 mul: mul arithmetic_op2 pow •
+   14 pow: pow • POW basic_exp
+
+    POW  desplazar e ir al estado 31
+
+    $default  reduce usando la regla 12 (mul)
+
+
+Estado 37
+
+   14 pow: pow POW basic_exp •
+
+    $default  reduce usando la regla 14 (pow)
+
+
+Estado 38
+
+    4 instruction: ARITHMETIC_ID ASIGN arithmetic_exp INTRO •
+
+    $default  reduce usando la regla 4 (instruction)
+
+
+Estado 39
+
+    2 instructions: instructions • instruction
+    6 instruction: setup DO INTRO instructions • DONE INTRO
+
+    POPEN          desplazar e ir al estado 1
+    DONE           desplazar e ir al estado 40
+    SUB            desplazar e ir al estado 2
+    VAR            desplazar e ir al estado 3
+    ARITHMETIC_ID  desplazar e ir al estado 4
+    REPEAT         desplazar e ir al estado 5
+
+    instruction     ir al estado 21
+    setup           ir al estado 9
+    arithmetic_exp  ir al estado 10
+    mul             ir al estado 11
+    pow             ir al estado 12
+    basic_exp       ir al estado 13
+
+
+Estado 40
+
+    6 instruction: setup DO INTRO instructions DONE • INTRO
+
+    INTRO  desplazar e ir al estado 41
+
+
+Estado 41
+
+    6 instruction: setup DO INTRO instructions DONE INTRO •
+
+    $default  reduce usando la regla 6 (instruction)

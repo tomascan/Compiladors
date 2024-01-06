@@ -4,7 +4,6 @@ char **quads;
 int next_quad;
 int next_temp;
 
-// Modified calculate function
 estructura calculate(estructura operando1, estructura operator, estructura operando2) {
     float op1 = (operando1.tipo == INT) ? operando1.integer : operando1.real;
     float op2 = (operando2.tipo == INT) ? operando2.integer : operando2.real;
@@ -53,7 +52,6 @@ estructura calculate(estructura operando1, estructura operator, estructura opera
 }
 
 
-// Modified set_valor function
 estructura set_valor(estructura r) {
     char* aux;
 
@@ -76,42 +74,32 @@ estructura negate(estructura value) {
     return value;
 }
 
+
 void generate(int nargs, ...) {
-    va_list ap;
-    va_start(ap, nargs);
-
-    // Calculate the required buffer size
-    int size = 0;
-    for (int i = 0; i < nargs; i++) {
-        size += strlen(va_arg(ap, char*));
-    }
-    va_end(ap);
-
-    // Allocate memory for the quad with the exact needed size
-    char *quad = malloc(size + 1); // +1 for the null terminator
+    char *quad = malloc(100);
     if (!quad) {
         yyerror("Error de memoria");
         return;
     }
-    quad[0] = '\0'; // Initialize the string
-
-    // Concatenate the strings
+    strcpy(quad, "");
+    char *aux;
+    va_list ap;
     va_start(ap, nargs);
     for (int i = 0; i < nargs; i++) {
-        strcat(quad, va_arg(ap, char*));
+        aux = va_arg(ap, char*);
+        strcat(quad, aux);
     }
     va_end(ap);
-
-    // Allocate and format the entry in the quads array
-    quads[next_quad-1] = malloc(strlen(quad));
+    if (!quads) {
+        yyerror("Error de memoria");
+        free(quad);
+        return;
+    }
+    quads[next_quad-1] = malloc(50);
     sprintf(quads[next_quad-1], "%d: %s", next_quad, quad);
-    free(quad); // Free the temporary quad buffer
-
-    // Resize quads array for the next quad
-    quads = realloc(quads, (next_quad + 1) * sizeof(char*));
+    quads = realloc(quads, 50 * (next_quad + 1));
     next_quad++;
 }
-
 
 char* temporal(){
     char* var = malloc(6);
@@ -130,4 +118,73 @@ void put(estructura r) {
     if (r.tipo == FLOAT) 	generate(1, "CALL PUTF, 1");
 }
 
+
+//PRACTICA 3 FUNCTIONS 
+
+quad* crearLista(int i) {
+    quad* lista = malloc(sizeof(quad));
+    if (!lista) {
+        yyerror("Error de memoria");
+        return NULL;
+    }
+    lista->num_quad = i;
+    lista->next_quad = NULL;
+    return lista;
+}
+
+quad* combinar(quad *p1, quad *p2) {
+    if (p1 == NULL) return p2;
+    quad *aux = p1;
+    while (aux->next_quad != NULL) {
+        aux = aux->next_quad;
+    }
+    aux->next_quad = p2;
+    return p1;
+}
+
+void complete(quad *p, int i) {
+    while (p != NULL) {
+        if (quads[p->num_quad - 1]) {
+            char* aux = malloc(strlen(quads[p->num_quad - 1]) + 20); // allocate space for modification
+            if (!aux) {
+                yyerror("Error de memoria");
+                return;
+            }
+            snprintf(aux, strlen(quads[p->num_quad - 1]) + 20, "%s %d", quads[p->num_quad - 1], i);
+            free(quads[p->num_quad - 1]); // free old quad string
+            quads[p->num_quad - 1] = aux; // update with new string
+        }
+        p = p->next_quad;
+    }
+}
+
+
+estructura calculo_booleano(estructura operando1, estructura operador, estructura operando2) {
+    char *op = operador.string;
+    estructura result;
+    result.tipo = BOOLEAN;
+    float r1, r2;
+    if (operando1.tipo == INT) 	r1 = operando1.integer;
+    if (operando1.tipo == FLOAT) 	r1 = operando1.float_;
+    if (operando2.tipo == INT) 	r2 = operando2.integer;
+    if (operando2.tipo == FLOAT) 	r2 = operando2.float_;
+
+    char* aux = malloc(7);
+    if (strlen(op) == 1) {
+        if(op[0] == '>') { result.boolean = r1 > r2; sprintf(aux, " GT"); }
+        if(op[0] == '<') { result.boolean = r1 < r2; sprintf(aux, " LT"); }
+	if(op[0] == '=') { result.boolean = r1 < r2; sprintf(aux, " EQ"); }
+
+    } 
+    else {
+        if(op[0] == '>' && op[1] == '=') { result.boolean = r1 >= r2; sprintf(aux, " GE"); }
+        if(op[0] == '<' && op[1] == '=') { result.boolean = r1 <= r2; sprintf(aux, " LE"); }
+        if(op[0] == '<' && op[1] == '>') { result.boolean = r1 != r2; sprintf(aux, " NE"); }
+    }
+    if (operando1.tipo == INT && operando2.tipo == INT) strcat(aux, "I ");
+    else strcat(aux, "F ");
+    
+    strcpy(operador.string, aux);
+    return set_valor(result);
+}
 

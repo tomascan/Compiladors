@@ -858,7 +858,7 @@ YY_RULE_SETUP
 case 11:
 YY_RULE_SETUP
 #line 27 "lexic.l"
-{ yylval.var.tipo = STRING; yylval.var.string = strdup("^"); return POW; }
+{ yylval.var.tipo = STRING; yylval.var.string = "^"; return POW; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
