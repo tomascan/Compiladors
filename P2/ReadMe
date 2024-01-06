@@ -1,0 +1,7 @@
+Divisiones solo de numeros enteros
+Trigonometria tiene que tener el siguiente formato --> sin() o cos ()
+Potencia sigue --> x ** 2
+
+La prioridad es correcta, Potencia > Mult | Division | Modulo > Suma | Resta 
+
+Bool --> 3 == 3 

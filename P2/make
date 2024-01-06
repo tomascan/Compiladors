@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Si no hay parámetros, ejecuta los comandos de compilación
+if [ $# -eq 0 ]; then
+    echo "<Inicio de Flex>" 
+    flex -l lexic.l 
+
+    echo "<Inicio de Bison>" 
+    bison -dv syntax.y 
+
+    echo "<Compilacion en C>" 
+    gcc -g -o main.o syntax.tab.c lex.yy.c symtab.c functions.c -lfl -lm 
+    # -g añade información de depuración
+    # -lfl Enlace a la biblioteca Flex 
+    # -lm Enlace biblioteca matemática 
+
+    echo "<FINALIZADA LA COMPILACION>"
+
+# Si el primer parámetro es "clean", ejecuta los comandos para limpiar los archivos
+elif [ "$1" = "clean" ]; then
+    echo "<CLEAN>"
+    rm lex.yy.c syntax.tab.h syntax.tab.c syntax.output 
+
+# Si el primer parámetro es "run", ejecuta los comandos para correr el programa
+elif [ "$1" = "run" ]; then
+    echo "<CALCULATOR RUNNING>"
+    ./main.o input.txt
+
+# Si el primer parámetro es "valgrind", ejecuta el programa bajo Valgrind
+elif [ "$1" = "valgrind" ]; then
+    echo "<RUNNING UNDER VALGRIND>"
+    valgrind --leak-check=yes ./main.o input.txt
+fi
+
