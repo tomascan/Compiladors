@@ -1,0 +1,49 @@
+// assignacions
+3 mod 2 
+#division
+3/2
+3 == 3
+2 > 3 
+5 ** 2 * 2
+(2 * 5) ** 2
+5 + 5 
+5+5 
+(5+5)
+sin (30)
+cos (30)
+sin (90) + sin (90) + sin(90)
+xd := 1.5
+i := 5
+z := i * (xd + i) - i / 4.0
+s := "Hola"
+b := z > 3 or not (i > 0 and i <= 10) or false
+// expressions bàsiques
+xd ** 2
+i
+z
+s
+not b
+f := "EOOOOO AQUIIII"
+b or not b
+/*
+* expressions
+*/
+i := i + i * 2
+i := 5.25
+-i + xd
+b or not b
+s+s+s+s+i+xd+s 
+s + (s + i)+ 2*3
+"hola" + s
+(7+(5-3))*2/3
+//Fichero adicional de pruebas 
+j:= (5 <> 5) and true 
+k:= ((5 mod 4) * 2 ** 2)
+(k / 3) * 2 + 7
+cadena:="Jon"
+cadena2:="Juan"
+cadena + cadena2 + xd + i
+z := (( 3 * 5 ) <= ( 7 mod 3))
+j or not z and (2 ** 5 == 32)
+x := 7
+s + (s + i) + "xd" + x + b 

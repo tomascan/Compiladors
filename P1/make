@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Si no hay parámetros, ejecuta los comandos de compilación
+if [ $# -eq 0 ]; then
+    echo "<Inicio de Flex>" 
+    flex -l lexic.l 
+
+    echo "<Inicio de Bison>" 
+    bison -dv syntax.y 
+
+    echo "<Compilacion en C>" 
+    gcc -o main syntax.tab.c lex.yy.c symtab.c functions.c -lfl -lm 
+    # -lfl Enlace a la biblioteca Flex 
+    # -lm Enlace biblioteca matemática 
+    # al tener las funciones en .c hay que incluirlas también al compilar 
+
+    echo "<FINALIZADA LA COMPILACION>"
+    
+    
+# Si el primer parámetro es "clean", ejecuta los comandos para limpiar los archivos
+elif [ "$1" = "clean" ]; then
+    echo "<CLEAN>"
+    rm lex.yy.c syntax.tab.h syntax.tab.c syntax.output 
+
+# Si el primer parámetro es "run", ejecuta los comandos para correr el programa
+elif [ "$1" = "run" ]; then
+    echo "<CALCULATOR RUNNING>"
+    ./main input.txt output.txt
+    cat output.txt
+fi
+
