@@ -132,7 +132,7 @@ quad* crearLista(int i) {
     return lista;
 }
 
-quad* combinar(quad *p1, quad *p2) {
+quad* combine(quad *p1, quad *p2) {
     if (p1 == NULL) return p2;
     quad *aux = p1;
     while (aux->next_quad != NULL) {
@@ -159,15 +159,15 @@ void complete(quad *p, int i) {
 }
 
 
-estructura calculo_booleano(estructura operando1, estructura operador, estructura operando2) {
+estructura boolean_calculate(estructura operando1, estructura operador, estructura operando2) {
     char *op = operador.string;
     estructura result;
     result.tipo = BOOLEAN;
     float r1, r2;
     if (operando1.tipo == INT) 	r1 = operando1.integer;
-    if (operando1.tipo == FLOAT) 	r1 = operando1.float_;
+    if (operando1.tipo == FLOAT) 	r1 = operando1.real;
     if (operando2.tipo == INT) 	r2 = operando2.integer;
-    if (operando2.tipo == FLOAT) 	r2 = operando2.float_;
+    if (operando2.tipo == FLOAT) 	r2 = operando2.real;
 
     char* aux = malloc(7);
     if (strlen(op) == 1) {

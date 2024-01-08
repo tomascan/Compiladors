@@ -63,18 +63,38 @@ extern int yydebug;
     ASIGN = 258,                   /* ASIGN  */
     POPEN = 259,                   /* POPEN  */
     PCLOSE = 260,                  /* PCLOSE  */
-    DO = 261,                      /* DO  */
-    DONE = 262,                    /* DONE  */
-    ADD = 263,                     /* ADD  */
-    SUB = 264,                     /* SUB  */
-    MUL = 265,                     /* MUL  */
-    DIV = 266,                     /* DIV  */
-    POW = 267,                     /* POW  */
-    MOD = 268,                     /* MOD  */
-    VAR = 269,                     /* VAR  */
-    ARITHMETIC_ID = 270,           /* ARITHMETIC_ID  */
-    INTRO = 271,                   /* INTRO  */
-    REPEAT = 272                   /* REPEAT  */
+    TTRUE = 261,                   /* TTRUE  */
+    FFALSE = 262,                  /* FFALSE  */
+    AND = 263,                     /* AND  */
+    OR = 264,                      /* OR  */
+    NOT = 265,                     /* NOT  */
+    DO = 266,                      /* DO  */
+    DONE = 267,                    /* DONE  */
+    IF = 268,                      /* IF  */
+    THEN = 269,                    /* THEN  */
+    FI = 270,                      /* FI  */
+    ELSE = 271,                    /* ELSE  */
+    WHILE = 272,                   /* WHILE  */
+    UNTIL = 273,                   /* UNTIL  */
+    TO = 274,                      /* TO  */
+    IN = 275,                      /* IN  */
+    FOR = 276,                     /* FOR  */
+    ADD = 277,                     /* ADD  */
+    SUB = 278,                     /* SUB  */
+    MUL = 279,                     /* MUL  */
+    DIV = 280,                     /* DIV  */
+    POW = 281,                     /* POW  */
+    MOD = 282,                     /* MOD  */
+    VAR = 283,                     /* VAR  */
+    ARITHMETIC_ID = 284,           /* ARITHMETIC_ID  */
+    INTRO = 285,                   /* INTRO  */
+    REPEAT = 286,                  /* REPEAT  */
+    GT = 287,                      /* GT  */
+    LT = 288,                      /* LT  */
+    GE = 289,                      /* GE  */
+    LE = 290,                      /* LE  */
+    EQ = 291,                      /* EQ  */
+    NE = 292                       /* NE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -87,7 +107,7 @@ union YYSTYPE
 
     estructura var;
 
-#line 91 "syntax.tab.h"
+#line 111 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

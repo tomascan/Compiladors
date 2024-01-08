@@ -1,13 +1,15 @@
-// expressions
-x := 5.0
-i := 3
-y := i + i * 3 - x
-// factorial
-n := 10
-fact := 1
-i := 2
-repeat n - 1 do
- fact := fact * i
- i := i + 1
+// nested sentences
+i := 1
+total := (1.0 + 0 * 1) - i
+while total < 1000.0 do
+if (i = 1) then
+total := total * 2
+else
+total := total - 1
+fi
+i := -i
+if (total > 666.6 or total = 500.0) then
+i := 111
+fi
 done
-fact
+total

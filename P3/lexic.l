@@ -39,6 +39,15 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 "do"			return DO;
 "done"			return DONE;
 "repeat"		return REPEAT;
+"for"			return FOR;
+"while"			return WHILE;
+"until"			return UNTIL;
+".."			return TO;
+"in"			return IN;
+"if"                    return IF;
+"then"                  return THEN;
+"else"			return ELSE;
+"fi"                    return FI;
                
 {commentary}   		{ }         
 "/*"                    { BEGIN(COMMENTARY); }
@@ -50,6 +59,7 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 
 {identifier}            {   yylval.var.tipo = STRING; 
                             yylval.var.string = malloc(sizeof(char) * (yyleng + 1));
+                            estructura r;
                             if (yylval.var.string == NULL) {
                                 printf("Error de memoria\n");
                                 exit(EXIT_FAILURE);

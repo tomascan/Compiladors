@@ -1,12 +1,13 @@
 #ifndef TYPES_H
 #define TYPES_H
-
+#include <stdbool.h>
 
 typedef enum
 {
 	INT,
 	FLOAT,
-	STRING
+	STRING,
+	BOOLEAN	
 }type;
 
 
@@ -23,6 +24,11 @@ typedef struct{
     float real;
     char *value;
     type tipo;
+    bool boolean;
+    int repeat;
+    quad* next_list;
+    quad* true_list;
+    quad* false_list;
 } estructura;
 
 extern char **quads;

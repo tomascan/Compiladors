@@ -4,36 +4,73 @@ Gramática
 
     1 calculator: instructions
 
-    2 instructions: instructions instruction
+    2 instructions: instructions x instruction
     3             | instruction
 
     4 instruction: ARITHMETIC_ID ASIGN arithmetic_exp INTRO
-    5            | arithmetic_exp INTRO
+    5            | expresion INTRO
     6            | setup DO INTRO instructions DONE INTRO
+    7            | WHILE x boolean_exp DO INTRO x instructions DONE INTRO
+    8            | DO INTRO x instructions UNTIL POPEN boolean_exp PCLOSE INTRO
+    9            | IF POPEN boolean_exp PCLOSE THEN INTRO x instructions else FI INTRO
+   10            | z DO INTRO instructions DONE INTRO
 
-    7 setup: REPEAT arithmetic_exp
+   11 z: FOR POPEN ARITHMETIC_ID IN arithmetic_exp TO arithmetic_exp PCLOSE
 
-    8 arithmetic_exp: arithmetic_exp arithmetic_op1 mul
-    9               | SUB VAR
-   10               | SUB ARITHMETIC_ID
-   11               | mul
+   12 else: ε
+   13     | ELSE INTRO y x instructions
 
-   12 mul: mul arithmetic_op2 pow
-   13    | pow
+   14 expresion: arithmetic_exp
+   15          | boolean_exp
 
-   14 pow: pow POW basic_exp
-   15    | basic_exp
+   16 setup: REPEAT arithmetic_exp
 
-   16 basic_exp: ARITHMETIC_ID
-   17          | POPEN arithmetic_exp PCLOSE
-   18          | VAR
+   17 arithmetic_exp: arithmetic_exp op1 mul
+   18               | SUB VAR
+   19               | SUB ARITHMETIC_ID
+   20               | mul
 
-   19 arithmetic_op1: ADD
-   20               | SUB
+   21 mul: mul op2 pow
+   22    | pow
 
-   21 arithmetic_op2: MUL
-   22               | DIV
-   23               | MOD
+   23 pow: pow POW basic_exp
+   24    | basic_exp
+
+   25 basic_exp: ARITHMETIC_ID
+   26          | POPEN arithmetic_exp PCLOSE
+   27          | VAR
+
+   28 boolean_exp: boolean_exp OR x and
+   29            | and
+
+   30 and: and AND x not
+   31    | not
+
+   32 not: NOT boolean_logic
+   33    | boolean_logic
+
+   34 boolean_logic: arithmetic_exp op3 arithmetic_exp
+   35              | TTRUE
+   36              | FFALSE
+   37              | POPEN boolean_exp PCLOSE
+
+   38 x: ε
+
+   39 y: ε
+
+   40 op1: ADD
+   41    | SUB
+
+   42 op2: MUL
+   43    | DIV
+   44    | MOD
+
+   45 op3: GT
+   46    | LT
+   47    | GE
+   48    | LE
+   49    | EQ
+   50    | NE
 
 
 Terminales con las reglas donde aparecen
@@ -41,56 +78,106 @@ Terminales con las reglas donde aparecen
     $end (0) 0
     error (256)
     ASIGN (258) 4
-    POPEN (259) 17
-    PCLOSE (260) 17
-    DO (261) 6
-    DONE (262) 6
-    ADD <var> (263) 19
-    SUB <var> (264) 9 10 20
-    MUL <var> (265) 21
-    DIV <var> (266) 22
-    POW <var> (267) 14
-    MOD <var> (268) 23
-    VAR <var> (269) 9 18
-    ARITHMETIC_ID <var> (270) 4 10 16
-    INTRO <var> (271) 4 5 6
-    REPEAT <var> (272) 7
+    POPEN (259) 8 9 11 26 37
+    PCLOSE (260) 8 9 11 26 37
+    TTRUE (261) 35
+    FFALSE (262) 36
+    AND (263) 30
+    OR (264) 28
+    NOT (265) 32
+    DO (266) 6 7 8 10
+    DONE (267) 6 7 10
+    IF (268) 9
+    THEN (269) 9
+    FI (270) 9
+    ELSE (271) 13
+    WHILE (272) 7
+    UNTIL (273) 8
+    TO (274) 11
+    IN (275) 11
+    FOR (276) 11
+    ADD <var> (277) 40
+    SUB <var> (278) 18 19 41
+    MUL <var> (279) 42
+    DIV <var> (280) 43
+    POW <var> (281) 23
+    MOD <var> (282) 44
+    VAR <var> (283) 18 27
+    ARITHMETIC_ID <var> (284) 4 11 19 25
+    INTRO <var> (285) 4 5 6 7 8 9 10 13
+    REPEAT <var> (286) 16
+    GT <var> (287) 45
+    LT <var> (288) 46
+    GE <var> (289) 47
+    LE <var> (290) 48
+    EQ <var> (291) 49
+    NE <var> (292) 50
 
 
 No terminales con las reglas donde aparecen
 
-    $accept (18)
+    $accept (38)
         on left: 0
-    calculator <var> (19)
+    calculator <var> (39)
         on left: 1
         on right: 0
-    instructions <var> (20)
+    instructions <var> (40)
         on left: 2 3
-        on right: 1 2 6
-    instruction <var> (21)
-        on left: 4 5 6
+        on right: 1 2 6 7 8 9 10 13
+    instruction <var> (41)
+        on left: 4 5 6 7 8 9 10
         on right: 2 3
-    setup <var> (22)
-        on left: 7
-        on right: 6
-    arithmetic_exp <var> (23)
-        on left: 8 9 10 11
-        on right: 4 5 7 8 17
-    mul <var> (24)
+    z <var> (42)
+        on left: 11
+        on right: 10
+    else <var> (43)
         on left: 12 13
-        on right: 8 11 12
-    pow <var> (25)
+        on right: 9
+    expresion <var> (44)
         on left: 14 15
-        on right: 12 13 14
-    basic_exp <var> (26)
-        on left: 16 17 18
-        on right: 14 15
-    arithmetic_op1 <var> (27)
-        on left: 19 20
-        on right: 8
-    arithmetic_op2 <var> (28)
-        on left: 21 22 23
-        on right: 12
+        on right: 5
+    setup <var> (45)
+        on left: 16
+        on right: 6
+    arithmetic_exp <var> (46)
+        on left: 17 18 19 20
+        on right: 4 11 14 16 17 26 34
+    mul <var> (47)
+        on left: 21 22
+        on right: 17 20 21
+    pow <var> (48)
+        on left: 23 24
+        on right: 21 22 23
+    basic_exp <var> (49)
+        on left: 25 26 27
+        on right: 23 24
+    boolean_exp <var> (50)
+        on left: 28 29
+        on right: 7 8 9 15 28 37
+    and <var> (51)
+        on left: 30 31
+        on right: 28 29 30
+    not <var> (52)
+        on left: 32 33
+        on right: 30 31
+    boolean_logic <var> (53)
+        on left: 34 35 36 37
+        on right: 32 33
+    x <var> (54)
+        on left: 38
+        on right: 2 7 8 9 13 28 30
+    y <var> (55)
+        on left: 39
+        on right: 13
+    op1 <var> (56)
+        on left: 40 41
+        on right: 17
+    op2 <var> (57)
+        on left: 42 43 44
+        on right: 21
+    op3 <var> (58)
+        on left: 45 46 47 48 49 50
+        on right: 34
 
 
 Estado 0
@@ -98,427 +185,1354 @@ Estado 0
     0 $accept: • calculator $end
 
     POPEN          desplazar e ir al estado 1
-    SUB            desplazar e ir al estado 2
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 4
-    REPEAT         desplazar e ir al estado 5
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
 
-    calculator      ir al estado 6
-    instructions    ir al estado 7
-    instruction     ir al estado 8
-    setup           ir al estado 9
-    arithmetic_exp  ir al estado 10
-    mul             ir al estado 11
-    pow             ir al estado 12
-    basic_exp       ir al estado 13
+    calculator      ir al estado 13
+    instructions    ir al estado 14
+    instruction     ir al estado 15
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
 
 
 Estado 1
 
-   17 basic_exp: POPEN • arithmetic_exp PCLOSE
+   26 basic_exp: POPEN • arithmetic_exp PCLOSE
+   37 boolean_logic: POPEN • boolean_exp PCLOSE
 
     POPEN          desplazar e ir al estado 1
-    SUB            desplazar e ir al estado 2
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 14
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
 
-    arithmetic_exp  ir al estado 15
-    mul             ir al estado 11
-    pow             ir al estado 12
-    basic_exp       ir al estado 13
+    arithmetic_exp  ir al estado 28
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 29
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
 
 
 Estado 2
 
-    9 arithmetic_exp: SUB • VAR
-   10               | SUB • ARITHMETIC_ID
+   35 boolean_logic: TTRUE •
 
-    VAR            desplazar e ir al estado 16
-    ARITHMETIC_ID  desplazar e ir al estado 17
+    $default  reduce usando la regla 35 (boolean_logic)
 
 
 Estado 3
 
-   18 basic_exp: VAR •
+   36 boolean_logic: FFALSE •
 
-    $default  reduce usando la regla 18 (basic_exp)
+    $default  reduce usando la regla 36 (boolean_logic)
 
 
 Estado 4
 
-    4 instruction: ARITHMETIC_ID • ASIGN arithmetic_exp INTRO
-   16 basic_exp: ARITHMETIC_ID •
+   32 not: NOT • boolean_logic
 
-    ASIGN  desplazar e ir al estado 18
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
 
-    $default  reduce usando la regla 16 (basic_exp)
+    arithmetic_exp  ir al estado 30
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_logic   ir al estado 31
 
 
 Estado 5
 
-    7 setup: REPEAT • arithmetic_exp
+    8 instruction: DO • INTRO x instructions UNTIL POPEN boolean_exp PCLOSE INTRO
 
-    POPEN          desplazar e ir al estado 1
-    SUB            desplazar e ir al estado 2
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 14
-
-    arithmetic_exp  ir al estado 19
-    mul             ir al estado 11
-    pow             ir al estado 12
-    basic_exp       ir al estado 13
+    INTRO  desplazar e ir al estado 32
 
 
 Estado 6
 
-    0 $accept: calculator • $end
+    9 instruction: IF • POPEN boolean_exp PCLOSE THEN INTRO x instructions else FI INTRO
 
-    $end  desplazar e ir al estado 20
+    POPEN  desplazar e ir al estado 33
 
 
 Estado 7
 
-    1 calculator: instructions •
-    2 instructions: instructions • instruction
+    7 instruction: WHILE • x boolean_exp DO INTRO x instructions DONE INTRO
 
-    POPEN          desplazar e ir al estado 1
-    SUB            desplazar e ir al estado 2
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 4
-    REPEAT         desplazar e ir al estado 5
+    $default  reduce usando la regla 38 (x)
 
-    $default  reduce usando la regla 1 (calculator)
-
-    instruction     ir al estado 21
-    setup           ir al estado 9
-    arithmetic_exp  ir al estado 10
-    mul             ir al estado 11
-    pow             ir al estado 12
-    basic_exp       ir al estado 13
+    x  ir al estado 34
 
 
 Estado 8
+
+   11 z: FOR • POPEN ARITHMETIC_ID IN arithmetic_exp TO arithmetic_exp PCLOSE
+
+    POPEN  desplazar e ir al estado 35
+
+
+Estado 9
+
+   18 arithmetic_exp: SUB • VAR
+   19               | SUB • ARITHMETIC_ID
+
+    VAR            desplazar e ir al estado 36
+    ARITHMETIC_ID  desplazar e ir al estado 37
+
+
+Estado 10
+
+   27 basic_exp: VAR •
+
+    $default  reduce usando la regla 27 (basic_exp)
+
+
+Estado 11
+
+    4 instruction: ARITHMETIC_ID • ASIGN arithmetic_exp INTRO
+   25 basic_exp: ARITHMETIC_ID •
+
+    ASIGN  desplazar e ir al estado 38
+
+    $default  reduce usando la regla 25 (basic_exp)
+
+
+Estado 12
+
+   16 setup: REPEAT • arithmetic_exp
+
+    POPEN          desplazar e ir al estado 39
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 40
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+
+
+Estado 13
+
+    0 $accept: calculator • $end
+
+    $end  desplazar e ir al estado 41
+
+
+Estado 14
+
+    1 calculator: instructions •
+    2 instructions: instructions • x instruction
+
+    $end      reduce usando la regla 1 (calculator)
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 42
+
+
+Estado 15
 
     3 instructions: instruction •
 
     $default  reduce usando la regla 3 (instructions)
 
 
-Estado 9
-
-    6 instruction: setup • DO INTRO instructions DONE INTRO
-
-    DO  desplazar e ir al estado 22
-
-
-Estado 10
-
-    5 instruction: arithmetic_exp • INTRO
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
-
-    ADD    desplazar e ir al estado 23
-    SUB    desplazar e ir al estado 24
-    INTRO  desplazar e ir al estado 25
-
-    arithmetic_op1  ir al estado 26
-
-
-Estado 11
-
-   11 arithmetic_exp: mul •
-   12 mul: mul • arithmetic_op2 pow
-
-    MUL  desplazar e ir al estado 27
-    DIV  desplazar e ir al estado 28
-    MOD  desplazar e ir al estado 29
-
-    $default  reduce usando la regla 11 (arithmetic_exp)
-
-    arithmetic_op2  ir al estado 30
-
-
-Estado 12
-
-   13 mul: pow •
-   14 pow: pow • POW basic_exp
-
-    POW  desplazar e ir al estado 31
-
-    $default  reduce usando la regla 13 (mul)
-
-
-Estado 13
-
-   15 pow: basic_exp •
-
-    $default  reduce usando la regla 15 (pow)
-
-
-Estado 14
-
-   16 basic_exp: ARITHMETIC_ID •
-
-    $default  reduce usando la regla 16 (basic_exp)
-
-
-Estado 15
-
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
-   17 basic_exp: POPEN arithmetic_exp • PCLOSE
-
-    PCLOSE  desplazar e ir al estado 32
-    ADD     desplazar e ir al estado 23
-    SUB     desplazar e ir al estado 24
-
-    arithmetic_op1  ir al estado 26
-
-
 Estado 16
 
-    9 arithmetic_exp: SUB VAR •
+   10 instruction: z • DO INTRO instructions DONE INTRO
 
-    $default  reduce usando la regla 9 (arithmetic_exp)
+    DO  desplazar e ir al estado 43
 
 
 Estado 17
 
-   10 arithmetic_exp: SUB ARITHMETIC_ID •
+    5 instruction: expresion • INTRO
 
-    $default  reduce usando la regla 10 (arithmetic_exp)
+    INTRO  desplazar e ir al estado 44
 
 
 Estado 18
 
-    4 instruction: ARITHMETIC_ID ASIGN • arithmetic_exp INTRO
+    6 instruction: setup • DO INTRO instructions DONE INTRO
 
-    POPEN          desplazar e ir al estado 1
-    SUB            desplazar e ir al estado 2
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 14
-
-    arithmetic_exp  ir al estado 33
-    mul             ir al estado 11
-    pow             ir al estado 12
-    basic_exp       ir al estado 13
+    DO  desplazar e ir al estado 45
 
 
 Estado 19
 
-    7 setup: REPEAT arithmetic_exp •
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   14 expresion: arithmetic_exp •
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+   34 boolean_logic: arithmetic_exp • op3 arithmetic_exp
 
-    ADD  desplazar e ir al estado 23
-    SUB  desplazar e ir al estado 24
+    ADD  desplazar e ir al estado 46
+    SUB  desplazar e ir al estado 47
+    GT   desplazar e ir al estado 48
+    LT   desplazar e ir al estado 49
+    GE   desplazar e ir al estado 50
+    LE   desplazar e ir al estado 51
+    EQ   desplazar e ir al estado 52
+    NE   desplazar e ir al estado 53
 
-    $default  reduce usando la regla 7 (setup)
+    $default  reduce usando la regla 14 (expresion)
 
-    arithmetic_op1  ir al estado 26
+    op1  ir al estado 54
+    op3  ir al estado 55
 
 
 Estado 20
+
+   20 arithmetic_exp: mul •
+   21 mul: mul • op2 pow
+
+    MUL  desplazar e ir al estado 56
+    DIV  desplazar e ir al estado 57
+    MOD  desplazar e ir al estado 58
+
+    $default  reduce usando la regla 20 (arithmetic_exp)
+
+    op2  ir al estado 59
+
+
+Estado 21
+
+   22 mul: pow •
+   23 pow: pow • POW basic_exp
+
+    POW  desplazar e ir al estado 60
+
+    $default  reduce usando la regla 22 (mul)
+
+
+Estado 22
+
+   24 pow: basic_exp •
+
+    $default  reduce usando la regla 24 (pow)
+
+
+Estado 23
+
+   15 expresion: boolean_exp •
+   28 boolean_exp: boolean_exp • OR x and
+
+    OR  desplazar e ir al estado 61
+
+    $default  reduce usando la regla 15 (expresion)
+
+
+Estado 24
+
+   29 boolean_exp: and •
+   30 and: and • AND x not
+
+    AND  desplazar e ir al estado 62
+
+    $default  reduce usando la regla 29 (boolean_exp)
+
+
+Estado 25
+
+   31 and: not •
+
+    $default  reduce usando la regla 31 (and)
+
+
+Estado 26
+
+   33 not: boolean_logic •
+
+    $default  reduce usando la regla 33 (not)
+
+
+Estado 27
+
+   25 basic_exp: ARITHMETIC_ID •
+
+    $default  reduce usando la regla 25 (basic_exp)
+
+
+Estado 28
+
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+   26 basic_exp: POPEN arithmetic_exp • PCLOSE
+   34 boolean_logic: arithmetic_exp • op3 arithmetic_exp
+
+    PCLOSE  desplazar e ir al estado 63
+    ADD     desplazar e ir al estado 46
+    SUB     desplazar e ir al estado 47
+    GT      desplazar e ir al estado 48
+    LT      desplazar e ir al estado 49
+    GE      desplazar e ir al estado 50
+    LE      desplazar e ir al estado 51
+    EQ      desplazar e ir al estado 52
+    NE      desplazar e ir al estado 53
+
+    op1  ir al estado 54
+    op3  ir al estado 55
+
+
+Estado 29
+
+   28 boolean_exp: boolean_exp • OR x and
+   37 boolean_logic: POPEN boolean_exp • PCLOSE
+
+    PCLOSE  desplazar e ir al estado 64
+    OR      desplazar e ir al estado 61
+
+
+Estado 30
+
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+   34 boolean_logic: arithmetic_exp • op3 arithmetic_exp
+
+    ADD  desplazar e ir al estado 46
+    SUB  desplazar e ir al estado 47
+    GT   desplazar e ir al estado 48
+    LT   desplazar e ir al estado 49
+    GE   desplazar e ir al estado 50
+    LE   desplazar e ir al estado 51
+    EQ   desplazar e ir al estado 52
+    NE   desplazar e ir al estado 53
+
+    op1  ir al estado 54
+    op3  ir al estado 55
+
+
+Estado 31
+
+   32 not: NOT boolean_logic •
+
+    $default  reduce usando la regla 32 (not)
+
+
+Estado 32
+
+    8 instruction: DO INTRO • x instructions UNTIL POPEN boolean_exp PCLOSE INTRO
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 65
+
+
+Estado 33
+
+    9 instruction: IF POPEN • boolean_exp PCLOSE THEN INTRO x instructions else FI INTRO
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 30
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 66
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 34
+
+    7 instruction: WHILE x • boolean_exp DO INTRO x instructions DONE INTRO
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 30
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 67
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 35
+
+   11 z: FOR POPEN • ARITHMETIC_ID IN arithmetic_exp TO arithmetic_exp PCLOSE
+
+    ARITHMETIC_ID  desplazar e ir al estado 68
+
+
+Estado 36
+
+   18 arithmetic_exp: SUB VAR •
+
+    $default  reduce usando la regla 18 (arithmetic_exp)
+
+
+Estado 37
+
+   19 arithmetic_exp: SUB ARITHMETIC_ID •
+
+    $default  reduce usando la regla 19 (arithmetic_exp)
+
+
+Estado 38
+
+    4 instruction: ARITHMETIC_ID ASIGN • arithmetic_exp INTRO
+
+    POPEN          desplazar e ir al estado 39
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 69
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+
+
+Estado 39
+
+   26 basic_exp: POPEN • arithmetic_exp PCLOSE
+
+    POPEN          desplazar e ir al estado 39
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 70
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+
+
+Estado 40
+
+   16 setup: REPEAT arithmetic_exp •
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+
+    ADD  desplazar e ir al estado 46
+    SUB  desplazar e ir al estado 47
+
+    $default  reduce usando la regla 16 (setup)
+
+    op1  ir al estado 54
+
+
+Estado 41
 
     0 $accept: calculator $end •
 
     $default  aceptar
 
 
-Estado 21
+Estado 42
 
-    2 instructions: instructions instruction •
+    2 instructions: instructions x • instruction
 
-    $default  reduce usando la regla 2 (instructions)
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
+
+    instruction     ir al estado 71
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
 
 
-Estado 22
+Estado 43
 
-    6 instruction: setup DO • INTRO instructions DONE INTRO
+   10 instruction: z DO • INTRO instructions DONE INTRO
 
-    INTRO  desplazar e ir al estado 34
-
-
-Estado 23
-
-   19 arithmetic_op1: ADD •
-
-    $default  reduce usando la regla 19 (arithmetic_op1)
+    INTRO  desplazar e ir al estado 72
 
 
-Estado 24
+Estado 44
 
-   20 arithmetic_op1: SUB •
-
-    $default  reduce usando la regla 20 (arithmetic_op1)
-
-
-Estado 25
-
-    5 instruction: arithmetic_exp INTRO •
+    5 instruction: expresion INTRO •
 
     $default  reduce usando la regla 5 (instruction)
 
 
-Estado 26
+Estado 45
 
-    8 arithmetic_exp: arithmetic_exp arithmetic_op1 • mul
+    6 instruction: setup DO • INTRO instructions DONE INTRO
+
+    INTRO  desplazar e ir al estado 73
+
+
+Estado 46
+
+   40 op1: ADD •
+
+    $default  reduce usando la regla 40 (op1)
+
+
+Estado 47
+
+   41 op1: SUB •
+
+    $default  reduce usando la regla 41 (op1)
+
+
+Estado 48
+
+   45 op3: GT •
+
+    $default  reduce usando la regla 45 (op3)
+
+
+Estado 49
+
+   46 op3: LT •
+
+    $default  reduce usando la regla 46 (op3)
+
+
+Estado 50
+
+   47 op3: GE •
+
+    $default  reduce usando la regla 47 (op3)
+
+
+Estado 51
+
+   48 op3: LE •
+
+    $default  reduce usando la regla 48 (op3)
+
+
+Estado 52
+
+   49 op3: EQ •
+
+    $default  reduce usando la regla 49 (op3)
+
+
+Estado 53
+
+   50 op3: NE •
+
+    $default  reduce usando la regla 50 (op3)
+
+
+Estado 54
+
+   17 arithmetic_exp: arithmetic_exp op1 • mul
+
+    POPEN          desplazar e ir al estado 39
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    mul        ir al estado 74
+    pow        ir al estado 21
+    basic_exp  ir al estado 22
+
+
+Estado 55
+
+   34 boolean_logic: arithmetic_exp op3 • arithmetic_exp
+
+    POPEN          desplazar e ir al estado 39
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 75
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+
+
+Estado 56
+
+   42 op2: MUL •
+
+    $default  reduce usando la regla 42 (op2)
+
+
+Estado 57
+
+   43 op2: DIV •
+
+    $default  reduce usando la regla 43 (op2)
+
+
+Estado 58
+
+   44 op2: MOD •
+
+    $default  reduce usando la regla 44 (op2)
+
+
+Estado 59
+
+   21 mul: mul op2 • pow
+
+    POPEN          desplazar e ir al estado 39
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    pow        ir al estado 76
+    basic_exp  ir al estado 22
+
+
+Estado 60
+
+   23 pow: pow POW • basic_exp
+
+    POPEN          desplazar e ir al estado 39
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    basic_exp  ir al estado 77
+
+
+Estado 61
+
+   28 boolean_exp: boolean_exp OR • x and
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 78
+
+
+Estado 62
+
+   30 and: and AND • x not
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 79
+
+
+Estado 63
+
+   26 basic_exp: POPEN arithmetic_exp PCLOSE •
+
+    $default  reduce usando la regla 26 (basic_exp)
+
+
+Estado 64
+
+   37 boolean_logic: POPEN boolean_exp PCLOSE •
+
+    $default  reduce usando la regla 37 (boolean_logic)
+
+
+Estado 65
+
+    8 instruction: DO INTRO x • instructions UNTIL POPEN boolean_exp PCLOSE INTRO
 
     POPEN          desplazar e ir al estado 1
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 14
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
 
-    mul        ir al estado 35
-    pow        ir al estado 12
-    basic_exp  ir al estado 13
-
-
-Estado 27
-
-   21 arithmetic_op2: MUL •
-
-    $default  reduce usando la regla 21 (arithmetic_op2)
-
-
-Estado 28
-
-   22 arithmetic_op2: DIV •
-
-    $default  reduce usando la regla 22 (arithmetic_op2)
-
-
-Estado 29
-
-   23 arithmetic_op2: MOD •
-
-    $default  reduce usando la regla 23 (arithmetic_op2)
+    instructions    ir al estado 80
+    instruction     ir al estado 15
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
 
 
-Estado 30
+Estado 66
 
-   12 mul: mul arithmetic_op2 • pow
+    9 instruction: IF POPEN boolean_exp • PCLOSE THEN INTRO x instructions else FI INTRO
+   28 boolean_exp: boolean_exp • OR x and
 
-    POPEN          desplazar e ir al estado 1
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 14
-
-    pow        ir al estado 36
-    basic_exp  ir al estado 13
+    PCLOSE  desplazar e ir al estado 81
+    OR      desplazar e ir al estado 61
 
 
-Estado 31
+Estado 67
 
-   14 pow: pow POW • basic_exp
+    7 instruction: WHILE x boolean_exp • DO INTRO x instructions DONE INTRO
+   28 boolean_exp: boolean_exp • OR x and
 
-    POPEN          desplazar e ir al estado 1
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 14
-
-    basic_exp  ir al estado 37
+    OR  desplazar e ir al estado 61
+    DO  desplazar e ir al estado 82
 
 
-Estado 32
+Estado 68
 
-   17 basic_exp: POPEN arithmetic_exp PCLOSE •
+   11 z: FOR POPEN ARITHMETIC_ID • IN arithmetic_exp TO arithmetic_exp PCLOSE
 
-    $default  reduce usando la regla 17 (basic_exp)
+    IN  desplazar e ir al estado 83
 
 
-Estado 33
+Estado 69
 
     4 instruction: ARITHMETIC_ID ASIGN arithmetic_exp • INTRO
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   17 arithmetic_exp: arithmetic_exp • op1 mul
 
-    ADD    desplazar e ir al estado 23
-    SUB    desplazar e ir al estado 24
-    INTRO  desplazar e ir al estado 38
+    ADD    desplazar e ir al estado 46
+    SUB    desplazar e ir al estado 47
+    INTRO  desplazar e ir al estado 84
 
-    arithmetic_op1  ir al estado 26
+    op1  ir al estado 54
 
 
-Estado 34
+Estado 70
+
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+   26 basic_exp: POPEN arithmetic_exp • PCLOSE
+
+    PCLOSE  desplazar e ir al estado 63
+    ADD     desplazar e ir al estado 46
+    SUB     desplazar e ir al estado 47
+
+    op1  ir al estado 54
+
+
+Estado 71
+
+    2 instructions: instructions x instruction •
+
+    $default  reduce usando la regla 2 (instructions)
+
+
+Estado 72
+
+   10 instruction: z DO INTRO • instructions DONE INTRO
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
+
+    instructions    ir al estado 85
+    instruction     ir al estado 15
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 73
 
     6 instruction: setup DO INTRO • instructions DONE INTRO
 
     POPEN          desplazar e ir al estado 1
-    SUB            desplazar e ir al estado 2
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 4
-    REPEAT         desplazar e ir al estado 5
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
 
-    instructions    ir al estado 39
-    instruction     ir al estado 8
-    setup           ir al estado 9
-    arithmetic_exp  ir al estado 10
-    mul             ir al estado 11
-    pow             ir al estado 12
-    basic_exp       ir al estado 13
-
-
-Estado 35
-
-    8 arithmetic_exp: arithmetic_exp arithmetic_op1 mul •
-   12 mul: mul • arithmetic_op2 pow
-
-    MUL  desplazar e ir al estado 27
-    DIV  desplazar e ir al estado 28
-    MOD  desplazar e ir al estado 29
-
-    $default  reduce usando la regla 8 (arithmetic_exp)
-
-    arithmetic_op2  ir al estado 30
-
-
-Estado 36
-
-   12 mul: mul arithmetic_op2 pow •
-   14 pow: pow • POW basic_exp
-
-    POW  desplazar e ir al estado 31
-
-    $default  reduce usando la regla 12 (mul)
+    instructions    ir al estado 86
+    instruction     ir al estado 15
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
 
 
-Estado 37
+Estado 74
 
-   14 pow: pow POW basic_exp •
+   17 arithmetic_exp: arithmetic_exp op1 mul •
+   21 mul: mul • op2 pow
 
-    $default  reduce usando la regla 14 (pow)
+    MUL  desplazar e ir al estado 56
+    DIV  desplazar e ir al estado 57
+    MOD  desplazar e ir al estado 58
+
+    $default  reduce usando la regla 17 (arithmetic_exp)
+
+    op2  ir al estado 59
 
 
-Estado 38
+Estado 75
+
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+   34 boolean_logic: arithmetic_exp op3 arithmetic_exp •
+
+    ADD  desplazar e ir al estado 46
+    SUB  desplazar e ir al estado 47
+
+    $default  reduce usando la regla 34 (boolean_logic)
+
+    op1  ir al estado 54
+
+
+Estado 76
+
+   21 mul: mul op2 pow •
+   23 pow: pow • POW basic_exp
+
+    POW  desplazar e ir al estado 60
+
+    $default  reduce usando la regla 21 (mul)
+
+
+Estado 77
+
+   23 pow: pow POW basic_exp •
+
+    $default  reduce usando la regla 23 (pow)
+
+
+Estado 78
+
+   28 boolean_exp: boolean_exp OR x • and
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 30
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    and             ir al estado 87
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 79
+
+   30 and: and AND x • not
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 30
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    not             ir al estado 88
+    boolean_logic   ir al estado 26
+
+
+Estado 80
+
+    2 instructions: instructions • x instruction
+    8 instruction: DO INTRO x instructions • UNTIL POPEN boolean_exp PCLOSE INTRO
+
+    UNTIL  desplazar e ir al estado 89
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 42
+
+
+Estado 81
+
+    9 instruction: IF POPEN boolean_exp PCLOSE • THEN INTRO x instructions else FI INTRO
+
+    THEN  desplazar e ir al estado 90
+
+
+Estado 82
+
+    7 instruction: WHILE x boolean_exp DO • INTRO x instructions DONE INTRO
+
+    INTRO  desplazar e ir al estado 91
+
+
+Estado 83
+
+   11 z: FOR POPEN ARITHMETIC_ID IN • arithmetic_exp TO arithmetic_exp PCLOSE
+
+    POPEN          desplazar e ir al estado 39
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 92
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+
+
+Estado 84
 
     4 instruction: ARITHMETIC_ID ASIGN arithmetic_exp INTRO •
 
     $default  reduce usando la regla 4 (instruction)
 
 
-Estado 39
+Estado 85
 
-    2 instructions: instructions • instruction
+    2 instructions: instructions • x instruction
+   10 instruction: z DO INTRO instructions • DONE INTRO
+
+    DONE  desplazar e ir al estado 93
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 42
+
+
+Estado 86
+
+    2 instructions: instructions • x instruction
     6 instruction: setup DO INTRO instructions • DONE INTRO
 
-    POPEN          desplazar e ir al estado 1
-    DONE           desplazar e ir al estado 40
-    SUB            desplazar e ir al estado 2
-    VAR            desplazar e ir al estado 3
-    ARITHMETIC_ID  desplazar e ir al estado 4
-    REPEAT         desplazar e ir al estado 5
+    DONE  desplazar e ir al estado 94
 
-    instruction     ir al estado 21
-    setup           ir al estado 9
-    arithmetic_exp  ir al estado 10
-    mul             ir al estado 11
-    pow             ir al estado 12
-    basic_exp       ir al estado 13
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 42
 
 
-Estado 40
+Estado 87
+
+   28 boolean_exp: boolean_exp OR x and •
+   30 and: and • AND x not
+
+    AND  desplazar e ir al estado 62
+
+    $default  reduce usando la regla 28 (boolean_exp)
+
+
+Estado 88
+
+   30 and: and AND x not •
+
+    $default  reduce usando la regla 30 (and)
+
+
+Estado 89
+
+    8 instruction: DO INTRO x instructions UNTIL • POPEN boolean_exp PCLOSE INTRO
+
+    POPEN  desplazar e ir al estado 95
+
+
+Estado 90
+
+    9 instruction: IF POPEN boolean_exp PCLOSE THEN • INTRO x instructions else FI INTRO
+
+    INTRO  desplazar e ir al estado 96
+
+
+Estado 91
+
+    7 instruction: WHILE x boolean_exp DO INTRO • x instructions DONE INTRO
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 97
+
+
+Estado 92
+
+   11 z: FOR POPEN ARITHMETIC_ID IN arithmetic_exp • TO arithmetic_exp PCLOSE
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+
+    TO   desplazar e ir al estado 98
+    ADD  desplazar e ir al estado 46
+    SUB  desplazar e ir al estado 47
+
+    op1  ir al estado 54
+
+
+Estado 93
+
+   10 instruction: z DO INTRO instructions DONE • INTRO
+
+    INTRO  desplazar e ir al estado 99
+
+
+Estado 94
 
     6 instruction: setup DO INTRO instructions DONE • INTRO
 
-    INTRO  desplazar e ir al estado 41
+    INTRO  desplazar e ir al estado 100
 
 
-Estado 41
+Estado 95
+
+    8 instruction: DO INTRO x instructions UNTIL POPEN • boolean_exp PCLOSE INTRO
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 30
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 101
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 96
+
+    9 instruction: IF POPEN boolean_exp PCLOSE THEN INTRO • x instructions else FI INTRO
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 102
+
+
+Estado 97
+
+    7 instruction: WHILE x boolean_exp DO INTRO x • instructions DONE INTRO
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
+
+    instructions    ir al estado 103
+    instruction     ir al estado 15
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 98
+
+   11 z: FOR POPEN ARITHMETIC_ID IN arithmetic_exp TO • arithmetic_exp PCLOSE
+
+    POPEN          desplazar e ir al estado 39
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 27
+
+    arithmetic_exp  ir al estado 104
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+
+
+Estado 99
+
+   10 instruction: z DO INTRO instructions DONE INTRO •
+
+    $default  reduce usando la regla 10 (instruction)
+
+
+Estado 100
 
     6 instruction: setup DO INTRO instructions DONE INTRO •
 
     $default  reduce usando la regla 6 (instruction)
+
+
+Estado 101
+
+    8 instruction: DO INTRO x instructions UNTIL POPEN boolean_exp • PCLOSE INTRO
+   28 boolean_exp: boolean_exp • OR x and
+
+    PCLOSE  desplazar e ir al estado 105
+    OR      desplazar e ir al estado 61
+
+
+Estado 102
+
+    9 instruction: IF POPEN boolean_exp PCLOSE THEN INTRO x • instructions else FI INTRO
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
+
+    instructions    ir al estado 106
+    instruction     ir al estado 15
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 103
+
+    2 instructions: instructions • x instruction
+    7 instruction: WHILE x boolean_exp DO INTRO x instructions • DONE INTRO
+
+    DONE  desplazar e ir al estado 107
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 42
+
+
+Estado 104
+
+   11 z: FOR POPEN ARITHMETIC_ID IN arithmetic_exp TO arithmetic_exp • PCLOSE
+   17 arithmetic_exp: arithmetic_exp • op1 mul
+
+    PCLOSE  desplazar e ir al estado 108
+    ADD     desplazar e ir al estado 46
+    SUB     desplazar e ir al estado 47
+
+    op1  ir al estado 54
+
+
+Estado 105
+
+    8 instruction: DO INTRO x instructions UNTIL POPEN boolean_exp PCLOSE • INTRO
+
+    INTRO  desplazar e ir al estado 109
+
+
+Estado 106
+
+    2 instructions: instructions • x instruction
+    9 instruction: IF POPEN boolean_exp PCLOSE THEN INTRO x instructions • else FI INTRO
+
+    ELSE  desplazar e ir al estado 110
+
+    FI        reduce usando la regla 12 (else)
+    $default  reduce usando la regla 38 (x)
+
+    else  ir al estado 111
+    x     ir al estado 42
+
+
+Estado 107
+
+    7 instruction: WHILE x boolean_exp DO INTRO x instructions DONE • INTRO
+
+    INTRO  desplazar e ir al estado 112
+
+
+Estado 108
+
+   11 z: FOR POPEN ARITHMETIC_ID IN arithmetic_exp TO arithmetic_exp PCLOSE •
+
+    $default  reduce usando la regla 11 (z)
+
+
+Estado 109
+
+    8 instruction: DO INTRO x instructions UNTIL POPEN boolean_exp PCLOSE INTRO •
+
+    $default  reduce usando la regla 8 (instruction)
+
+
+Estado 110
+
+   13 else: ELSE • INTRO y x instructions
+
+    INTRO  desplazar e ir al estado 113
+
+
+Estado 111
+
+    9 instruction: IF POPEN boolean_exp PCLOSE THEN INTRO x instructions else • FI INTRO
+
+    FI  desplazar e ir al estado 114
+
+
+Estado 112
+
+    7 instruction: WHILE x boolean_exp DO INTRO x instructions DONE INTRO •
+
+    $default  reduce usando la regla 7 (instruction)
+
+
+Estado 113
+
+   13 else: ELSE INTRO • y x instructions
+
+    $default  reduce usando la regla 39 (y)
+
+    y  ir al estado 115
+
+
+Estado 114
+
+    9 instruction: IF POPEN boolean_exp PCLOSE THEN INTRO x instructions else FI • INTRO
+
+    INTRO  desplazar e ir al estado 116
+
+
+Estado 115
+
+   13 else: ELSE INTRO y • x instructions
+
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 117
+
+
+Estado 116
+
+    9 instruction: IF POPEN boolean_exp PCLOSE THEN INTRO x instructions else FI INTRO •
+
+    $default  reduce usando la regla 9 (instruction)
+
+
+Estado 117
+
+   13 else: ELSE INTRO y x • instructions
+
+    POPEN          desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    FFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    DO             desplazar e ir al estado 5
+    IF             desplazar e ir al estado 6
+    WHILE          desplazar e ir al estado 7
+    FOR            desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    REPEAT         desplazar e ir al estado 12
+
+    instructions    ir al estado 118
+    instruction     ir al estado 15
+    z               ir al estado 16
+    expresion       ir al estado 17
+    setup           ir al estado 18
+    arithmetic_exp  ir al estado 19
+    mul             ir al estado 20
+    pow             ir al estado 21
+    basic_exp       ir al estado 22
+    boolean_exp     ir al estado 23
+    and             ir al estado 24
+    not             ir al estado 25
+    boolean_logic   ir al estado 26
+
+
+Estado 118
+
+    2 instructions: instructions • x instruction
+   13 else: ELSE INTRO y x instructions •
+
+    FI        reduce usando la regla 13 (else)
+    $default  reduce usando la regla 38 (x)
+
+    x  ir al estado 42
