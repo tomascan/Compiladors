@@ -20,7 +20,7 @@ extern int yylex();
     estructura var;
 }
 
-%token ASIGN OPEN CLOSE TTRUE TFALSE AND OR NOT
+%token ASIGN OPEN CLOSE TTRUE TFALSE AND OR NOT DEC_MODE OCT_MODE HEX_MODE
 %token <var> ADD SUB MUL DIV POW MOD GT LT GE LE EQ NE VAR BOOLEAN_ID ARITHMETIC_ID INTRO COS SIN TAN
 %type <var> expression arithmetic_op1 arithmetic_op2 boolean_op arithmetic_exp boolean_exp trigonometric_op sum mul pow and not top_bool instructions instruction
 
@@ -36,6 +36,9 @@ instruction:
     ARITHMETIC_ID ASIGN expression INTRO { sym_enter($1.string, &$3); printf("Variable: \"%s\" - ", $1.string); print_result($3); }
     | BOOLEAN_ID ASIGN expression INTRO   { sym_enter($1.string, &$3); printf("Var \"%s\" - ", $1.string); print_result($3); }
     | expression INTRO                   { print_result($1); }
+    | DEC_MODE INTRO                { cambiar_modo_formato("decimal"); }
+    | OCT_MODE INTRO                  { cambiar_modo_formato("octal"); }
+    | HEX_MODE INTRO                    { cambiar_modo_formato("hexagesimal"); }
 ;
 
 expression: 
@@ -95,6 +98,7 @@ trigonometric_op: SIN | COS | TAN;
 boolean_op: GT | LT | GE | LE | EQ | NE;
 
 %%
+
 
 void yyerror(const char *err)
 {

@@ -2,6 +2,7 @@
 #include <math.h>
 
 #define PI 3.14159265358979323846
+#define E 2.7818281828459045
 
 // Funciones auxiliares para la conversión de tipos
 float getFloatValue(estructura op) {
@@ -229,8 +230,32 @@ estructura negate(estructura value) {
     return value;
 }
 
+void cambiar_modo_formato(const char* modo) {
+    modo_formato = strdup(modo);
+}
+
+estructura strlen_function(estructura str) {
+    if (str.type != STRING) {
+        fprintf(stderr, "ERROR: strlen() solo se puede aplicar a cadenas de caracteres.\n");
+        exit(EXIT_FAILURE);
+    }
+    estructura result;
+    result.type = INT;
+    result.integer = strlen(str.string);
+    return result;
+}
+
+
 void print_result(estructura s) {
-    if(s.type == INT) 		printf("Type: INT - Value: %i\n", (int)s.integer);
+    if (s.type == INT) {
+        if (strcmp(modo_formato, "hexagesimal") == 0) {
+            printf("Type: INT - Value: 0x%X\n", (int)s.integer);
+        } else if (strcmp(modo_formato, "octal") == 0) {
+            printf("Type: INT - Value: 0o%o\n", (int)s.integer);
+        } else {
+            printf("Type: INT - Value: %i\n", (int)s.integer);
+        }
+     }
     if(s.type == FLOAT) 	printf("Type: FLOAT - Value: %f\n", s.real);
     if(s.type == STRING) 	printf("Type: STRING - Value: %s\n", s.string);       
     if(s.type == BOOLEAN){

@@ -8,58 +8,61 @@ Gramática
     3 instruction: ARITHMETIC_ID ASIGN expression INTRO
     4            | BOOLEAN_ID ASIGN expression INTRO
     5            | expression INTRO
+    6            | DEC_MODE INTRO
+    7            | OCT_MODE INTRO
+    8            | HEX_MODE INTRO
 
-    6 expression: arithmetic_exp
-    7           | boolean_exp
+    9 expression: arithmetic_exp
+   10           | boolean_exp
 
-    8 arithmetic_exp: arithmetic_exp arithmetic_op1 sum
-    9               | sum
+   11 arithmetic_exp: arithmetic_exp arithmetic_op1 sum
+   12               | sum
 
-   10 sum: sum arithmetic_op2 mul
-   11    | SUB VAR
-   12    | SUB ARITHMETIC_ID
-   13    | mul
+   13 sum: sum arithmetic_op2 mul
+   14    | SUB VAR
+   15    | SUB ARITHMETIC_ID
+   16    | mul
 
-   14 mul: mul POW pow
-   15    | pow
+   17 mul: mul POW pow
+   18    | pow
 
-   16 pow: ARITHMETIC_ID
-   17    | VAR
-   18    | OPEN arithmetic_exp CLOSE
-   19    | trigonometric_op OPEN arithmetic_exp CLOSE
+   19 pow: ARITHMETIC_ID
+   20    | VAR
+   21    | OPEN arithmetic_exp CLOSE
+   22    | trigonometric_op OPEN arithmetic_exp CLOSE
 
-   20 boolean_exp: boolean_exp OR and
-   21            | and
+   23 boolean_exp: boolean_exp OR and
+   24            | and
 
-   22 and: and AND not
-   23    | not
+   25 and: and AND not
+   26    | not
 
-   24 not: NOT top_bool
-   25    | top_bool
+   27 not: NOT top_bool
+   28    | top_bool
 
-   26 top_bool: arithmetic_exp boolean_op arithmetic_exp
-   27         | TTRUE
-   28         | TFALSE
-   29         | OPEN boolean_exp CLOSE
-   30         | BOOLEAN_ID
+   29 top_bool: arithmetic_exp boolean_op arithmetic_exp
+   30         | TTRUE
+   31         | TFALSE
+   32         | OPEN boolean_exp CLOSE
+   33         | BOOLEAN_ID
 
-   31 arithmetic_op1: ADD
-   32               | SUB
+   34 arithmetic_op1: ADD
+   35               | SUB
 
-   33 arithmetic_op2: MUL
-   34               | DIV
-   35               | MOD
+   36 arithmetic_op2: MUL
+   37               | DIV
+   38               | MOD
 
-   36 trigonometric_op: SIN
-   37                 | COS
-   38                 | TAN
+   39 trigonometric_op: SIN
+   40                 | COS
+   41                 | TAN
 
-   39 boolean_op: GT
-   40           | LT
-   41           | GE
-   42           | LE
-   43           | EQ
-   44           | NE
+   42 boolean_op: GT
+   43           | LT
+   44           | GE
+   45           | LE
+   46           | EQ
+   47           | NE
 
 
 Terminales con las reglas donde aparecen
@@ -67,83 +70,86 @@ Terminales con las reglas donde aparecen
     $end (0) 0
     error (256)
     ASIGN (258) 3 4
-    OPEN (259) 18 19 29
-    CLOSE (260) 18 19 29
-    TTRUE (261) 27
-    TFALSE (262) 28
-    AND (263) 22
-    OR (264) 20
-    NOT (265) 24
-    ADD <var> (266) 31
-    SUB <var> (267) 11 12 32
-    MUL <var> (268) 33
-    DIV <var> (269) 34
-    POW <var> (270) 14
-    MOD <var> (271) 35
-    GT <var> (272) 39
-    LT <var> (273) 40
-    GE <var> (274) 41
-    LE <var> (275) 42
-    EQ <var> (276) 43
-    NE <var> (277) 44
-    VAR <var> (278) 11 17
-    BOOLEAN_ID <var> (279) 4 30
-    ARITHMETIC_ID <var> (280) 3 12 16
-    INTRO <var> (281) 3 4 5
-    COS <var> (282) 37
-    SIN <var> (283) 36
-    TAN <var> (284) 38
+    OPEN (259) 21 22 32
+    CLOSE (260) 21 22 32
+    TTRUE (261) 30
+    TFALSE (262) 31
+    AND (263) 25
+    OR (264) 23
+    NOT (265) 27
+    DEC_MODE (266) 6
+    OCT_MODE (267) 7
+    HEX_MODE (268) 8
+    ADD <var> (269) 34
+    SUB <var> (270) 14 15 35
+    MUL <var> (271) 36
+    DIV <var> (272) 37
+    POW <var> (273) 17
+    MOD <var> (274) 38
+    GT <var> (275) 42
+    LT <var> (276) 43
+    GE <var> (277) 44
+    LE <var> (278) 45
+    EQ <var> (279) 46
+    NE <var> (280) 47
+    VAR <var> (281) 14 20
+    BOOLEAN_ID <var> (282) 4 33
+    ARITHMETIC_ID <var> (283) 3 15 19
+    INTRO <var> (284) 3 4 5 6 7 8
+    COS <var> (285) 40
+    SIN <var> (286) 39
+    TAN <var> (287) 41
 
 
 No terminales con las reglas donde aparecen
 
-    $accept (30)
+    $accept (33)
         on left: 0
-    instructions <var> (31)
+    instructions <var> (34)
         on left: 1 2
         on right: 0 1
-    instruction <var> (32)
-        on left: 3 4 5
+    instruction <var> (35)
+        on left: 3 4 5 6 7 8
         on right: 1 2
-    expression <var> (33)
-        on left: 6 7
+    expression <var> (36)
+        on left: 9 10
         on right: 3 4 5
-    arithmetic_exp <var> (34)
-        on left: 8 9
-        on right: 6 8 18 19 26
-    sum <var> (35)
-        on left: 10 11 12 13
-        on right: 8 9 10
-    mul <var> (36)
-        on left: 14 15
-        on right: 10 13 14
-    pow <var> (37)
-        on left: 16 17 18 19
-        on right: 14 15
-    boolean_exp <var> (38)
-        on left: 20 21
-        on right: 7 20 29
-    and <var> (39)
-        on left: 22 23
-        on right: 20 21 22
-    not <var> (40)
-        on left: 24 25
-        on right: 22 23
-    top_bool <var> (41)
-        on left: 26 27 28 29 30
-        on right: 24 25
-    arithmetic_op1 <var> (42)
-        on left: 31 32
-        on right: 8
-    arithmetic_op2 <var> (43)
-        on left: 33 34 35
-        on right: 10
-    trigonometric_op <var> (44)
+    arithmetic_exp <var> (37)
+        on left: 11 12
+        on right: 9 11 21 22 29
+    sum <var> (38)
+        on left: 13 14 15 16
+        on right: 11 12 13
+    mul <var> (39)
+        on left: 17 18
+        on right: 13 16 17
+    pow <var> (40)
+        on left: 19 20 21 22
+        on right: 17 18
+    boolean_exp <var> (41)
+        on left: 23 24
+        on right: 10 23 32
+    and <var> (42)
+        on left: 25 26
+        on right: 23 24 25
+    not <var> (43)
+        on left: 27 28
+        on right: 25 26
+    top_bool <var> (44)
+        on left: 29 30 31 32 33
+        on right: 27 28
+    arithmetic_op1 <var> (45)
+        on left: 34 35
+        on right: 11
+    arithmetic_op2 <var> (46)
         on left: 36 37 38
-        on right: 19
-    boolean_op <var> (45)
-        on left: 39 40 41 42 43 44
-        on right: 26
+        on right: 13
+    trigonometric_op <var> (47)
+        on left: 39 40 41
+        on right: 22
+    boolean_op <var> (48)
+        on left: 42 43 44 45 46 47
+        on right: 29
 
 
 Estado 0
@@ -154,371 +160,419 @@ Estado 0
     TTRUE          desplazar e ir al estado 2
     TFALSE         desplazar e ir al estado 3
     NOT            desplazar e ir al estado 4
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 7
-    ARITHMETIC_ID  desplazar e ir al estado 8
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    DEC_MODE       desplazar e ir al estado 5
+    OCT_MODE       desplazar e ir al estado 6
+    HEX_MODE       desplazar e ir al estado 7
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    instructions      ir al estado 12
-    instruction       ir al estado 13
-    expression        ir al estado 14
-    arithmetic_exp    ir al estado 15
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    boolean_exp       ir al estado 19
-    and               ir al estado 20
-    not               ir al estado 21
-    top_bool          ir al estado 22
-    trigonometric_op  ir al estado 23
+    instructions      ir al estado 15
+    instruction       ir al estado 16
+    expression        ir al estado 17
+    arithmetic_exp    ir al estado 18
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    boolean_exp       ir al estado 22
+    and               ir al estado 23
+    not               ir al estado 24
+    top_bool          ir al estado 25
+    trigonometric_op  ir al estado 26
 
 
 Estado 1
 
-   18 pow: OPEN • arithmetic_exp CLOSE
-   29 top_bool: OPEN • boolean_exp CLOSE
+   21 pow: OPEN • arithmetic_exp CLOSE
+   32 top_bool: OPEN • boolean_exp CLOSE
 
     OPEN           desplazar e ir al estado 1
     TTRUE          desplazar e ir al estado 2
     TFALSE         desplazar e ir al estado 3
     NOT            desplazar e ir al estado 4
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 24
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 27
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    arithmetic_exp    ir al estado 26
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    boolean_exp       ir al estado 27
-    and               ir al estado 20
-    not               ir al estado 21
-    top_bool          ir al estado 22
-    trigonometric_op  ir al estado 23
+    arithmetic_exp    ir al estado 29
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    boolean_exp       ir al estado 30
+    and               ir al estado 23
+    not               ir al estado 24
+    top_bool          ir al estado 25
+    trigonometric_op  ir al estado 26
 
 
 Estado 2
 
-   27 top_bool: TTRUE •
-
-    $default  reduce usando la regla 27 (top_bool)
-
-
-Estado 3
-
-   28 top_bool: TFALSE •
-
-    $default  reduce usando la regla 28 (top_bool)
-
-
-Estado 4
-
-   24 not: NOT • top_bool
-
-    OPEN           desplazar e ir al estado 1
-    TTRUE          desplazar e ir al estado 2
-    TFALSE         desplazar e ir al estado 3
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 24
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
-
-    arithmetic_exp    ir al estado 28
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    top_bool          ir al estado 29
-    trigonometric_op  ir al estado 23
-
-
-Estado 5
-
-   11 sum: SUB • VAR
-   12    | SUB • ARITHMETIC_ID
-
-    VAR            desplazar e ir al estado 30
-    ARITHMETIC_ID  desplazar e ir al estado 31
-
-
-Estado 6
-
-   17 pow: VAR •
-
-    $default  reduce usando la regla 17 (pow)
-
-
-Estado 7
-
-    4 instruction: BOOLEAN_ID • ASIGN expression INTRO
-   30 top_bool: BOOLEAN_ID •
-
-    ASIGN  desplazar e ir al estado 32
+   30 top_bool: TTRUE •
 
     $default  reduce usando la regla 30 (top_bool)
 
 
+Estado 3
+
+   31 top_bool: TFALSE •
+
+    $default  reduce usando la regla 31 (top_bool)
+
+
+Estado 4
+
+   27 not: NOT • top_bool
+
+    OPEN           desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    TFALSE         desplazar e ir al estado 3
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 27
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
+
+    arithmetic_exp    ir al estado 31
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    top_bool          ir al estado 32
+    trigonometric_op  ir al estado 26
+
+
+Estado 5
+
+    6 instruction: DEC_MODE • INTRO
+
+    INTRO  desplazar e ir al estado 33
+
+
+Estado 6
+
+    7 instruction: OCT_MODE • INTRO
+
+    INTRO  desplazar e ir al estado 34
+
+
+Estado 7
+
+    8 instruction: HEX_MODE • INTRO
+
+    INTRO  desplazar e ir al estado 35
+
+
 Estado 8
 
-    3 instruction: ARITHMETIC_ID • ASIGN expression INTRO
-   16 pow: ARITHMETIC_ID •
+   14 sum: SUB • VAR
+   15    | SUB • ARITHMETIC_ID
 
-    ASIGN  desplazar e ir al estado 33
-
-    $default  reduce usando la regla 16 (pow)
+    VAR            desplazar e ir al estado 36
+    ARITHMETIC_ID  desplazar e ir al estado 37
 
 
 Estado 9
 
-   37 trigonometric_op: COS •
+   20 pow: VAR •
 
-    $default  reduce usando la regla 37 (trigonometric_op)
+    $default  reduce usando la regla 20 (pow)
 
 
 Estado 10
 
-   36 trigonometric_op: SIN •
+    4 instruction: BOOLEAN_ID • ASIGN expression INTRO
+   33 top_bool: BOOLEAN_ID •
 
-    $default  reduce usando la regla 36 (trigonometric_op)
+    ASIGN  desplazar e ir al estado 38
+
+    $default  reduce usando la regla 33 (top_bool)
 
 
 Estado 11
 
-   38 trigonometric_op: TAN •
+    3 instruction: ARITHMETIC_ID • ASIGN expression INTRO
+   19 pow: ARITHMETIC_ID •
 
-    $default  reduce usando la regla 38 (trigonometric_op)
+    ASIGN  desplazar e ir al estado 39
+
+    $default  reduce usando la regla 19 (pow)
 
 
 Estado 12
 
+   40 trigonometric_op: COS •
+
+    $default  reduce usando la regla 40 (trigonometric_op)
+
+
+Estado 13
+
+   39 trigonometric_op: SIN •
+
+    $default  reduce usando la regla 39 (trigonometric_op)
+
+
+Estado 14
+
+   41 trigonometric_op: TAN •
+
+    $default  reduce usando la regla 41 (trigonometric_op)
+
+
+Estado 15
+
     0 $accept: instructions • $end
     1 instructions: instructions • instruction
 
-    $end           desplazar e ir al estado 34
+    $end           desplazar e ir al estado 40
     OPEN           desplazar e ir al estado 1
     TTRUE          desplazar e ir al estado 2
     TFALSE         desplazar e ir al estado 3
     NOT            desplazar e ir al estado 4
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 7
-    ARITHMETIC_ID  desplazar e ir al estado 8
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    DEC_MODE       desplazar e ir al estado 5
+    OCT_MODE       desplazar e ir al estado 6
+    HEX_MODE       desplazar e ir al estado 7
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 10
+    ARITHMETIC_ID  desplazar e ir al estado 11
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    instruction       ir al estado 35
-    expression        ir al estado 14
-    arithmetic_exp    ir al estado 15
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    boolean_exp       ir al estado 19
-    and               ir al estado 20
-    not               ir al estado 21
-    top_bool          ir al estado 22
-    trigonometric_op  ir al estado 23
+    instruction       ir al estado 41
+    expression        ir al estado 17
+    arithmetic_exp    ir al estado 18
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    boolean_exp       ir al estado 22
+    and               ir al estado 23
+    not               ir al estado 24
+    top_bool          ir al estado 25
+    trigonometric_op  ir al estado 26
 
 
-Estado 13
+Estado 16
 
     2 instructions: instruction •
 
     $default  reduce usando la regla 2 (instructions)
 
 
-Estado 14
+Estado 17
 
     5 instruction: expression • INTRO
 
-    INTRO  desplazar e ir al estado 36
-
-
-Estado 15
-
-    6 expression: arithmetic_exp •
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
-   26 top_bool: arithmetic_exp • boolean_op arithmetic_exp
-
-    ADD  desplazar e ir al estado 37
-    SUB  desplazar e ir al estado 38
-    GT   desplazar e ir al estado 39
-    LT   desplazar e ir al estado 40
-    GE   desplazar e ir al estado 41
-    LE   desplazar e ir al estado 42
-    EQ   desplazar e ir al estado 43
-    NE   desplazar e ir al estado 44
-
-    $default  reduce usando la regla 6 (expression)
-
-    arithmetic_op1  ir al estado 45
-    boolean_op      ir al estado 46
-
-
-Estado 16
-
-    9 arithmetic_exp: sum •
-   10 sum: sum • arithmetic_op2 mul
-
-    MUL  desplazar e ir al estado 47
-    DIV  desplazar e ir al estado 48
-    MOD  desplazar e ir al estado 49
-
-    $default  reduce usando la regla 9 (arithmetic_exp)
-
-    arithmetic_op2  ir al estado 50
-
-
-Estado 17
-
-   13 sum: mul •
-   14 mul: mul • POW pow
-
-    POW  desplazar e ir al estado 51
-
-    $default  reduce usando la regla 13 (sum)
+    INTRO  desplazar e ir al estado 42
 
 
 Estado 18
 
-   15 mul: pow •
+    9 expression: arithmetic_exp •
+   11 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
+   29 top_bool: arithmetic_exp • boolean_op arithmetic_exp
 
-    $default  reduce usando la regla 15 (mul)
+    ADD  desplazar e ir al estado 43
+    SUB  desplazar e ir al estado 44
+    GT   desplazar e ir al estado 45
+    LT   desplazar e ir al estado 46
+    GE   desplazar e ir al estado 47
+    LE   desplazar e ir al estado 48
+    EQ   desplazar e ir al estado 49
+    NE   desplazar e ir al estado 50
+
+    $default  reduce usando la regla 9 (expression)
+
+    arithmetic_op1  ir al estado 51
+    boolean_op      ir al estado 52
 
 
 Estado 19
 
-    7 expression: boolean_exp •
-   20 boolean_exp: boolean_exp • OR and
+   12 arithmetic_exp: sum •
+   13 sum: sum • arithmetic_op2 mul
 
-    OR  desplazar e ir al estado 52
+    MUL  desplazar e ir al estado 53
+    DIV  desplazar e ir al estado 54
+    MOD  desplazar e ir al estado 55
 
-    $default  reduce usando la regla 7 (expression)
+    $default  reduce usando la regla 12 (arithmetic_exp)
+
+    arithmetic_op2  ir al estado 56
 
 
 Estado 20
 
-   21 boolean_exp: and •
-   22 and: and • AND not
+   16 sum: mul •
+   17 mul: mul • POW pow
 
-    AND  desplazar e ir al estado 53
+    POW  desplazar e ir al estado 57
 
-    $default  reduce usando la regla 21 (boolean_exp)
+    $default  reduce usando la regla 16 (sum)
 
 
 Estado 21
 
-   23 and: not •
+   18 mul: pow •
 
-    $default  reduce usando la regla 23 (and)
+    $default  reduce usando la regla 18 (mul)
 
 
 Estado 22
 
-   25 not: top_bool •
+   10 expression: boolean_exp •
+   23 boolean_exp: boolean_exp • OR and
 
-    $default  reduce usando la regla 25 (not)
+    OR  desplazar e ir al estado 58
+
+    $default  reduce usando la regla 10 (expression)
 
 
 Estado 23
 
-   19 pow: trigonometric_op • OPEN arithmetic_exp CLOSE
+   24 boolean_exp: and •
+   25 and: and • AND not
 
-    OPEN  desplazar e ir al estado 54
+    AND  desplazar e ir al estado 59
+
+    $default  reduce usando la regla 24 (boolean_exp)
 
 
 Estado 24
 
-   30 top_bool: BOOLEAN_ID •
+   26 and: not •
 
-    $default  reduce usando la regla 30 (top_bool)
+    $default  reduce usando la regla 26 (and)
 
 
 Estado 25
 
-   16 pow: ARITHMETIC_ID •
+   28 not: top_bool •
 
-    $default  reduce usando la regla 16 (pow)
+    $default  reduce usando la regla 28 (not)
 
 
 Estado 26
 
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
-   18 pow: OPEN arithmetic_exp • CLOSE
-   26 top_bool: arithmetic_exp • boolean_op arithmetic_exp
+   22 pow: trigonometric_op • OPEN arithmetic_exp CLOSE
 
-    CLOSE  desplazar e ir al estado 55
-    ADD    desplazar e ir al estado 37
-    SUB    desplazar e ir al estado 38
-    GT     desplazar e ir al estado 39
-    LT     desplazar e ir al estado 40
-    GE     desplazar e ir al estado 41
-    LE     desplazar e ir al estado 42
-    EQ     desplazar e ir al estado 43
-    NE     desplazar e ir al estado 44
-
-    arithmetic_op1  ir al estado 45
-    boolean_op      ir al estado 46
+    OPEN  desplazar e ir al estado 60
 
 
 Estado 27
 
-   20 boolean_exp: boolean_exp • OR and
-   29 top_bool: OPEN boolean_exp • CLOSE
+   33 top_bool: BOOLEAN_ID •
 
-    CLOSE  desplazar e ir al estado 56
-    OR     desplazar e ir al estado 52
+    $default  reduce usando la regla 33 (top_bool)
 
 
 Estado 28
 
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
-   26 top_bool: arithmetic_exp • boolean_op arithmetic_exp
+   19 pow: ARITHMETIC_ID •
 
-    ADD  desplazar e ir al estado 37
-    SUB  desplazar e ir al estado 38
-    GT   desplazar e ir al estado 39
-    LT   desplazar e ir al estado 40
-    GE   desplazar e ir al estado 41
-    LE   desplazar e ir al estado 42
-    EQ   desplazar e ir al estado 43
-    NE   desplazar e ir al estado 44
-
-    arithmetic_op1  ir al estado 45
-    boolean_op      ir al estado 46
+    $default  reduce usando la regla 19 (pow)
 
 
 Estado 29
 
-   24 not: NOT top_bool •
+   11 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
+   21 pow: OPEN arithmetic_exp • CLOSE
+   29 top_bool: arithmetic_exp • boolean_op arithmetic_exp
 
-    $default  reduce usando la regla 24 (not)
+    CLOSE  desplazar e ir al estado 61
+    ADD    desplazar e ir al estado 43
+    SUB    desplazar e ir al estado 44
+    GT     desplazar e ir al estado 45
+    LT     desplazar e ir al estado 46
+    GE     desplazar e ir al estado 47
+    LE     desplazar e ir al estado 48
+    EQ     desplazar e ir al estado 49
+    NE     desplazar e ir al estado 50
+
+    arithmetic_op1  ir al estado 51
+    boolean_op      ir al estado 52
 
 
 Estado 30
 
-   11 sum: SUB VAR •
+   23 boolean_exp: boolean_exp • OR and
+   32 top_bool: OPEN boolean_exp • CLOSE
 
-    $default  reduce usando la regla 11 (sum)
+    CLOSE  desplazar e ir al estado 62
+    OR     desplazar e ir al estado 58
 
 
 Estado 31
 
-   12 sum: SUB ARITHMETIC_ID •
+   11 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
+   29 top_bool: arithmetic_exp • boolean_op arithmetic_exp
 
-    $default  reduce usando la regla 12 (sum)
+    ADD  desplazar e ir al estado 43
+    SUB  desplazar e ir al estado 44
+    GT   desplazar e ir al estado 45
+    LT   desplazar e ir al estado 46
+    GE   desplazar e ir al estado 47
+    LE   desplazar e ir al estado 48
+    EQ   desplazar e ir al estado 49
+    NE   desplazar e ir al estado 50
+
+    arithmetic_op1  ir al estado 51
+    boolean_op      ir al estado 52
 
 
 Estado 32
+
+   27 not: NOT top_bool •
+
+    $default  reduce usando la regla 27 (not)
+
+
+Estado 33
+
+    6 instruction: DEC_MODE INTRO •
+
+    $default  reduce usando la regla 6 (instruction)
+
+
+Estado 34
+
+    7 instruction: OCT_MODE INTRO •
+
+    $default  reduce usando la regla 7 (instruction)
+
+
+Estado 35
+
+    8 instruction: HEX_MODE INTRO •
+
+    $default  reduce usando la regla 8 (instruction)
+
+
+Estado 36
+
+   14 sum: SUB VAR •
+
+    $default  reduce usando la regla 14 (sum)
+
+
+Estado 37
+
+   15 sum: SUB ARITHMETIC_ID •
+
+    $default  reduce usando la regla 15 (sum)
+
+
+Estado 38
 
     4 instruction: BOOLEAN_ID ASIGN • expression INTRO
 
@@ -526,27 +580,27 @@ Estado 32
     TTRUE          desplazar e ir al estado 2
     TFALSE         desplazar e ir al estado 3
     NOT            desplazar e ir al estado 4
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 24
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 27
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    expression        ir al estado 57
-    arithmetic_exp    ir al estado 15
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    boolean_exp       ir al estado 19
-    and               ir al estado 20
-    not               ir al estado 21
-    top_bool          ir al estado 22
-    trigonometric_op  ir al estado 23
+    expression        ir al estado 63
+    arithmetic_exp    ir al estado 18
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    boolean_exp       ir al estado 22
+    and               ir al estado 23
+    not               ir al estado 24
+    top_bool          ir al estado 25
+    trigonometric_op  ir al estado 26
 
 
-Estado 33
+Estado 39
 
     3 instruction: ARITHMETIC_ID ASIGN • expression INTRO
 
@@ -554,410 +608,410 @@ Estado 33
     TTRUE          desplazar e ir al estado 2
     TFALSE         desplazar e ir al estado 3
     NOT            desplazar e ir al estado 4
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 24
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 27
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    expression        ir al estado 58
-    arithmetic_exp    ir al estado 15
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    boolean_exp       ir al estado 19
-    and               ir al estado 20
-    not               ir al estado 21
-    top_bool          ir al estado 22
-    trigonometric_op  ir al estado 23
+    expression        ir al estado 64
+    arithmetic_exp    ir al estado 18
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    boolean_exp       ir al estado 22
+    and               ir al estado 23
+    not               ir al estado 24
+    top_bool          ir al estado 25
+    trigonometric_op  ir al estado 26
 
 
-Estado 34
+Estado 40
 
     0 $accept: instructions $end •
 
     $default  aceptar
 
 
-Estado 35
+Estado 41
 
     1 instructions: instructions instruction •
 
     $default  reduce usando la regla 1 (instructions)
 
 
-Estado 36
+Estado 42
 
     5 instruction: expression INTRO •
 
     $default  reduce usando la regla 5 (instruction)
 
 
-Estado 37
-
-   31 arithmetic_op1: ADD •
-
-    $default  reduce usando la regla 31 (arithmetic_op1)
-
-
-Estado 38
-
-   32 arithmetic_op1: SUB •
-
-    $default  reduce usando la regla 32 (arithmetic_op1)
-
-
-Estado 39
-
-   39 boolean_op: GT •
-
-    $default  reduce usando la regla 39 (boolean_op)
-
-
-Estado 40
-
-   40 boolean_op: LT •
-
-    $default  reduce usando la regla 40 (boolean_op)
-
-
-Estado 41
-
-   41 boolean_op: GE •
-
-    $default  reduce usando la regla 41 (boolean_op)
-
-
-Estado 42
-
-   42 boolean_op: LE •
-
-    $default  reduce usando la regla 42 (boolean_op)
-
-
 Estado 43
 
-   43 boolean_op: EQ •
+   34 arithmetic_op1: ADD •
 
-    $default  reduce usando la regla 43 (boolean_op)
+    $default  reduce usando la regla 34 (arithmetic_op1)
 
 
 Estado 44
 
-   44 boolean_op: NE •
+   35 arithmetic_op1: SUB •
 
-    $default  reduce usando la regla 44 (boolean_op)
+    $default  reduce usando la regla 35 (arithmetic_op1)
 
 
 Estado 45
 
-    8 arithmetic_exp: arithmetic_exp arithmetic_op1 • sum
+   42 boolean_op: GT •
 
-    OPEN           desplazar e ir al estado 59
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
-
-    sum               ir al estado 60
-    mul               ir al estado 17
-    pow               ir al estado 18
-    trigonometric_op  ir al estado 23
+    $default  reduce usando la regla 42 (boolean_op)
 
 
 Estado 46
 
-   26 top_bool: arithmetic_exp boolean_op • arithmetic_exp
+   43 boolean_op: LT •
 
-    OPEN           desplazar e ir al estado 59
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
-
-    arithmetic_exp    ir al estado 61
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    trigonometric_op  ir al estado 23
+    $default  reduce usando la regla 43 (boolean_op)
 
 
 Estado 47
 
-   33 arithmetic_op2: MUL •
+   44 boolean_op: GE •
 
-    $default  reduce usando la regla 33 (arithmetic_op2)
+    $default  reduce usando la regla 44 (boolean_op)
 
 
 Estado 48
 
-   34 arithmetic_op2: DIV •
+   45 boolean_op: LE •
 
-    $default  reduce usando la regla 34 (arithmetic_op2)
+    $default  reduce usando la regla 45 (boolean_op)
 
 
 Estado 49
 
-   35 arithmetic_op2: MOD •
+   46 boolean_op: EQ •
 
-    $default  reduce usando la regla 35 (arithmetic_op2)
+    $default  reduce usando la regla 46 (boolean_op)
 
 
 Estado 50
 
-   10 sum: sum arithmetic_op2 • mul
+   47 boolean_op: NE •
 
-    OPEN           desplazar e ir al estado 59
-    VAR            desplazar e ir al estado 6
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
-
-    mul               ir al estado 62
-    pow               ir al estado 18
-    trigonometric_op  ir al estado 23
+    $default  reduce usando la regla 47 (boolean_op)
 
 
 Estado 51
 
-   14 mul: mul POW • pow
+   11 arithmetic_exp: arithmetic_exp arithmetic_op1 • sum
 
-    OPEN           desplazar e ir al estado 59
-    VAR            desplazar e ir al estado 6
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    OPEN           desplazar e ir al estado 65
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    pow               ir al estado 63
-    trigonometric_op  ir al estado 23
+    sum               ir al estado 66
+    mul               ir al estado 20
+    pow               ir al estado 21
+    trigonometric_op  ir al estado 26
 
 
 Estado 52
 
-   20 boolean_exp: boolean_exp OR • and
+   29 top_bool: arithmetic_exp boolean_op • arithmetic_exp
 
-    OPEN           desplazar e ir al estado 1
-    TTRUE          desplazar e ir al estado 2
-    TFALSE         desplazar e ir al estado 3
-    NOT            desplazar e ir al estado 4
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 24
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    OPEN           desplazar e ir al estado 65
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    arithmetic_exp    ir al estado 28
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    and               ir al estado 64
-    not               ir al estado 21
-    top_bool          ir al estado 22
-    trigonometric_op  ir al estado 23
+    arithmetic_exp    ir al estado 67
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    trigonometric_op  ir al estado 26
 
 
 Estado 53
 
-   22 and: and AND • not
+   36 arithmetic_op2: MUL •
+
+    $default  reduce usando la regla 36 (arithmetic_op2)
+
+
+Estado 54
+
+   37 arithmetic_op2: DIV •
+
+    $default  reduce usando la regla 37 (arithmetic_op2)
+
+
+Estado 55
+
+   38 arithmetic_op2: MOD •
+
+    $default  reduce usando la regla 38 (arithmetic_op2)
+
+
+Estado 56
+
+   13 sum: sum arithmetic_op2 • mul
+
+    OPEN           desplazar e ir al estado 65
+    VAR            desplazar e ir al estado 9
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
+
+    mul               ir al estado 68
+    pow               ir al estado 21
+    trigonometric_op  ir al estado 26
+
+
+Estado 57
+
+   17 mul: mul POW • pow
+
+    OPEN           desplazar e ir al estado 65
+    VAR            desplazar e ir al estado 9
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
+
+    pow               ir al estado 69
+    trigonometric_op  ir al estado 26
+
+
+Estado 58
+
+   23 boolean_exp: boolean_exp OR • and
 
     OPEN           desplazar e ir al estado 1
     TTRUE          desplazar e ir al estado 2
     TFALSE         desplazar e ir al estado 3
     NOT            desplazar e ir al estado 4
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    BOOLEAN_ID     desplazar e ir al estado 24
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 27
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    arithmetic_exp    ir al estado 28
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    not               ir al estado 65
-    top_bool          ir al estado 22
-    trigonometric_op  ir al estado 23
-
-
-Estado 54
-
-   19 pow: trigonometric_op OPEN • arithmetic_exp CLOSE
-
-    OPEN           desplazar e ir al estado 59
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
-
-    arithmetic_exp    ir al estado 66
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    trigonometric_op  ir al estado 23
-
-
-Estado 55
-
-   18 pow: OPEN arithmetic_exp CLOSE •
-
-    $default  reduce usando la regla 18 (pow)
-
-
-Estado 56
-
-   29 top_bool: OPEN boolean_exp CLOSE •
-
-    $default  reduce usando la regla 29 (top_bool)
-
-
-Estado 57
-
-    4 instruction: BOOLEAN_ID ASIGN expression • INTRO
-
-    INTRO  desplazar e ir al estado 67
-
-
-Estado 58
-
-    3 instruction: ARITHMETIC_ID ASIGN expression • INTRO
-
-    INTRO  desplazar e ir al estado 68
+    arithmetic_exp    ir al estado 31
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    and               ir al estado 70
+    not               ir al estado 24
+    top_bool          ir al estado 25
+    trigonometric_op  ir al estado 26
 
 
 Estado 59
 
-   18 pow: OPEN • arithmetic_exp CLOSE
+   25 and: and AND • not
 
-    OPEN           desplazar e ir al estado 59
-    SUB            desplazar e ir al estado 5
-    VAR            desplazar e ir al estado 6
-    ARITHMETIC_ID  desplazar e ir al estado 25
-    COS            desplazar e ir al estado 9
-    SIN            desplazar e ir al estado 10
-    TAN            desplazar e ir al estado 11
+    OPEN           desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    TFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    BOOLEAN_ID     desplazar e ir al estado 27
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    arithmetic_exp    ir al estado 69
-    sum               ir al estado 16
-    mul               ir al estado 17
-    pow               ir al estado 18
-    trigonometric_op  ir al estado 23
+    arithmetic_exp    ir al estado 31
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    not               ir al estado 71
+    top_bool          ir al estado 25
+    trigonometric_op  ir al estado 26
 
 
 Estado 60
 
-    8 arithmetic_exp: arithmetic_exp arithmetic_op1 sum •
-   10 sum: sum • arithmetic_op2 mul
+   22 pow: trigonometric_op OPEN • arithmetic_exp CLOSE
 
-    MUL  desplazar e ir al estado 47
-    DIV  desplazar e ir al estado 48
-    MOD  desplazar e ir al estado 49
+    OPEN           desplazar e ir al estado 65
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
 
-    $default  reduce usando la regla 8 (arithmetic_exp)
-
-    arithmetic_op2  ir al estado 50
+    arithmetic_exp    ir al estado 72
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    trigonometric_op  ir al estado 26
 
 
 Estado 61
 
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
-   26 top_bool: arithmetic_exp boolean_op arithmetic_exp •
+   21 pow: OPEN arithmetic_exp CLOSE •
 
-    ADD  desplazar e ir al estado 37
-    SUB  desplazar e ir al estado 38
-
-    $default  reduce usando la regla 26 (top_bool)
-
-    arithmetic_op1  ir al estado 45
+    $default  reduce usando la regla 21 (pow)
 
 
 Estado 62
 
-   10 sum: sum arithmetic_op2 mul •
-   14 mul: mul • POW pow
+   32 top_bool: OPEN boolean_exp CLOSE •
 
-    POW  desplazar e ir al estado 51
-
-    $default  reduce usando la regla 10 (sum)
+    $default  reduce usando la regla 32 (top_bool)
 
 
 Estado 63
 
-   14 mul: mul POW pow •
+    4 instruction: BOOLEAN_ID ASIGN expression • INTRO
 
-    $default  reduce usando la regla 14 (mul)
+    INTRO  desplazar e ir al estado 73
 
 
 Estado 64
 
-   20 boolean_exp: boolean_exp OR and •
-   22 and: and • AND not
+    3 instruction: ARITHMETIC_ID ASIGN expression • INTRO
 
-    AND  desplazar e ir al estado 53
-
-    $default  reduce usando la regla 20 (boolean_exp)
+    INTRO  desplazar e ir al estado 74
 
 
 Estado 65
 
-   22 and: and AND not •
+   21 pow: OPEN • arithmetic_exp CLOSE
 
-    $default  reduce usando la regla 22 (and)
+    OPEN           desplazar e ir al estado 65
+    SUB            desplazar e ir al estado 8
+    VAR            desplazar e ir al estado 9
+    ARITHMETIC_ID  desplazar e ir al estado 28
+    COS            desplazar e ir al estado 12
+    SIN            desplazar e ir al estado 13
+    TAN            desplazar e ir al estado 14
+
+    arithmetic_exp    ir al estado 75
+    sum               ir al estado 19
+    mul               ir al estado 20
+    pow               ir al estado 21
+    trigonometric_op  ir al estado 26
 
 
 Estado 66
 
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
-   19 pow: trigonometric_op OPEN arithmetic_exp • CLOSE
+   11 arithmetic_exp: arithmetic_exp arithmetic_op1 sum •
+   13 sum: sum • arithmetic_op2 mul
 
-    CLOSE  desplazar e ir al estado 70
-    ADD    desplazar e ir al estado 37
-    SUB    desplazar e ir al estado 38
+    MUL  desplazar e ir al estado 53
+    DIV  desplazar e ir al estado 54
+    MOD  desplazar e ir al estado 55
 
-    arithmetic_op1  ir al estado 45
+    $default  reduce usando la regla 11 (arithmetic_exp)
+
+    arithmetic_op2  ir al estado 56
 
 
 Estado 67
+
+   11 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
+   29 top_bool: arithmetic_exp boolean_op arithmetic_exp •
+
+    ADD  desplazar e ir al estado 43
+    SUB  desplazar e ir al estado 44
+
+    $default  reduce usando la regla 29 (top_bool)
+
+    arithmetic_op1  ir al estado 51
+
+
+Estado 68
+
+   13 sum: sum arithmetic_op2 mul •
+   17 mul: mul • POW pow
+
+    POW  desplazar e ir al estado 57
+
+    $default  reduce usando la regla 13 (sum)
+
+
+Estado 69
+
+   17 mul: mul POW pow •
+
+    $default  reduce usando la regla 17 (mul)
+
+
+Estado 70
+
+   23 boolean_exp: boolean_exp OR and •
+   25 and: and • AND not
+
+    AND  desplazar e ir al estado 59
+
+    $default  reduce usando la regla 23 (boolean_exp)
+
+
+Estado 71
+
+   25 and: and AND not •
+
+    $default  reduce usando la regla 25 (and)
+
+
+Estado 72
+
+   11 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
+   22 pow: trigonometric_op OPEN arithmetic_exp • CLOSE
+
+    CLOSE  desplazar e ir al estado 76
+    ADD    desplazar e ir al estado 43
+    SUB    desplazar e ir al estado 44
+
+    arithmetic_op1  ir al estado 51
+
+
+Estado 73
 
     4 instruction: BOOLEAN_ID ASIGN expression INTRO •
 
     $default  reduce usando la regla 4 (instruction)
 
 
-Estado 68
+Estado 74
 
     3 instruction: ARITHMETIC_ID ASIGN expression INTRO •
 
     $default  reduce usando la regla 3 (instruction)
 
 
-Estado 69
+Estado 75
 
-    8 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
-   18 pow: OPEN arithmetic_exp • CLOSE
+   11 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
+   21 pow: OPEN arithmetic_exp • CLOSE
 
-    CLOSE  desplazar e ir al estado 55
-    ADD    desplazar e ir al estado 37
-    SUB    desplazar e ir al estado 38
+    CLOSE  desplazar e ir al estado 61
+    ADD    desplazar e ir al estado 43
+    SUB    desplazar e ir al estado 44
 
-    arithmetic_op1  ir al estado 45
+    arithmetic_op1  ir al estado 51
 
 
-Estado 70
+Estado 76
 
-   19 pow: trigonometric_op OPEN arithmetic_exp CLOSE •
+   22 pow: trigonometric_op OPEN arithmetic_exp CLOSE •
 
-    $default  reduce usando la regla 19 (pow)
+    $default  reduce usando la regla 22 (pow)

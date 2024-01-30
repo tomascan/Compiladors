@@ -2,7 +2,15 @@
 %{
     #include "syntax.tab.h"
     #include "symtab.h"
+    #include <string.h> 
+    char* modo_formato = "decimal";
 %}
+
+%{
+#define PI 3.14159265358979323846
+#define E 2.7818281828459045
+%}
+
 
 %x COMMENTARY
 
@@ -15,10 +23,9 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 
 %%
 
-
 "\n"                    return INTRO; 
 ":="                    return ASIGN; 
-"("                    	return OPEN;
+"("                     return OPEN;
 ")"                     return CLOSE;
 "+"                     { yylval.var.type = STRING; yylval.var.string = strdup(yytext); return ADD; }
 "-"                     { yylval.var.type = STRING; yylval.var.string = strdup(yytext); return SUB; }
@@ -40,14 +47,21 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 "not"                   return NOT;
 "and"                   return AND;
 "or"                    return OR;
+"decimal"               { modo_formato = "decimal"; return DEC_MODE; } 
+"octal"                 { modo_formato = "octal"; return OCT_MODE; }   
+"hexagesimal"           { modo_formato = "hexagesimal"; return HEX_MODE; } 
 {sep}                   
 {commentary}            
 "/*"                    { BEGIN(COMMENTARY); }
 <COMMENTARY>"*/\n" { BEGIN(INITIAL); }
 <COMMENTARY>"\n"
 <COMMENTARY>.
+
 {int}                   { yylval.var.type = INT; yylval.var.integer = atoi(yytext); return VAR; }
+"PI" 			{ yylval.var.type = FLOAT; yylval.var.real = PI; return VAR; }
+"E" 			{ yylval.var.type = FLOAT; yylval.var.real = E; return VAR; }
 {float}                 { yylval.var.type = FLOAT; yylval.var.real = atof(yytext); return VAR; }
+
 {string}                { 	yylval.var.type = STRING; 
 				yylval.var.string = (char*)malloc(yyleng-2); 
 				strncpy(yylval.var.string, yytext+1, yyleng-2); 
@@ -55,10 +69,10 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 			}
 {identifier}            { 	yylval.var.type = STRING; 
 				yylval.var.string = strdup(yytext);
-				estructura v;
-    				if(sym_lookup(yylval.var.string, &v) == SYMTAB_NOT_FOUND) 
+				estructura s;
+    				if(sym_lookup(yylval.var.string, &s) == SYMTAB_NOT_FOUND) 
     					return ARITHMETIC_ID; 
-    				if (v.type == BOOLEAN) 
+    				if (s.type == BOOLEAN) 
     					return BOOLEAN_ID;
     				else 
     					return ARITHMETIC_ID; 
@@ -67,3 +81,4 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 				yyterminate(); 
 			}
 %%
+
