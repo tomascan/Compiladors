@@ -71,25 +71,26 @@ extern int yydebug;
     DEC_MODE = 266,                /* DEC_MODE  */
     OCT_MODE = 267,                /* OCT_MODE  */
     HEX_MODE = 268,                /* HEX_MODE  */
-    ADD = 269,                     /* ADD  */
-    SUB = 270,                     /* SUB  */
-    MUL = 271,                     /* MUL  */
-    DIV = 272,                     /* DIV  */
-    POW = 273,                     /* POW  */
-    MOD = 274,                     /* MOD  */
-    GT = 275,                      /* GT  */
-    LT = 276,                      /* LT  */
-    GE = 277,                      /* GE  */
-    LE = 278,                      /* LE  */
-    EQ = 279,                      /* EQ  */
-    NE = 280,                      /* NE  */
-    VAR = 281,                     /* VAR  */
-    BOOLEAN_ID = 282,              /* BOOLEAN_ID  */
-    ARITHMETIC_ID = 283,           /* ARITHMETIC_ID  */
-    INTRO = 284,                   /* INTRO  */
-    COS = 285,                     /* COS  */
-    SIN = 286,                     /* SIN  */
-    TAN = 287                      /* TAN  */
+    STRLEN = 269,                  /* STRLEN  */
+    ADD = 270,                     /* ADD  */
+    SUB = 271,                     /* SUB  */
+    MUL = 272,                     /* MUL  */
+    DIV = 273,                     /* DIV  */
+    POW = 274,                     /* POW  */
+    MOD = 275,                     /* MOD  */
+    GT = 276,                      /* GT  */
+    LT = 277,                      /* LT  */
+    GE = 278,                      /* GE  */
+    LE = 279,                      /* LE  */
+    EQ = 280,                      /* EQ  */
+    NE = 281,                      /* NE  */
+    VAR = 282,                     /* VAR  */
+    BOOLEAN_ID = 283,              /* BOOLEAN_ID  */
+    ARITHMETIC_ID = 284,           /* ARITHMETIC_ID  */
+    INTRO = 285,                   /* INTRO  */
+    COS = 286,                     /* COS  */
+    SIN = 287,                     /* SIN  */
+    TAN = 288                      /* TAN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -102,7 +103,7 @@ union YYSTYPE
 
     estructura var;
 
-#line 106 "syntax.tab.h"
+#line 107 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

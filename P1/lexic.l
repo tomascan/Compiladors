@@ -47,6 +47,7 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 "not"                   return NOT;
 "and"                   return AND;
 "or"                    return OR;
+"strlen" 		return  STRLEN;
 "decimal"               { modo_formato = "decimal"; return DEC_MODE; } 
 "octal"                 { modo_formato = "octal"; return OCT_MODE; }   
 "hexagesimal"           { modo_formato = "hexagesimal"; return HEX_MODE; } 

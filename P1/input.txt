@@ -1,8 +1,11 @@
 // assignacions
+PI
 a:=PI
 b:=E
 a+b
 z:="Esto es una prueba de strlen"
+strlen(z)
+strlen("Hola que tal")
 "OCTAL"
 octal
 6+10

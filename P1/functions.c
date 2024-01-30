@@ -234,16 +234,6 @@ void cambiar_modo_formato(const char* modo) {
     modo_formato = strdup(modo);
 }
 
-estructura strlen_function(estructura str) {
-    if (str.type != STRING) {
-        fprintf(stderr, "ERROR: strlen() solo se puede aplicar a cadenas de caracteres.\n");
-        exit(EXIT_FAILURE);
-    }
-    estructura result;
-    result.type = INT;
-    result.integer = strlen(str.string);
-    return result;
-}
 
 
 void print_result(estructura s) {

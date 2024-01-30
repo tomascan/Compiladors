@@ -20,9 +20,9 @@ extern int yylex();
     estructura var;
 }
 
-%token ASIGN OPEN CLOSE TTRUE TFALSE AND OR NOT DEC_MODE OCT_MODE HEX_MODE
+%token ASIGN OPEN CLOSE TTRUE TFALSE AND OR NOT DEC_MODE OCT_MODE HEX_MODE STRLEN
 %token <var> ADD SUB MUL DIV POW MOD GT LT GE LE EQ NE VAR BOOLEAN_ID ARITHMETIC_ID INTRO COS SIN TAN
-%type <var> expression arithmetic_op1 arithmetic_op2 boolean_op arithmetic_exp boolean_exp trigonometric_op sum mul pow and not top_bool instructions instruction
+%type <var> expression arithmetic_op1 arithmetic_op2 boolean_op arithmetic_exp boolean_exp strlen_exp trigonometric_op sum mul pow and not top_bool instructions instruction
 
 %start instructions
 
@@ -44,6 +44,7 @@ instruction:
 expression: 
     arithmetic_exp 
     | boolean_exp 
+    | strlen_exp
 ;
 
 arithmetic_exp: 
@@ -88,6 +89,23 @@ top_bool: arithmetic_exp boolean_op arithmetic_exp  	{ $$ = check_boolean($1, $2
     | OPEN boolean_exp CLOSE                 		{ $$ = $2; }
     | BOOLEAN_ID                            		{ if(sym_lookup($1.string, &$$) == SYMTAB_NOT_FOUND) yyerror("Identifier does not exist"); }
 ;
+
+strlen_exp:
+    STRLEN OPEN ARITHMETIC_ID CLOSE {
+       					 estructura s;
+        				if(sym_lookup($3.string, &s) == SYMTAB_NOT_FOUND)
+          					  yyerror("Identifier does not exist");
+        				if (s.type != STRING)
+            					yyerror("strlen requires a string");
+        				$$.integer = strlen(s.string);
+       					$$.type = INT;
+   				    }
+    | STRLEN OPEN VAR CLOSE {
+        $$.integer = strlen($3.string);
+        $$.type = INT;
+    }			    
+;
+
 
 arithmetic_op1: ADD | SUB;                                
 
