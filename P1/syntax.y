@@ -140,13 +140,22 @@ array_declaration:
     
 array_assignment:
     ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression { assignArrayElement($1.string, $3.integer, $6);}
+        | ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN expression {
+        estructura indexValue;
+        if (sym_lookup($3.string, &indexValue) == SYMTAB_NOT_FOUND) {
+            yyerror("Variable de índice no encontrada en la tabla de símbolos");
+        } else if (indexValue.type != INT) {
+            yyerror("Variable de índice debe ser de tipo INT");
+        } else {
+            assignArrayElement($1.string, indexValue.integer, $6);
+        }
+    }
     ;
 
 array_access:
     ARRAY_ID LBRACKET VAR RBRACKET {int value = accessArrayElement($1.string, $3.integer);
         printf("Array Access: ID=%s, Index=%d, Value=%d\n", $1.string, $3.integer, value); }
     ;
-
 
 
 arithmetic_op1: ADD | SUB;                                

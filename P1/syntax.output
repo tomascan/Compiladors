@@ -58,33 +58,34 @@ Gramática
    41 array_declaration: ARITHMETIC_ID ASIGN LBRACKET VAR RBRACKET
 
    42 array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression
+   43                 | ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN expression
 
-   43 array_access: ARRAY_ID LBRACKET VAR RBRACKET
+   44 array_access: ARRAY_ID LBRACKET VAR RBRACKET
 
-   44 arithmetic_op1: ADD
-   45               | SUB
+   45 arithmetic_op1: ADD
+   46               | SUB
 
-   46 arithmetic_op2: MUL
-   47               | DIV
-   48               | MOD
+   47 arithmetic_op2: MUL
+   48               | DIV
+   49               | MOD
 
-   49 trigonometric_op: SIN
-   50                 | COS
-   51                 | TAN
+   50 trigonometric_op: SIN
+   51                 | COS
+   52                 | TAN
 
-   52 boolean_op: GT
-   53           | LT
-   54           | GE
-   55           | LE
-   56           | EQ
-   57           | NE
+   53 boolean_op: GT
+   54           | LT
+   55           | GE
+   56           | LE
+   57           | EQ
+   58           | NE
 
 
 Terminales con las reglas donde aparecen
 
     $end (0) 0
     error (256)
-    ASIGN (258) 3 41 42
+    ASIGN (258) 3 41 42 43
     OPEN (259) 22 23 33 35 36
     CLOSE (260) 22 23 33 35 36
     TTRUE (261) 31
@@ -96,28 +97,28 @@ Terminales con las reglas donde aparecen
     OCT_MODE (267) 6
     HEX_MODE (268) 7
     STRLEN (269) 35 36
-    LBRACKET (270) 41 42 43
-    RBRACKET (271) 41 42 43
-    ADD <var> (272) 44
-    SUB <var> (273) 15 16 45
-    MUL <var> (274) 46
-    DIV <var> (275) 47
+    LBRACKET (270) 41 42 43 44
+    RBRACKET (271) 41 42 43 44
+    ADD <var> (272) 45
+    SUB <var> (273) 15 16 46
+    MUL <var> (274) 47
+    DIV <var> (275) 48
     POW <var> (276) 18
-    MOD <var> (277) 48
-    GT <var> (278) 52
-    LT <var> (279) 53
-    GE <var> (280) 54
-    LE <var> (281) 55
-    EQ <var> (282) 56
-    NE <var> (283) 57
-    VAR <var> (284) 15 21 36 41 42 43
+    MOD <var> (277) 49
+    GT <var> (278) 53
+    LT <var> (279) 54
+    GE <var> (280) 55
+    LE <var> (281) 56
+    EQ <var> (282) 57
+    NE <var> (283) 58
+    VAR <var> (284) 15 21 36 41 42 44
     BOOLEAN_ID <var> (285) 34
-    ARITHMETIC_ID <var> (286) 3 16 20 35 41
-    ARRAY_ID <var> (287) 40 42 43
+    ARITHMETIC_ID <var> (286) 3 16 20 35 41 43
+    ARRAY_ID <var> (287) 40 42 43 44
     INTRO <var> (288) 3 4 5 6 7 8
-    COS <var> (289) 50
-    SIN <var> (290) 49
-    TAN <var> (291) 51
+    COS <var> (289) 51
+    SIN <var> (290) 50
+    TAN <var> (291) 52
 
 
 No terminales con las reglas donde aparecen
@@ -132,7 +133,7 @@ No terminales con las reglas donde aparecen
         on right: 1 2
     expression <var> (40)
         on left: 9 10 11
-        on right: 3 4 42
+        on right: 3 4 42 43
     arithmetic_exp <var> (41)
         on left: 12 13
         on right: 9 12 22 23 30
@@ -167,22 +168,22 @@ No terminales con las reglas donde aparecen
         on left: 41
         on right: 37
     array_assignment <var> (52)
-        on left: 42
+        on left: 42 43
         on right: 39
     array_access <var> (53)
-        on left: 43
+        on left: 44
         on right: 38
     arithmetic_op1 <var> (54)
-        on left: 44 45
+        on left: 45 46
         on right: 12
     arithmetic_op2 <var> (55)
-        on left: 46 47 48
+        on left: 47 48 49
         on right: 14
     trigonometric_op <var> (56)
-        on left: 49 50 51
+        on left: 50 51 52
         on right: 23
     boolean_op <var> (57)
-        on left: 52 53 54 55 56 57
+        on left: 53 54 55 56 57 58
         on right: 30
 
 
@@ -358,7 +359,8 @@ Estado 13
 
    40 array_exp: ARRAY_ID •
    42 array_assignment: ARRAY_ID • LBRACKET VAR RBRACKET ASIGN expression
-   43 array_access: ARRAY_ID • LBRACKET VAR RBRACKET
+   43                 | ARRAY_ID • LBRACKET ARITHMETIC_ID RBRACKET ASIGN expression
+   44 array_access: ARRAY_ID • LBRACKET VAR RBRACKET
 
     LBRACKET  desplazar e ir al estado 46
 
@@ -367,23 +369,23 @@ Estado 13
 
 Estado 14
 
-   50 trigonometric_op: COS •
+   51 trigonometric_op: COS •
 
-    $default  reduce usando la regla 50 (trigonometric_op)
+    $default  reduce usando la regla 51 (trigonometric_op)
 
 
 Estado 15
 
-   49 trigonometric_op: SIN •
+   50 trigonometric_op: SIN •
 
-    $default  reduce usando la regla 49 (trigonometric_op)
+    $default  reduce usando la regla 50 (trigonometric_op)
 
 
 Estado 16
 
-   51 trigonometric_op: TAN •
+   52 trigonometric_op: TAN •
 
-    $default  reduce usando la regla 51 (trigonometric_op)
+    $default  reduce usando la regla 52 (trigonometric_op)
 
 
 Estado 17
@@ -709,9 +711,11 @@ Estado 45
 Estado 46
 
    42 array_assignment: ARRAY_ID LBRACKET • VAR RBRACKET ASIGN expression
-   43 array_access: ARRAY_ID LBRACKET • VAR RBRACKET
+   43                 | ARRAY_ID LBRACKET • ARITHMETIC_ID RBRACKET ASIGN expression
+   44 array_access: ARRAY_ID LBRACKET • VAR RBRACKET
 
-    VAR  desplazar e ir al estado 75
+    VAR            desplazar e ir al estado 75
+    ARITHMETIC_ID  desplazar e ir al estado 76
 
 
 Estado 47
@@ -737,65 +741,65 @@ Estado 49
 
 Estado 50
 
-   44 arithmetic_op1: ADD •
-
-    $default  reduce usando la regla 44 (arithmetic_op1)
-
-
-Estado 51
-
-   45 arithmetic_op1: SUB •
+   45 arithmetic_op1: ADD •
 
     $default  reduce usando la regla 45 (arithmetic_op1)
 
 
+Estado 51
+
+   46 arithmetic_op1: SUB •
+
+    $default  reduce usando la regla 46 (arithmetic_op1)
+
+
 Estado 52
 
-   52 boolean_op: GT •
-
-    $default  reduce usando la regla 52 (boolean_op)
-
-
-Estado 53
-
-   53 boolean_op: LT •
+   53 boolean_op: GT •
 
     $default  reduce usando la regla 53 (boolean_op)
 
 
-Estado 54
+Estado 53
 
-   54 boolean_op: GE •
+   54 boolean_op: LT •
 
     $default  reduce usando la regla 54 (boolean_op)
 
 
-Estado 55
+Estado 54
 
-   55 boolean_op: LE •
+   55 boolean_op: GE •
 
     $default  reduce usando la regla 55 (boolean_op)
 
 
-Estado 56
+Estado 55
 
-   56 boolean_op: EQ •
+   56 boolean_op: LE •
 
     $default  reduce usando la regla 56 (boolean_op)
 
 
-Estado 57
+Estado 56
 
-   57 boolean_op: NE •
+   57 boolean_op: EQ •
 
     $default  reduce usando la regla 57 (boolean_op)
+
+
+Estado 57
+
+   58 boolean_op: NE •
+
+    $default  reduce usando la regla 58 (boolean_op)
 
 
 Estado 58
 
    12 arithmetic_exp: arithmetic_exp arithmetic_op1 • sum
 
-    OPEN           desplazar e ir al estado 76
+    OPEN           desplazar e ir al estado 77
     SUB            desplazar e ir al estado 9
     VAR            desplazar e ir al estado 10
     ARITHMETIC_ID  desplazar e ir al estado 34
@@ -803,7 +807,7 @@ Estado 58
     SIN            desplazar e ir al estado 15
     TAN            desplazar e ir al estado 16
 
-    sum               ir al estado 77
+    sum               ir al estado 78
     mul               ir al estado 22
     pow               ir al estado 23
     trigonometric_op  ir al estado 33
@@ -813,7 +817,7 @@ Estado 59
 
    30 top_bool: arithmetic_exp boolean_op • arithmetic_exp
 
-    OPEN           desplazar e ir al estado 76
+    OPEN           desplazar e ir al estado 77
     SUB            desplazar e ir al estado 9
     VAR            desplazar e ir al estado 10
     ARITHMETIC_ID  desplazar e ir al estado 34
@@ -821,7 +825,7 @@ Estado 59
     SIN            desplazar e ir al estado 15
     TAN            desplazar e ir al estado 16
 
-    arithmetic_exp    ir al estado 78
+    arithmetic_exp    ir al estado 79
     sum               ir al estado 21
     mul               ir al estado 22
     pow               ir al estado 23
@@ -830,37 +834,37 @@ Estado 59
 
 Estado 60
 
-   46 arithmetic_op2: MUL •
-
-    $default  reduce usando la regla 46 (arithmetic_op2)
-
-
-Estado 61
-
-   47 arithmetic_op2: DIV •
+   47 arithmetic_op2: MUL •
 
     $default  reduce usando la regla 47 (arithmetic_op2)
 
 
-Estado 62
+Estado 61
 
-   48 arithmetic_op2: MOD •
+   48 arithmetic_op2: DIV •
 
     $default  reduce usando la regla 48 (arithmetic_op2)
+
+
+Estado 62
+
+   49 arithmetic_op2: MOD •
+
+    $default  reduce usando la regla 49 (arithmetic_op2)
 
 
 Estado 63
 
    14 sum: sum arithmetic_op2 • mul
 
-    OPEN           desplazar e ir al estado 76
+    OPEN           desplazar e ir al estado 77
     VAR            desplazar e ir al estado 10
     ARITHMETIC_ID  desplazar e ir al estado 34
     COS            desplazar e ir al estado 14
     SIN            desplazar e ir al estado 15
     TAN            desplazar e ir al estado 16
 
-    mul               ir al estado 79
+    mul               ir al estado 80
     pow               ir al estado 23
     trigonometric_op  ir al estado 33
 
@@ -869,14 +873,14 @@ Estado 64
 
    18 mul: mul POW • pow
 
-    OPEN           desplazar e ir al estado 76
+    OPEN           desplazar e ir al estado 77
     VAR            desplazar e ir al estado 10
     ARITHMETIC_ID  desplazar e ir al estado 34
     COS            desplazar e ir al estado 14
     SIN            desplazar e ir al estado 15
     TAN            desplazar e ir al estado 16
 
-    pow               ir al estado 80
+    pow               ir al estado 81
     trigonometric_op  ir al estado 33
 
 
@@ -900,7 +904,7 @@ Estado 65
     sum               ir al estado 21
     mul               ir al estado 22
     pow               ir al estado 23
-    and               ir al estado 81
+    and               ir al estado 82
     not               ir al estado 26
     top_bool          ir al estado 27
     trigonometric_op  ir al estado 33
@@ -926,7 +930,7 @@ Estado 66
     sum               ir al estado 21
     mul               ir al estado 22
     pow               ir al estado 23
-    not               ir al estado 82
+    not               ir al estado 83
     top_bool          ir al estado 27
     trigonometric_op  ir al estado 33
 
@@ -942,7 +946,7 @@ Estado 68
 
    23 pow: trigonometric_op OPEN • arithmetic_exp CLOSE
 
-    OPEN           desplazar e ir al estado 76
+    OPEN           desplazar e ir al estado 77
     SUB            desplazar e ir al estado 9
     VAR            desplazar e ir al estado 10
     ARITHMETIC_ID  desplazar e ir al estado 34
@@ -950,7 +954,7 @@ Estado 68
     SIN            desplazar e ir al estado 15
     TAN            desplazar e ir al estado 16
 
-    arithmetic_exp    ir al estado 83
+    arithmetic_exp    ir al estado 84
     sum               ir al estado 21
     mul               ir al estado 22
     pow               ir al estado 23
@@ -975,43 +979,50 @@ Estado 71
 
    36 strlen_exp: STRLEN OPEN VAR • CLOSE
 
-    CLOSE  desplazar e ir al estado 84
+    CLOSE  desplazar e ir al estado 85
 
 
 Estado 72
 
    35 strlen_exp: STRLEN OPEN ARITHMETIC_ID • CLOSE
 
-    CLOSE  desplazar e ir al estado 85
+    CLOSE  desplazar e ir al estado 86
 
 
 Estado 73
 
    41 array_declaration: ARITHMETIC_ID ASIGN LBRACKET • VAR RBRACKET
 
-    VAR  desplazar e ir al estado 86
+    VAR  desplazar e ir al estado 87
 
 
 Estado 74
 
     3 instruction: ARITHMETIC_ID ASIGN expression • INTRO
 
-    INTRO  desplazar e ir al estado 87
+    INTRO  desplazar e ir al estado 88
 
 
 Estado 75
 
    42 array_assignment: ARRAY_ID LBRACKET VAR • RBRACKET ASIGN expression
-   43 array_access: ARRAY_ID LBRACKET VAR • RBRACKET
+   44 array_access: ARRAY_ID LBRACKET VAR • RBRACKET
 
-    RBRACKET  desplazar e ir al estado 88
+    RBRACKET  desplazar e ir al estado 89
 
 
 Estado 76
 
+   43 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID • RBRACKET ASIGN expression
+
+    RBRACKET  desplazar e ir al estado 90
+
+
+Estado 77
+
    22 pow: OPEN • arithmetic_exp CLOSE
 
-    OPEN           desplazar e ir al estado 76
+    OPEN           desplazar e ir al estado 77
     SUB            desplazar e ir al estado 9
     VAR            desplazar e ir al estado 10
     ARITHMETIC_ID  desplazar e ir al estado 34
@@ -1019,14 +1030,14 @@ Estado 76
     SIN            desplazar e ir al estado 15
     TAN            desplazar e ir al estado 16
 
-    arithmetic_exp    ir al estado 89
+    arithmetic_exp    ir al estado 91
     sum               ir al estado 21
     mul               ir al estado 22
     pow               ir al estado 23
     trigonometric_op  ir al estado 33
 
 
-Estado 77
+Estado 78
 
    12 arithmetic_exp: arithmetic_exp arithmetic_op1 sum •
    14 sum: sum • arithmetic_op2 mul
@@ -1040,7 +1051,7 @@ Estado 77
     arithmetic_op2  ir al estado 63
 
 
-Estado 78
+Estado 79
 
    12 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
    30 top_bool: arithmetic_exp boolean_op arithmetic_exp •
@@ -1053,7 +1064,7 @@ Estado 78
     arithmetic_op1  ir al estado 58
 
 
-Estado 79
+Estado 80
 
    14 sum: sum arithmetic_op2 mul •
    18 mul: mul • POW pow
@@ -1063,14 +1074,14 @@ Estado 79
     $default  reduce usando la regla 14 (sum)
 
 
-Estado 80
+Estado 81
 
    18 mul: mul POW pow •
 
     $default  reduce usando la regla 18 (mul)
 
 
-Estado 81
+Estado 82
 
    24 boolean_exp: boolean_exp OR and •
    26 and: and • AND not
@@ -1080,64 +1091,71 @@ Estado 81
     $default  reduce usando la regla 24 (boolean_exp)
 
 
-Estado 82
+Estado 83
 
    26 and: and AND not •
 
     $default  reduce usando la regla 26 (and)
 
 
-Estado 83
+Estado 84
 
    12 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
    23 pow: trigonometric_op OPEN arithmetic_exp • CLOSE
 
-    CLOSE  desplazar e ir al estado 90
+    CLOSE  desplazar e ir al estado 92
     ADD    desplazar e ir al estado 50
     SUB    desplazar e ir al estado 51
 
     arithmetic_op1  ir al estado 58
 
 
-Estado 84
+Estado 85
 
    36 strlen_exp: STRLEN OPEN VAR CLOSE •
 
     $default  reduce usando la regla 36 (strlen_exp)
 
 
-Estado 85
+Estado 86
 
    35 strlen_exp: STRLEN OPEN ARITHMETIC_ID CLOSE •
 
     $default  reduce usando la regla 35 (strlen_exp)
 
 
-Estado 86
+Estado 87
 
    41 array_declaration: ARITHMETIC_ID ASIGN LBRACKET VAR • RBRACKET
 
-    RBRACKET  desplazar e ir al estado 91
+    RBRACKET  desplazar e ir al estado 93
 
 
-Estado 87
+Estado 88
 
     3 instruction: ARITHMETIC_ID ASIGN expression INTRO •
 
     $default  reduce usando la regla 3 (instruction)
 
 
-Estado 88
+Estado 89
 
    42 array_assignment: ARRAY_ID LBRACKET VAR RBRACKET • ASIGN expression
-   43 array_access: ARRAY_ID LBRACKET VAR RBRACKET •
+   44 array_access: ARRAY_ID LBRACKET VAR RBRACKET •
 
-    ASIGN  desplazar e ir al estado 92
+    ASIGN  desplazar e ir al estado 94
 
-    $default  reduce usando la regla 43 (array_access)
+    $default  reduce usando la regla 44 (array_access)
 
 
-Estado 89
+Estado 90
+
+   43 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET • ASIGN expression
+
+    ASIGN  desplazar e ir al estado 95
+
+
+Estado 91
 
    12 arithmetic_exp: arithmetic_exp • arithmetic_op1 sum
    22 pow: OPEN arithmetic_exp • CLOSE
@@ -1149,21 +1167,21 @@ Estado 89
     arithmetic_op1  ir al estado 58
 
 
-Estado 90
+Estado 92
 
    23 pow: trigonometric_op OPEN arithmetic_exp CLOSE •
 
     $default  reduce usando la regla 23 (pow)
 
 
-Estado 91
+Estado 93
 
    41 array_declaration: ARITHMETIC_ID ASIGN LBRACKET VAR RBRACKET •
 
     $default  reduce usando la regla 41 (array_declaration)
 
 
-Estado 92
+Estado 94
 
    42 array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN • expression
 
@@ -1180,7 +1198,7 @@ Estado 92
     SIN            desplazar e ir al estado 15
     TAN            desplazar e ir al estado 16
 
-    expression        ir al estado 93
+    expression        ir al estado 96
     arithmetic_exp    ir al estado 20
     sum               ir al estado 21
     mul               ir al estado 22
@@ -1193,8 +1211,45 @@ Estado 92
     trigonometric_op  ir al estado 33
 
 
-Estado 93
+Estado 95
+
+   43 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN • expression
+
+    OPEN           desplazar e ir al estado 1
+    TTRUE          desplazar e ir al estado 2
+    TFALSE         desplazar e ir al estado 3
+    NOT            desplazar e ir al estado 4
+    STRLEN         desplazar e ir al estado 8
+    SUB            desplazar e ir al estado 9
+    VAR            desplazar e ir al estado 10
+    BOOLEAN_ID     desplazar e ir al estado 11
+    ARITHMETIC_ID  desplazar e ir al estado 34
+    COS            desplazar e ir al estado 14
+    SIN            desplazar e ir al estado 15
+    TAN            desplazar e ir al estado 16
+
+    expression        ir al estado 97
+    arithmetic_exp    ir al estado 20
+    sum               ir al estado 21
+    mul               ir al estado 22
+    pow               ir al estado 23
+    boolean_exp       ir al estado 24
+    and               ir al estado 25
+    not               ir al estado 26
+    top_bool          ir al estado 27
+    strlen_exp        ir al estado 28
+    trigonometric_op  ir al estado 33
+
+
+Estado 96
 
    42 array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression •
 
     $default  reduce usando la regla 42 (array_assignment)
+
+
+Estado 97
+
+   43 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN expression •
+
+    $default  reduce usando la regla 43 (array_assignment)

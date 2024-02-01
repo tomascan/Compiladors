@@ -1,8 +1,34 @@
 // assignacions
+a:=[ 10 ]
+a[ 1 ] := 1
+a[ 2 ] := 2
+a[ 3 ] := "hola"
+a[ 4 ] := true
+a[ 5 ] := strlen("Compiladors")
+a[ 6 ] := 6
+a[ 7 ] := 7
+a[ 8 ] := 8
+a[ 9 ] := sin(90)
+a
+on:=1 
+a[ on ] := 9
+on:=2
+a [ on ] := 8
+on:=3
+a[ on ] := 7
+on:=4
+a [ on ] := 6
+on:=5
+a[ on ] := 5
+on:=6
+a [ on ] := 4
+a
 PI
-a:=PI
+c:=PI
 b:=E
-a+b
+c+b
+c:=23
+c:="Comp"
 z:="Esto es una prueba de strlen"
 strlen(z)
 strlen("Hola que tal")
@@ -69,16 +95,4 @@ cadena2:="Juan"
 cadena + cadena2 + xd + i
 z := (( 3 * 5 ) <= ( 7 mod 3))
 j or not z and (2 ** 5 == 32)
-a:=[ 10 ]
-a[ 1 ] := 1
-a[ 2 ] := 2.5
-a[ 3 ] := "hola"
-a[ 4 ] := true
-a[ 5 ] := 5
-a[ 6 ] := 6
-a[ 7 ] := 7
-a[ 8 ] := 8
-a[ 9 ] := sin(90)
-a[ 4 ]
-a
 password:="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"
