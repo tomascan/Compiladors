@@ -11,6 +11,7 @@
 
 
 extern char* modo_formato;
+void yyerror(const char *err);
 
 // Declaraciones de las funciones
 estructura sumar(estructura op1, estructura op2);
@@ -24,6 +25,10 @@ estructura trigonometric_op(estructura value, estructura op);
 estructura check_boolean(estructura op1, estructura operador, estructura op2);
 estructura negate(estructura value);
 void cambiar_modo_formato(const char* modo);
+void initializeArray(const char* arrayName, int size);
+void assignArrayElement(const char* arrayName, int index, int value, type valueType);
+void printArray(const char* arrayName);
+int accessArrayElement(const char* arrayName, int index);
 void print_result(estructura s);
 
 #endif // FUNCTIONS_H

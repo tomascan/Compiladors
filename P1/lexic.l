@@ -27,6 +27,8 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 ":="                    return ASIGN; 
 "("                     return OPEN;
 ")"                     return CLOSE;
+"["			return LBRACKET;
+"]"			return RBRACKET;
 "+"                     { yylval.var.type = STRING; yylval.var.string = strdup(yytext); return ADD; }
 "-"                     { yylval.var.type = STRING; yylval.var.string = strdup(yytext); return SUB; }
 "*"                     { yylval.var.type = STRING; yylval.var.string = strdup(yytext); return MUL; }
@@ -68,16 +70,23 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 				strncpy(yylval.var.string, yytext+1, yyleng-2); 
 				return VAR; 
 			}
-{identifier}            { 	yylval.var.type = STRING; 
-				yylval.var.string = strdup(yytext);
-				estructura s;
-    				if(sym_lookup(yylval.var.string, &s) == SYMTAB_NOT_FOUND) 
-    					return ARITHMETIC_ID; 
-    				if (s.type == BOOLEAN) 
-    					return BOOLEAN_ID;
-    				else 
-    					return ARITHMETIC_ID; 
-    			}
+{identifier} { 	
+    yylval.var.string = strdup(yytext);
+    estructura s;
+    if(sym_lookup(yylval.var.string, &s) != SYMTAB_NOT_FOUND) {
+        switch (s.type) {
+            case ARRAY:
+                return ARRAY_ID;
+            case BOOLEAN:
+                return BOOLEAN_ID;
+            default:
+                return ARITHMETIC_ID;
+        }
+    } else {
+        return ARITHMETIC_ID;
+    }
+}
+
 .                       { 	printf("[ERROR] Input %s not accepted.\n", yytext); 
 				yyterminate(); 
 			}

@@ -5,3 +5,20 @@ Potencia sigue --> x ** 2
 La prioridad es correcta, Potencia > Mult | Division | Modulo > Suma | Resta 
 
 Bool --> 3 == 3 
+
+
+IMPLEMENTACION DE ARRAYS 
+
+a:= [ 2 ] //Escribir con espacios 
+a[ 2 ]:= 1 //Asignar valor en una posicion 
+a[ 2 ] //Devuelve valor en la posicion 
+a //Deberia devolver tipo Array y tamaño del Array 
+//De momento solo funciona con enteros, deberia poder aceptar cualquier cosa
+//Con esto ya se puede implementar el Repeat de la practica 2 con Arrays. 
+
+    
+array_assignment:
+    ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression {
+    
+Vigilar esta expresion, cambiar parametros de la funcion para poder añadir distintos tipos, VAR siempre tiene que ser int, pero expression puede ser cualquier cosa que quieras añadir al array. 
+No rayarse mucho con esto, no es necesario para poder trabajar con los arrays. En P2 añadir int o float al array. 

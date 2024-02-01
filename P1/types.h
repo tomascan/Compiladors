@@ -8,7 +8,8 @@ typedef enum
 	INT,
 	FLOAT,
 	STRING,
-	BOOLEAN
+	BOOLEAN,
+	ARRAY
 }type;
 
 typedef struct{
@@ -17,6 +18,8 @@ typedef struct{
     float real;
     bool boolean;
     type type;
+    int arraySize;
+    void *array;
 } estructura;
 
 #endif /* TYPES_H */

@@ -20,9 +20,9 @@ extern int yylex();
     estructura var;
 }
 
-%token ASIGN OPEN CLOSE TTRUE TFALSE AND OR NOT DEC_MODE OCT_MODE HEX_MODE STRLEN
-%token <var> ADD SUB MUL DIV POW MOD GT LT GE LE EQ NE VAR BOOLEAN_ID ARITHMETIC_ID INTRO COS SIN TAN
-%type <var> expression arithmetic_op1 arithmetic_op2 boolean_op arithmetic_exp boolean_exp strlen_exp trigonometric_op sum mul pow and not top_bool instructions instruction
+%token ASIGN OPEN CLOSE TTRUE TFALSE AND OR NOT DEC_MODE OCT_MODE HEX_MODE STRLEN LBRACKET RBRACKET
+%token <var> ADD SUB MUL DIV POW MOD GT LT GE LE EQ NE VAR BOOLEAN_ID ARITHMETIC_ID ARRAY_ID INTRO COS SIN TAN
+%type <var> expression arithmetic_op1 arithmetic_op2 boolean_op arithmetic_exp boolean_exp strlen_exp array_exp array_declaration array_assignment array_access trigonometric_op sum mul pow and not top_bool instructions instruction
 
 %start instructions
 
@@ -33,12 +33,13 @@ instructions: instructions instruction
 ;
 
 instruction: 
-    ARITHMETIC_ID ASIGN expression INTRO { sym_enter($1.string, &$3); printf("Variable: \"%s\" - ", $1.string); print_result($3); }
-    | BOOLEAN_ID ASIGN expression INTRO   { sym_enter($1.string, &$3); printf("Var \"%s\" - ", $1.string); print_result($3); }
-    | expression INTRO                   { print_result($1); }
-    | DEC_MODE INTRO                { cambiar_modo_formato("decimal"); }
-    | OCT_MODE INTRO                  { cambiar_modo_formato("octal"); }
-    | HEX_MODE INTRO                    { cambiar_modo_formato("hexagesimal"); }
+    ARITHMETIC_ID ASIGN expression INTRO { sym_enter($1.string, &$3); printf("Var: \"%s\" - ", $1.string); print_result($3); }
+    | expression INTRO                    { print_result($1); }
+    | DEC_MODE INTRO              	  { cambiar_modo_formato("decimal"); }
+    | OCT_MODE INTRO                      { cambiar_modo_formato("octal"); }
+    | HEX_MODE INTRO                      { cambiar_modo_formato("hexagesimal"); }
+    | array_exp INTRO
+    
 ;
 
 expression: 
@@ -46,6 +47,10 @@ expression:
     | boolean_exp 
     | strlen_exp
 ;
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
 
 arithmetic_exp: 
     arithmetic_exp arithmetic_op1 sum { $$ = calculate($1, $2, $3); } 
@@ -55,7 +60,7 @@ arithmetic_exp:
 sum: 
     sum arithmetic_op2 mul { $$ = calculate($1, $2, $3); } 
     | SUB VAR             { $$ = negate($2); }
-    | SUB ARITHMETIC_ID   { estructura s; if(sym_lookup($2.string, &s) == SYMTAB_NOT_FOUND) yyerror("Identifier does not exist"); $$ = negate(s); }
+    | SUB ARITHMETIC_ID   { estructura s; if(sym_lookup($2.string, &s) == SYMTAB_NOT_FOUND) yyerror("Identifier does not exist 1"); $$ = negate(s); }
     | mul 
 ;
 
@@ -65,11 +70,15 @@ mul:
 ;
 
 pow: 
-    ARITHMETIC_ID { if(sym_lookup($1.string, &$$) == SYMTAB_NOT_FOUND) yyerror("Identifier does not exist"); }
+    ARITHMETIC_ID { if(sym_lookup($1.string, &$$) == SYMTAB_NOT_FOUND) yyerror("Identifier does not exist 2"); }
     | VAR         { $$ = $1; }
     | OPEN arithmetic_exp CLOSE { $$ = $2; }
     | trigonometric_op OPEN arithmetic_exp CLOSE { $$ = trigonometric_op($3, $1); }
 ;
+
+
+
+/////////////////////////////////////////////////////////////////////////
 
 boolean_exp: boolean_exp OR and               		{ $$.boolean = $1.boolean; $$.type = BOOLEAN; }
     | and                                   
@@ -87,14 +96,18 @@ top_bool: arithmetic_exp boolean_op arithmetic_exp  	{ $$ = check_boolean($1, $2
     | TTRUE                                  		{ $$.boolean = true; $$.type = BOOLEAN; }
     | TFALSE                                  		{ $$.boolean = false; $$.type = BOOLEAN; }
     | OPEN boolean_exp CLOSE                 		{ $$ = $2; }
-    | BOOLEAN_ID                            		{ if(sym_lookup($1.string, &$$) == SYMTAB_NOT_FOUND) yyerror("Identifier does not exist"); }
+    | BOOLEAN_ID                            		{ if(sym_lookup($1.string, &$$) == SYMTAB_NOT_FOUND) yyerror("Identifier does not exist 3"); }
 ;
+
+
+/////////////////////////////////////////////////////////////////////////////
+
 
 strlen_exp:
     STRLEN OPEN ARITHMETIC_ID CLOSE {
        					 estructura s;
         				if(sym_lookup($3.string, &s) == SYMTAB_NOT_FOUND)
-          					  yyerror("Identifier does not exist");
+          					  yyerror("Identifier does not exist 4");
         				if (s.type != STRING)
             					yyerror("strlen requires a string");
         				$$.integer = strlen(s.string);
@@ -105,6 +118,36 @@ strlen_exp:
         $$.type = INT;
     }			    
 ;
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+
+array_exp: 
+    array_declaration
+    | array_access
+    | array_assignment
+    | ARRAY_ID { printArray($1.string); }
+
+    ;
+array_declaration:
+    ARITHMETIC_ID ASIGN LBRACKET VAR RBRACKET {
+        if ($4.type != INT) { yyerror("El tamaño del array debe ser un entero");
+        } else {   initializeArray($1.string, $4.integer);
+            printf("Type: ARRAY - VAR =%s, Size=%d\n", $1.string, $4.integer);}
+    }
+    ;
+    
+array_assignment:
+    ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression { assignArrayElement($1.string, $3.integer, $6.integer, $1.type);
+        printf("Type: ARRAY - VAR=%s, Index=%d, Type=%d\n", $1.string, $3.integer, $1.type); }
+    ;
+
+array_access:
+    ARRAY_ID LBRACKET VAR RBRACKET {int value = accessArrayElement($1.string, $3.integer);
+        printf("Array Access: ID=%s, Index=%d, Value=%d\n", $1.string, $3.integer, value); }
+    ;
+
 
 
 arithmetic_op1: ADD | SUB;                                

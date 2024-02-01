@@ -224,17 +224,78 @@ estructura check_boolean(estructura op1, estructura operador, estructura op2) {
     return r;
 }
 
+
 estructura negate(estructura value) {
     if(value.type == INT) 	value.integer = -value.integer;
     if(value.type == FLOAT) 	value.real = -value.real;
     return value;
 }
 
+
 void cambiar_modo_formato(const char* modo) {
     modo_formato = strdup(modo);
 }
 
 
+void initializeArray(const char* arrayName, int size) {
+    estructura newArray;
+    newArray.type = ARRAY;
+    newArray.arraySize = size;
+    newArray.array = malloc(sizeof(estructura) * size);
+    for (int i = 0; i < size; i++) {
+        ((estructura *)newArray.array)[i].type = INT;
+        ((estructura *)newArray.array)[i].integer = 0;
+    }
+    sym_enter(arrayName, &newArray);
+}
+
+
+void assignArrayElement(const char* arrayName, int index, int value, type valueType) {
+    estructura arrayVar;
+    if (sym_lookup(arrayName, &arrayVar) != SYMTAB_NOT_FOUND && arrayVar.type == ARRAY) {
+        if (index >= 0 && index < arrayVar.arraySize) {
+            estructura *arrayElement = &(((estructura *)arrayVar.array)[index]);
+            arrayElement->integer = value;
+            arrayElement->type = valueType;
+        } else {
+            yyerror("Índice de array fuera de rango");
+        }
+    } else {
+        yyerror("Identificador no es un array o no encontrado");
+    }
+}
+
+int accessArrayElement(const char* arrayName, int index) {
+    estructura arrayVar;
+    if (sym_lookup(arrayName, &arrayVar) != SYMTAB_NOT_FOUND && arrayVar.type == ARRAY) {
+        if (index >= 0 && index < arrayVar.arraySize) {
+            estructura *element = &(((estructura *)arrayVar.array)[index]);
+            return element->integer;
+        } else {
+            yyerror("Índice de array fuera de rango");
+        }
+    } else {
+        yyerror("Identificador no es un array o no encontrado");
+    }
+    return 0; // Valor predeterminado si ocurre un error
+}
+
+
+void printArray(const char* arrayName) {
+    estructura arrayVar;
+    if (sym_lookup(arrayName, &arrayVar) != SYMTAB_NOT_FOUND && arrayVar.type == ARRAY) {
+        estructura newArray;
+        newArray.type = ARRAY;
+        newArray.arraySize = arrayVar.arraySize;
+        newArray.array = malloc(sizeof(estructura) * newArray.arraySize);
+        for (int i = 0; i < newArray.arraySize; i++) {
+            ((estructura *)newArray.array)[i] = ((estructura *)arrayVar.array)[i];
+        }
+        print_result(newArray); 
+    } else {
+        yyerror("Identifier is not an array or not found");
+    }
+}
 
 void print_result(estructura s) {
     if (s.type == INT) {
@@ -251,6 +312,14 @@ void print_result(estructura s) {
     if(s.type == BOOLEAN){
             if (s.boolean) 	printf("Type: BOOLEAN - Value: true \n"); 
             else 		printf("Type: BOOLEAN - Value: false\n"); 
+    }
+    if (s.type == ARRAY) {
+        printf("Type: ARRAY - Size: %d:\n", s.arraySize);
+        for (int i = 0; i < s.arraySize; i++) {
+            estructura element = ((estructura*)s.array)[i];
+            printf("\tElemento %d: ", i);
+            print_result(element);
+      	}
     }
 }
 
