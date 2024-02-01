@@ -139,8 +139,7 @@ array_declaration:
     ;
     
 array_assignment:
-    ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression { assignArrayElement($1.string, $3.integer, $6.integer, $1.type);
-        printf("Type: ARRAY - VAR=%s, Index=%d, Type=%d\n", $1.string, $3.integer, $1.type); }
+    ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression { assignArrayElement($1.string, $3.integer, $6);}
     ;
 
 array_access:

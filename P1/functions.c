@@ -249,14 +249,12 @@ void initializeArray(const char* arrayName, int size) {
     sym_enter(arrayName, &newArray);
 }
 
-
-void assignArrayElement(const char* arrayName, int index, int value, type valueType) {
+void assignArrayElement(const char* arrayName, int index, estructura value) {
     estructura arrayVar;
     if (sym_lookup(arrayName, &arrayVar) != SYMTAB_NOT_FOUND && arrayVar.type == ARRAY) {
         if (index >= 0 && index < arrayVar.arraySize) {
             estructura *arrayElement = &(((estructura *)arrayVar.array)[index]);
-            arrayElement->integer = value;
-            arrayElement->type = valueType;
+            *arrayElement = value;
         } else {
             yyerror("Índice de array fuera de rango");
         }

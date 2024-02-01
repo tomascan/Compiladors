@@ -560,8 +560,8 @@ static const yytype_uint8 yyrline[] =
       46,    47,    48,    56,    57,    61,    62,    63,    64,    68,
       69,    73,    74,    75,    76,    83,    84,    87,    88,    91,
       92,    95,    96,    97,    98,    99,   107,   116,   127,   128,
-     129,   130,   134,   142,   147,   153,   153,   155,   155,   155,
-     157,   157,   157,   159,   159,   159,   159,   159,   159
+     129,   130,   134,   142,   146,   152,   152,   154,   154,   154,
+     156,   156,   156,   158,   158,   158,   158,   158,   158
 };
 #endif
 
@@ -1376,20 +1376,19 @@ yyreduce:
 
   case 43: /* array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN expression  */
 #line 142 "syntax.y"
-                                                    { assignArrayElement((yyvsp[-5].var).string, (yyvsp[-3].var).integer, (yyvsp[0].var).integer, (yyvsp[-5].var).type);
-        printf("Type: ARRAY - VAR=%s, Index=%d, Type=%d\n", (yyvsp[-5].var).string, (yyvsp[-3].var).integer, (yyvsp[-5].var).type); }
-#line 1382 "syntax.tab.c"
+                                                    { assignArrayElement((yyvsp[-5].var).string, (yyvsp[-3].var).integer, (yyvsp[0].var));}
+#line 1381 "syntax.tab.c"
     break;
 
   case 44: /* array_access: ARRAY_ID LBRACKET VAR RBRACKET  */
-#line 147 "syntax.y"
+#line 146 "syntax.y"
                                    {int value = accessArrayElement((yyvsp[-3].var).string, (yyvsp[-1].var).integer);
         printf("Array Access: ID=%s, Index=%d, Value=%d\n", (yyvsp[-3].var).string, (yyvsp[-1].var).integer, value); }
-#line 1389 "syntax.tab.c"
+#line 1388 "syntax.tab.c"
     break;
 
 
-#line 1393 "syntax.tab.c"
+#line 1392 "syntax.tab.c"
 
       default: break;
     }
@@ -1582,7 +1581,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 161 "syntax.y"
+#line 160 "syntax.y"
 
 
 

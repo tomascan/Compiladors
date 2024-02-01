@@ -71,13 +71,14 @@ z := (( 3 * 5 ) <= ( 7 mod 3))
 j or not z and (2 ** 5 == 32)
 a:=[ 10 ]
 a[ 1 ] := 1
-a[ 2 ] := 2
-a[ 3 ] := 3
-a[ 4 ] := 4
+a[ 2 ] := 2.5
+a[ 3 ] := "hola"
+a[ 4 ] := true
 a[ 5 ] := 5
 a[ 6 ] := 6
 a[ 7 ] := 7
 a[ 8 ] := 8
-a[ 9 ] := 9
+a[ 9 ] := sin(90)
 a[ 4 ]
 a
+password:="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"
