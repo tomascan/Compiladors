@@ -6,7 +6,8 @@ typedef enum
 {
 	INT,
 	FLOAT,
-	STRING
+	STRING,
+	ARRAY
 }type;
 
 
@@ -23,6 +24,8 @@ typedef struct{
     float real;
     char *value;
     type tipo;
+    int arraySize;
+    void *array;
 } estructura;
 
 extern char **quads;

@@ -65,16 +65,21 @@ extern int yydebug;
     PCLOSE = 260,                  /* PCLOSE  */
     DO = 261,                      /* DO  */
     DONE = 262,                    /* DONE  */
-    ADD = 263,                     /* ADD  */
-    SUB = 264,                     /* SUB  */
-    MUL = 265,                     /* MUL  */
-    DIV = 266,                     /* DIV  */
-    POW = 267,                     /* POW  */
-    MOD = 268,                     /* MOD  */
-    VAR = 269,                     /* VAR  */
-    ARITHMETIC_ID = 270,           /* ARITHMETIC_ID  */
-    INTRO = 271,                   /* INTRO  */
-    REPEAT = 272                   /* REPEAT  */
+    LBRACKET = 263,                /* LBRACKET  */
+    RBRACKET = 264,                /* RBRACKET  */
+    TO_INT = 265,                  /* TO_INT  */
+    TO_FLOAT = 266,                /* TO_FLOAT  */
+    ADD = 267,                     /* ADD  */
+    SUB = 268,                     /* SUB  */
+    MUL = 269,                     /* MUL  */
+    DIV = 270,                     /* DIV  */
+    POW = 271,                     /* POW  */
+    MOD = 272,                     /* MOD  */
+    VAR = 273,                     /* VAR  */
+    ARITHMETIC_ID = 274,           /* ARITHMETIC_ID  */
+    ARRAY_ID = 275,                /* ARRAY_ID  */
+    INTRO = 276,                   /* INTRO  */
+    REPEAT = 277                   /* REPEAT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -87,7 +92,7 @@ union YYSTYPE
 
     estructura var;
 
-#line 91 "syntax.tab.h"
+#line 96 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

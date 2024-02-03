@@ -21,10 +21,15 @@ elif [ "$1" = "clean" ]; then
     echo "<CLEAN>"
     rm lex.yy.c syntax.tab.h syntax.tab.c syntax.output 
 
-# Si el primer parámetro es "run", ejecuta los comandos para correr el programa
-elif [ "$1" = "run" ]; then
-    echo "<CALCULATOR RUNNING>"
+# Si el primer parámetro es "run 1", ejecuta con input.txt
+elif [ "$1" = "run" ] && [ "$2" = "1" ]; then
+    echo "<CALCULATOR RUNNING with input.txt>"
     ./main.o input.txt
+
+# Si el primer parámetro es "run 2", ejecuta con input2.txt
+elif [ "$1" = "run" ] && [ "$2" = "2" ]; then
+    echo "<CALCULATOR RUNNING with input2.txt>"
+    ./main.o input2.txt
 
 # Si el primer parámetro es "valgrind", ejecuta el programa bajo Valgrind
 elif [ "$1" = "valgrind" ]; then

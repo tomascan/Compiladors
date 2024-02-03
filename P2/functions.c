@@ -4,7 +4,47 @@ char **quads;
 int next_quad;
 int next_temp;
 
-// Modified calculate function
+
+
+estructura convert_to_int(estructura var) {
+    estructura result;
+    // Assuming sym_lookup and sym_enter are correctly implemented to manage the symbol table
+    if (sym_lookup(var.string, &result) == SYMTAB_OK) {
+        // Perform the conversion
+        result.tipo = INT;
+        result.integer = (int)result.real;
+        // Update the 'value' field to reflect the new integer value
+        char buffer[20]; // Ensure the buffer is large enough
+        sprintf(buffer, "%d", result.integer);
+        free(result.value); // Free the old value string if necessary
+        result.value = strdup(buffer); // Update with the new value string
+        // Update the symbol table entry
+        sym_enter(var.string, &result);
+    }
+    return result;
+}
+
+
+estructura convert_to_float(estructura var) {
+    estructura result;
+    // Assuming sym_lookup and sym_enter are correctly implemented to manage the symbol table
+    if (sym_lookup(var.string, &result) == SYMTAB_OK) {
+        // Perform the conversion
+        result.tipo = FLOAT;
+        result.real = (float)result.integer;
+        // Update the 'value' field to reflect the new integer value
+        char buffer[20]; // Ensure the buffer is large enough
+        sprintf(buffer, "%.2f", result.real);
+        free(result.value);
+        result.value = strdup(buffer); // Update with the new value string
+        // Update the symbol table entry
+        sym_enter(var.string, &result);
+    }
+    return result;
+}
+
+
+
 estructura calculate(estructura operando1, estructura operator, estructura operando2) {
     float op1 = (operando1.tipo == INT) ? operando1.integer : operando1.real;
     float op2 = (operando2.tipo == INT) ? operando2.integer : operando2.real;
@@ -52,8 +92,6 @@ estructura calculate(estructura operando1, estructura operator, estructura opera
     return set_valor(result);
 }
 
-
-// Modified set_valor function
 estructura set_valor(estructura r) {
     char* aux;
 
@@ -76,11 +114,64 @@ estructura negate(estructura value) {
     return value;
 }
 
+
+void declare_array(char* arrayName, int elements) {
+    estructura array;
+    array.tipo = ARRAY;
+    int elementSize = sizeof(int); //El indice siempre va a ser entero
+    int totalSize = elements * elementSize;
+    array.arraySize = elements;
+    sym_enter(arrayName, &array);
+    char sizeStr[20];
+    sprintf(sizeStr, "%d", totalSize);
+    generate(5, arrayName, " := ", "ALLOC ", sizeStr, " bytes");
+    for(int i = 0; i < elements; ++i) {
+        char offsetStr[20];
+        sprintf(offsetStr, "[%d]", i * elementSize);
+        generate(5, arrayName, offsetStr, " := ", "0");
+    }
+}
+
+void assign_array(const char* arrayName, int index, char* value) {
+    estructura array_info;
+    if (sym_lookup(arrayName, &array_info) == SYMTAB_OK && array_info.tipo == ARRAY) {
+        int elementSize = sizeof(int); // Tamaño del tipo de elemento en el array (entero)
+        int offset = elementSize * index; // Calcula el desplazamiento en bytes
+        char offsetStr[20];
+        sprintf(offsetStr, "%d", offset);
+        
+        // Genera el código para asignar el valor al array en la posición calculada
+        generate(3, temporal(), " := ", value);
+        generate(5,temporal(), " := ", arrayName, "[", offsetStr, "]");
+        generate(5, arrayName, "[", offsetStr, "] := ", temporal()); //esta ok pero temp no
+    } else {
+        yyerror("Identificador no encontrado o no es un array");
+    }
+}
+
+
+void access_array(const char* arrayName, int index) {
+    estructura array_info;
+    if (sym_lookup(arrayName, &array_info) == SYMTAB_OK && array_info.tipo == ARRAY) {
+        if (index >= 0 && index < array_info.arraySize) {
+            estructura array_element = ((estructura *)array_info.array)[index];
+            put(array_element); // Llama a la función put con el valor del elemento del array
+        } else {
+            yyerror("Índice de array fuera de rango");
+        }
+    } else {
+        yyerror("Identificador no encontrado o no es un array");
+    }
+}
+
+
+
+
+
 void generate(int nargs, ...) {
     va_list ap;
     va_start(ap, nargs);
-
-    // Calculate the required buffer size
+    
     int size = 0;
     for (int i = 0; i < nargs; i++) {
         size += strlen(va_arg(ap, char*));
@@ -93,9 +184,8 @@ void generate(int nargs, ...) {
         yyerror("Error de memoria");
         return;
     }
-    quad[0] = '\0'; // Initialize the string
+    quad[0] = '\0';
 
-    // Concatenate the strings
     va_start(ap, nargs);
     for (int i = 0; i < nargs; i++) {
         strcat(quad, va_arg(ap, char*));
@@ -112,7 +202,6 @@ void generate(int nargs, ...) {
     next_quad++;
 }
 
-
 char* temporal(){
     char* var = malloc(6);
     char* numero = malloc(3);
@@ -122,7 +211,6 @@ char* temporal(){
     next_temp++;
     return var;
 }
-
 
 void put(estructura r) {
     generate(2, "PARAM ", r.value);

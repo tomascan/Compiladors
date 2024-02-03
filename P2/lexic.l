@@ -19,16 +19,19 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 ":="                    return ASIGN; 
 "("                    	return POPEN;
 ")"                     return PCLOSE;
+"["			return LBRACKET; 
+"]"			return RBRACKET;	
 "+"                     { yylval.var.tipo = STRING; yylval.var.string = strdup(yytext); return ADD; }
 "-"                     { yylval.var.tipo = STRING; yylval.var.string = strdup(yytext); return SUB; }
 "*"                     { yylval.var.tipo = STRING; yylval.var.string = strdup(yytext); return MUL; }
 "/"                     { yylval.var.tipo = STRING; yylval.var.string = strdup(yytext); return DIV; }
-"mod" 			        { yylval.var.tipo = STRING; yylval.var.string = strdup("%"); return MOD; }
+"mod" 			{ yylval.var.tipo = STRING; yylval.var.string = strdup("%"); return MOD; }
 "**"                    { yylval.var.tipo = STRING; yylval.var.string = strdup("^"); return POW; }
 "do"			return DO;
 "done"			return DONE;
 "repeat"		return REPEAT;
-               
+"to_int"     		return TO_INT;
+"to_float"   		return TO_FLOAT;
 {commentary}   		{ }         
 "/*"                    { BEGIN(COMMENTARY); }
 <COMMENTARY>"*/\n" { BEGIN(INITIAL); }
@@ -36,17 +39,21 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 <COMMENTARY>.
 {int}                   { yylval.var.tipo = INT; yylval.var.integer = atoi(yytext); return VAR; }
 {float}                 { yylval.var.tipo = FLOAT; yylval.var.real = atof(yytext); return VAR; }
+{identifier} { 	
+    yylval.var.string = strdup(yytext);
+    estructura s;
+    if(sym_lookup(yylval.var.string, &s) != SYMTAB_NOT_FOUND) {
+        switch (s.tipo) {
+            case ARRAY:
+                return ARRAY_ID;
+            default:
+                return ARITHMETIC_ID;
+        }
+    } else {
+        return ARITHMETIC_ID;
+    }
+}
 
-{identifier}            {   yylval.var.tipo = STRING; 
-                            yylval.var.string = malloc(sizeof(char) * (yyleng + 1));
-                            if (yylval.var.string == NULL) {
-                                printf("Error de memoria\n");
-                                exit(EXIT_FAILURE);
-                            }
-                            strncpy(yylval.var.string, yytext, yyleng);
-                            yylval.var.string[yyleng] = '\0'; // Agrega el carácter nulo
-                            return ARITHMETIC_ID; // Devuelve el tipo de token
-                        }
 
 .                       { 	printf("[LEXIC ERROR!] Input %s not accepted.\n", yytext); 
 				yyterminate(); 
