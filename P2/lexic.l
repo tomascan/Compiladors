@@ -30,8 +30,8 @@ identifier          [[a-zA-Z]([a-zA-Z]|[0-9])*
 "do"			return DO;
 "done"			return DONE;
 "repeat"		return REPEAT;
-"to_int"     		return TO_INT;
-"to_float"   		return TO_FLOAT;
+"int"     		return TO_INT;
+"float"   		return TO_FLOAT;
 {commentary}   		{ }         
 "/*"                    { BEGIN(COMMENTARY); }
 <COMMENTARY>"*/\n" { BEGIN(INITIAL); }

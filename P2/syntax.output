@@ -23,32 +23,33 @@ Gramática
    14                 | ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp INTRO
 
    15 array_access: ARRAY_ID LBRACKET VAR RBRACKET INTRO
+   16             | ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET INTRO
 
-   16 setup: REPEAT arithmetic_exp
+   17 setup: REPEAT arithmetic_exp
 
-   17 arithmetic_exp: arithmetic_exp arithmetic_op1 mul
-   18               | SUB VAR
-   19               | SUB ARITHMETIC_ID
-   20               | mul
-   21               | TO_INT POPEN arithmetic_exp PCLOSE
-   22               | TO_FLOAT POPEN arithmetic_exp PCLOSE
+   18 arithmetic_exp: arithmetic_exp arithmetic_op1 mul
+   19               | SUB VAR
+   20               | SUB ARITHMETIC_ID
+   21               | mul
+   22               | TO_INT POPEN arithmetic_exp PCLOSE
+   23               | TO_FLOAT POPEN arithmetic_exp PCLOSE
 
-   23 mul: mul arithmetic_op2 pow
-   24    | pow
+   24 mul: mul arithmetic_op2 pow
+   25    | pow
 
-   25 pow: pow POW basic_exp
-   26    | basic_exp
+   26 pow: pow POW basic_exp
+   27    | basic_exp
 
-   27 basic_exp: ARITHMETIC_ID
-   28          | POPEN arithmetic_exp PCLOSE
-   29          | VAR
+   28 basic_exp: ARITHMETIC_ID
+   29          | POPEN arithmetic_exp PCLOSE
+   30          | VAR
 
-   30 arithmetic_op1: ADD
-   31               | SUB
+   31 arithmetic_op1: ADD
+   32               | SUB
 
-   32 arithmetic_op2: MUL
-   33               | DIV
-   34               | MOD
+   33 arithmetic_op2: MUL
+   34               | DIV
+   35               | MOD
 
 
 Terminales con las reglas donde aparecen
@@ -56,25 +57,25 @@ Terminales con las reglas donde aparecen
     $end (0) 0
     error (256)
     ASIGN (258) 4 12 13 14
-    POPEN (259) 21 22 28
-    PCLOSE (260) 21 22 28
+    POPEN (259) 22 23 29
+    PCLOSE (260) 22 23 29
     DO (261) 7
     DONE (262) 7
-    LBRACKET (263) 12 13 14 15
-    RBRACKET (264) 12 13 14 15
-    TO_INT (265) 21
-    TO_FLOAT (266) 22
-    ADD <var> (267) 30
-    SUB <var> (268) 18 19 31
-    MUL <var> (269) 32
-    DIV <var> (270) 33
-    POW <var> (271) 25
-    MOD <var> (272) 34
-    VAR <var> (273) 12 13 15 18 29
-    ARITHMETIC_ID <var> (274) 4 12 14 19 27
-    ARRAY_ID <var> (275) 11 13 14 15
-    INTRO <var> (276) 4 6 7 11 12 13 14 15
-    REPEAT <var> (277) 16
+    LBRACKET (263) 12 13 14 15 16
+    RBRACKET (264) 12 13 14 15 16
+    TO_INT (265) 22
+    TO_FLOAT (266) 23
+    ADD <var> (267) 31
+    SUB <var> (268) 19 20 32
+    MUL <var> (269) 33
+    DIV <var> (270) 34
+    POW <var> (271) 26
+    MOD <var> (272) 35
+    VAR <var> (273) 12 13 15 19 30
+    ARITHMETIC_ID <var> (274) 4 12 14 16 20 28
+    ARRAY_ID <var> (275) 11 13 14 15 16
+    INTRO <var> (276) 4 6 7 11 12 13 14 15 16
+    REPEAT <var> (277) 17
 
 
 No terminales con las reglas donde aparecen
@@ -100,29 +101,29 @@ No terminales con las reglas donde aparecen
         on left: 13 14
         on right: 9
     array_access <var> (30)
-        on left: 15
+        on left: 15 16
         on right: 10
     setup <var> (31)
-        on left: 16
+        on left: 17
         on right: 7
     arithmetic_exp <var> (32)
-        on left: 17 18 19 20 21 22
-        on right: 4 6 13 14 16 17 21 22 28
+        on left: 18 19 20 21 22 23
+        on right: 4 6 13 14 17 18 22 23 29
     mul <var> (33)
-        on left: 23 24
-        on right: 17 20 23
+        on left: 24 25
+        on right: 18 21 24
     pow <var> (34)
-        on left: 25 26
-        on right: 23 24 25
+        on left: 26 27
+        on right: 24 25 26
     basic_exp <var> (35)
-        on left: 27 28 29
-        on right: 25 26
+        on left: 28 29 30
+        on right: 26 27
     arithmetic_op1 <var> (36)
-        on left: 30 31
-        on right: 17
+        on left: 31 32
+        on right: 18
     arithmetic_op2 <var> (37)
-        on left: 32 33 34
-        on right: 23
+        on left: 33 34 35
+        on right: 24
 
 
 Estado 0
@@ -154,7 +155,7 @@ Estado 0
 
 Estado 1
 
-   28 basic_exp: POPEN • arithmetic_exp PCLOSE
+   29 basic_exp: POPEN • arithmetic_exp PCLOSE
 
     POPEN          desplazar e ir al estado 1
     TO_INT         desplazar e ir al estado 2
@@ -171,22 +172,22 @@ Estado 1
 
 Estado 2
 
-   21 arithmetic_exp: TO_INT • POPEN arithmetic_exp PCLOSE
+   22 arithmetic_exp: TO_INT • POPEN arithmetic_exp PCLOSE
 
     POPEN  desplazar e ir al estado 23
 
 
 Estado 3
 
-   22 arithmetic_exp: TO_FLOAT • POPEN arithmetic_exp PCLOSE
+   23 arithmetic_exp: TO_FLOAT • POPEN arithmetic_exp PCLOSE
 
     POPEN  desplazar e ir al estado 24
 
 
 Estado 4
 
-   18 arithmetic_exp: SUB • VAR
-   19               | SUB • ARITHMETIC_ID
+   19 arithmetic_exp: SUB • VAR
+   20               | SUB • ARITHMETIC_ID
 
     VAR            desplazar e ir al estado 25
     ARITHMETIC_ID  desplazar e ir al estado 26
@@ -194,20 +195,20 @@ Estado 4
 
 Estado 5
 
-   29 basic_exp: VAR •
+   30 basic_exp: VAR •
 
-    $default  reduce usando la regla 29 (basic_exp)
+    $default  reduce usando la regla 30 (basic_exp)
 
 
 Estado 6
 
     4 instruction: ARITHMETIC_ID • ASIGN arithmetic_exp INTRO
    12 array_declaration: ARITHMETIC_ID • ASIGN LBRACKET VAR RBRACKET INTRO
-   27 basic_exp: ARITHMETIC_ID •
+   28 basic_exp: ARITHMETIC_ID •
 
     ASIGN  desplazar e ir al estado 27
 
-    $default  reduce usando la regla 27 (basic_exp)
+    $default  reduce usando la regla 28 (basic_exp)
 
 
 Estado 7
@@ -216,6 +217,7 @@ Estado 7
    13 array_assignment: ARRAY_ID • LBRACKET VAR RBRACKET ASIGN arithmetic_exp INTRO
    14                 | ARRAY_ID • LBRACKET ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp INTRO
    15 array_access: ARRAY_ID • LBRACKET VAR RBRACKET INTRO
+   16             | ARRAY_ID • LBRACKET ARITHMETIC_ID RBRACKET INTRO
 
     LBRACKET  desplazar e ir al estado 28
     INTRO     desplazar e ir al estado 29
@@ -223,7 +225,7 @@ Estado 7
 
 Estado 8
 
-   16 setup: REPEAT • arithmetic_exp
+   17 setup: REPEAT • arithmetic_exp
 
     POPEN          desplazar e ir al estado 1
     TO_INT         desplazar e ir al estado 2
@@ -318,7 +320,7 @@ Estado 16
 Estado 17
 
     6 instruction: arithmetic_exp • INTRO
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
 
     ADD    desplazar e ir al estado 34
     SUB    desplazar e ir al estado 35
@@ -329,46 +331,46 @@ Estado 17
 
 Estado 18
 
-   20 arithmetic_exp: mul •
-   23 mul: mul • arithmetic_op2 pow
+   21 arithmetic_exp: mul •
+   24 mul: mul • arithmetic_op2 pow
 
     MUL  desplazar e ir al estado 38
     DIV  desplazar e ir al estado 39
     MOD  desplazar e ir al estado 40
 
-    $default  reduce usando la regla 20 (arithmetic_exp)
+    $default  reduce usando la regla 21 (arithmetic_exp)
 
     arithmetic_op2  ir al estado 41
 
 
 Estado 19
 
-   24 mul: pow •
-   25 pow: pow • POW basic_exp
+   25 mul: pow •
+   26 pow: pow • POW basic_exp
 
     POW  desplazar e ir al estado 42
 
-    $default  reduce usando la regla 24 (mul)
+    $default  reduce usando la regla 25 (mul)
 
 
 Estado 20
 
-   26 pow: basic_exp •
+   27 pow: basic_exp •
 
-    $default  reduce usando la regla 26 (pow)
+    $default  reduce usando la regla 27 (pow)
 
 
 Estado 21
 
-   27 basic_exp: ARITHMETIC_ID •
+   28 basic_exp: ARITHMETIC_ID •
 
-    $default  reduce usando la regla 27 (basic_exp)
+    $default  reduce usando la regla 28 (basic_exp)
 
 
 Estado 22
 
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
-   28 basic_exp: POPEN arithmetic_exp • PCLOSE
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   29 basic_exp: POPEN arithmetic_exp • PCLOSE
 
     PCLOSE  desplazar e ir al estado 43
     ADD     desplazar e ir al estado 34
@@ -379,7 +381,7 @@ Estado 22
 
 Estado 23
 
-   21 arithmetic_exp: TO_INT POPEN • arithmetic_exp PCLOSE
+   22 arithmetic_exp: TO_INT POPEN • arithmetic_exp PCLOSE
 
     POPEN          desplazar e ir al estado 1
     TO_INT         desplazar e ir al estado 2
@@ -396,7 +398,7 @@ Estado 23
 
 Estado 24
 
-   22 arithmetic_exp: TO_FLOAT POPEN • arithmetic_exp PCLOSE
+   23 arithmetic_exp: TO_FLOAT POPEN • arithmetic_exp PCLOSE
 
     POPEN          desplazar e ir al estado 1
     TO_INT         desplazar e ir al estado 2
@@ -413,16 +415,16 @@ Estado 24
 
 Estado 25
 
-   18 arithmetic_exp: SUB VAR •
+   19 arithmetic_exp: SUB VAR •
 
-    $default  reduce usando la regla 18 (arithmetic_exp)
+    $default  reduce usando la regla 19 (arithmetic_exp)
 
 
 Estado 26
 
-   19 arithmetic_exp: SUB ARITHMETIC_ID •
+   20 arithmetic_exp: SUB ARITHMETIC_ID •
 
-    $default  reduce usando la regla 19 (arithmetic_exp)
+    $default  reduce usando la regla 20 (arithmetic_exp)
 
 
 Estado 27
@@ -449,6 +451,7 @@ Estado 28
    13 array_assignment: ARRAY_ID LBRACKET • VAR RBRACKET ASIGN arithmetic_exp INTRO
    14                 | ARRAY_ID LBRACKET • ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp INTRO
    15 array_access: ARRAY_ID LBRACKET • VAR RBRACKET INTRO
+   16             | ARRAY_ID LBRACKET • ARITHMETIC_ID RBRACKET INTRO
 
     VAR            desplazar e ir al estado 48
     ARITHMETIC_ID  desplazar e ir al estado 49
@@ -463,13 +466,13 @@ Estado 29
 
 Estado 30
 
-   16 setup: REPEAT arithmetic_exp •
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   17 setup: REPEAT arithmetic_exp •
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
 
     ADD  desplazar e ir al estado 34
     SUB  desplazar e ir al estado 35
 
-    $default  reduce usando la regla 16 (setup)
+    $default  reduce usando la regla 17 (setup)
 
     arithmetic_op1  ir al estado 37
 
@@ -497,16 +500,16 @@ Estado 33
 
 Estado 34
 
-   30 arithmetic_op1: ADD •
+   31 arithmetic_op1: ADD •
 
-    $default  reduce usando la regla 30 (arithmetic_op1)
+    $default  reduce usando la regla 31 (arithmetic_op1)
 
 
 Estado 35
 
-   31 arithmetic_op1: SUB •
+   32 arithmetic_op1: SUB •
 
-    $default  reduce usando la regla 31 (arithmetic_op1)
+    $default  reduce usando la regla 32 (arithmetic_op1)
 
 
 Estado 36
@@ -518,7 +521,7 @@ Estado 36
 
 Estado 37
 
-   17 arithmetic_exp: arithmetic_exp arithmetic_op1 • mul
+   18 arithmetic_exp: arithmetic_exp arithmetic_op1 • mul
 
     POPEN          desplazar e ir al estado 1
     VAR            desplazar e ir al estado 5
@@ -531,28 +534,28 @@ Estado 37
 
 Estado 38
 
-   32 arithmetic_op2: MUL •
-
-    $default  reduce usando la regla 32 (arithmetic_op2)
-
-
-Estado 39
-
-   33 arithmetic_op2: DIV •
+   33 arithmetic_op2: MUL •
 
     $default  reduce usando la regla 33 (arithmetic_op2)
 
 
-Estado 40
+Estado 39
 
-   34 arithmetic_op2: MOD •
+   34 arithmetic_op2: DIV •
 
     $default  reduce usando la regla 34 (arithmetic_op2)
 
 
+Estado 40
+
+   35 arithmetic_op2: MOD •
+
+    $default  reduce usando la regla 35 (arithmetic_op2)
+
+
 Estado 41
 
-   23 mul: mul arithmetic_op2 • pow
+   24 mul: mul arithmetic_op2 • pow
 
     POPEN          desplazar e ir al estado 1
     VAR            desplazar e ir al estado 5
@@ -564,7 +567,7 @@ Estado 41
 
 Estado 42
 
-   25 pow: pow POW • basic_exp
+   26 pow: pow POW • basic_exp
 
     POPEN          desplazar e ir al estado 1
     VAR            desplazar e ir al estado 5
@@ -575,15 +578,15 @@ Estado 42
 
 Estado 43
 
-   28 basic_exp: POPEN arithmetic_exp PCLOSE •
+   29 basic_exp: POPEN arithmetic_exp PCLOSE •
 
-    $default  reduce usando la regla 28 (basic_exp)
+    $default  reduce usando la regla 29 (basic_exp)
 
 
 Estado 44
 
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
-   21               | TO_INT POPEN arithmetic_exp • PCLOSE
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   22               | TO_INT POPEN arithmetic_exp • PCLOSE
 
     PCLOSE  desplazar e ir al estado 54
     ADD     desplazar e ir al estado 34
@@ -594,8 +597,8 @@ Estado 44
 
 Estado 45
 
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
-   22               | TO_FLOAT POPEN arithmetic_exp • PCLOSE
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   23               | TO_FLOAT POPEN arithmetic_exp • PCLOSE
 
     PCLOSE  desplazar e ir al estado 55
     ADD     desplazar e ir al estado 34
@@ -614,7 +617,7 @@ Estado 46
 Estado 47
 
     4 instruction: ARITHMETIC_ID ASIGN arithmetic_exp • INTRO
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
 
     ADD    desplazar e ir al estado 34
     SUB    desplazar e ir al estado 35
@@ -634,6 +637,7 @@ Estado 48
 Estado 49
 
    14 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID • RBRACKET ASIGN arithmetic_exp INTRO
+   16 array_access: ARRAY_ID LBRACKET ARITHMETIC_ID • RBRACKET INTRO
 
     RBRACKET  desplazar e ir al estado 59
 
@@ -666,47 +670,47 @@ Estado 50
 
 Estado 51
 
-   17 arithmetic_exp: arithmetic_exp arithmetic_op1 mul •
-   23 mul: mul • arithmetic_op2 pow
+   18 arithmetic_exp: arithmetic_exp arithmetic_op1 mul •
+   24 mul: mul • arithmetic_op2 pow
 
     MUL  desplazar e ir al estado 38
     DIV  desplazar e ir al estado 39
     MOD  desplazar e ir al estado 40
 
-    $default  reduce usando la regla 17 (arithmetic_exp)
+    $default  reduce usando la regla 18 (arithmetic_exp)
 
     arithmetic_op2  ir al estado 41
 
 
 Estado 52
 
-   23 mul: mul arithmetic_op2 pow •
-   25 pow: pow • POW basic_exp
+   24 mul: mul arithmetic_op2 pow •
+   26 pow: pow • POW basic_exp
 
     POW  desplazar e ir al estado 42
 
-    $default  reduce usando la regla 23 (mul)
+    $default  reduce usando la regla 24 (mul)
 
 
 Estado 53
 
-   25 pow: pow POW basic_exp •
+   26 pow: pow POW basic_exp •
 
-    $default  reduce usando la regla 25 (pow)
+    $default  reduce usando la regla 26 (pow)
 
 
 Estado 54
 
-   21 arithmetic_exp: TO_INT POPEN arithmetic_exp PCLOSE •
+   22 arithmetic_exp: TO_INT POPEN arithmetic_exp PCLOSE •
 
-    $default  reduce usando la regla 21 (arithmetic_exp)
+    $default  reduce usando la regla 22 (arithmetic_exp)
 
 
 Estado 55
 
-   22 arithmetic_exp: TO_FLOAT POPEN arithmetic_exp PCLOSE •
+   23 arithmetic_exp: TO_FLOAT POPEN arithmetic_exp PCLOSE •
 
-    $default  reduce usando la regla 22 (arithmetic_exp)
+    $default  reduce usando la regla 23 (arithmetic_exp)
 
 
 Estado 56
@@ -735,8 +739,10 @@ Estado 58
 Estado 59
 
    14 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET • ASIGN arithmetic_exp INTRO
+   16 array_access: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET • INTRO
 
     ASIGN  desplazar e ir al estado 64
+    INTRO  desplazar e ir al estado 65
 
 
 Estado 60
@@ -745,7 +751,7 @@ Estado 60
     7 instruction: setup DO INTRO instructions • DONE INTRO
 
     POPEN          desplazar e ir al estado 1
-    DONE           desplazar e ir al estado 65
+    DONE           desplazar e ir al estado 66
     TO_INT         desplazar e ir al estado 2
     TO_FLOAT       desplazar e ir al estado 3
     SUB            desplazar e ir al estado 4
@@ -770,7 +776,7 @@ Estado 61
 
    12 array_declaration: ARITHMETIC_ID ASIGN LBRACKET VAR RBRACKET • INTRO
 
-    INTRO  desplazar e ir al estado 66
+    INTRO  desplazar e ir al estado 67
 
 
 Estado 62
@@ -784,7 +790,7 @@ Estado 62
     VAR            desplazar e ir al estado 5
     ARITHMETIC_ID  desplazar e ir al estado 21
 
-    arithmetic_exp  ir al estado 67
+    arithmetic_exp  ir al estado 68
     mul             ir al estado 18
     pow             ir al estado 19
     basic_exp       ir al estado 20
@@ -808,7 +814,7 @@ Estado 64
     VAR            desplazar e ir al estado 5
     ARITHMETIC_ID  desplazar e ir al estado 21
 
-    arithmetic_exp  ir al estado 68
+    arithmetic_exp  ir al estado 69
     mul             ir al estado 18
     pow             ir al estado 19
     basic_exp       ir al estado 20
@@ -816,34 +822,29 @@ Estado 64
 
 Estado 65
 
-    7 instruction: setup DO INTRO instructions DONE • INTRO
+   16 array_access: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET INTRO •
 
-    INTRO  desplazar e ir al estado 69
+    $default  reduce usando la regla 16 (array_access)
 
 
 Estado 66
+
+    7 instruction: setup DO INTRO instructions DONE • INTRO
+
+    INTRO  desplazar e ir al estado 70
+
+
+Estado 67
 
    12 array_declaration: ARITHMETIC_ID ASIGN LBRACKET VAR RBRACKET INTRO •
 
     $default  reduce usando la regla 12 (array_declaration)
 
 
-Estado 67
-
-   13 array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN arithmetic_exp • INTRO
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
-
-    ADD    desplazar e ir al estado 34
-    SUB    desplazar e ir al estado 35
-    INTRO  desplazar e ir al estado 70
-
-    arithmetic_op1  ir al estado 37
-
-
 Estado 68
 
-   14 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp • INTRO
-   17 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+   13 array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN arithmetic_exp • INTRO
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
 
     ADD    desplazar e ir al estado 34
     SUB    desplazar e ir al estado 35
@@ -854,19 +855,31 @@ Estado 68
 
 Estado 69
 
+   14 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp • INTRO
+   18 arithmetic_exp: arithmetic_exp • arithmetic_op1 mul
+
+    ADD    desplazar e ir al estado 34
+    SUB    desplazar e ir al estado 35
+    INTRO  desplazar e ir al estado 72
+
+    arithmetic_op1  ir al estado 37
+
+
+Estado 70
+
     7 instruction: setup DO INTRO instructions DONE INTRO •
 
     $default  reduce usando la regla 7 (instruction)
 
 
-Estado 70
+Estado 71
 
    13 array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN arithmetic_exp INTRO •
 
     $default  reduce usando la regla 13 (array_assignment)
 
 
-Estado 71
+Estado 72
 
    14 array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp INTRO •
 

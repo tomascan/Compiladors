@@ -12,7 +12,7 @@
 
 // Declaraciones de las funciones
 void declare_array(char* arrayName, int elements);
-void assign_array(const char* arrayName, int index, char* value);
+void assign_array(const char* arrayName, int index, estructura r);
 void access_array(const char* arrayName, int index);
 estructura convert_to_int(estructura var);
 estructura convert_to_float(estructura var);

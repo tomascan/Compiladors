@@ -13,8 +13,8 @@ estructura convert_to_int(estructura var) {
         // Perform the conversion
         result.tipo = INT;
         result.integer = (int)result.real;
-        // Update the 'value' field to reflect the new integer value
-        char buffer[20]; // Ensure the buffer is large enough
+        //Update the 'value' field to reflect the new integer value
+        char buffer[sizeof(int)]; // Ensure the buffer is large enough
         sprintf(buffer, "%d", result.integer);
         free(result.value); // Free the old value string if necessary
         result.value = strdup(buffer); // Update with the new value string
@@ -124,47 +124,29 @@ void declare_array(char* arrayName, int elements) {
     sym_enter(arrayName, &array);
     char sizeStr[20];
     sprintf(sizeStr, "%d", totalSize);
-    generate(5, arrayName, " := ", "ALLOC ", sizeStr, " bytes");
-    for(int i = 0; i < elements; ++i) {
-        char offsetStr[20];
-        sprintf(offsetStr, "[%d]", i * elementSize);
-        generate(5, arrayName, offsetStr, " := ", "0");
-    }
+    generate(4, arrayName, " := ", "ALLOC ", sizeStr);
+//    for(int i = 0; i < elements; ++i) {
+//        char offsetStr[20];
+//        sprintf(offsetStr, "[%d]", i * elementSize);
+//        generate(5, arrayName, offsetStr, " := ", "0");
+//    }
 }
 
-void assign_array(const char* arrayName, int index, char* value) {
+void assign_array(const char* arrayName, int index, estructura r) {
     estructura array_info;
     if (sym_lookup(arrayName, &array_info) == SYMTAB_OK && array_info.tipo == ARRAY) {
-        int elementSize = sizeof(int); // Tamaño del tipo de elemento en el array (entero)
-        int offset = elementSize * index; // Calcula el desplazamiento en bytes
-        char offsetStr[20];
-        sprintf(offsetStr, "%d", offset);
-        
-        // Genera el código para asignar el valor al array en la posición calculada
-        generate(3, temporal(), " := ", value);
-        generate(5,temporal(), " := ", arrayName, "[", offsetStr, "]");
-        generate(5, arrayName, "[", offsetStr, "] := ", temporal()); //esta ok pero temp no
+        int offset = sizeof(r.tipo) * index; // Tamaño del tipo de elemento en el array
+        char* aux = malloc(sizeof(r.tipo) * index);
+        sprintf(aux, "%d", offset);
+        // Genera un nombre de temporal y guarda el desplazamiento calculado en él
+        char* tempOffset = temporal();
+        generate(5, tempOffset, " := ", "i ", "MULI ", aux); // Asume 'i' representa el índice
+        // Usa el temporal para la asignación al elemento del array
+        generate(5, arrayName, "[", tempOffset, "] := ", r.value);
     } else {
         yyerror("Identificador no encontrado o no es un array");
     }
 }
-
-
-void access_array(const char* arrayName, int index) {
-    estructura array_info;
-    if (sym_lookup(arrayName, &array_info) == SYMTAB_OK && array_info.tipo == ARRAY) {
-        if (index >= 0 && index < array_info.arraySize) {
-            estructura array_element = ((estructura *)array_info.array)[index];
-            put(array_element); // Llama a la función put con el valor del elemento del array
-        } else {
-            yyerror("Índice de array fuera de rango");
-        }
-    } else {
-        yyerror("Identificador no encontrado o no es un array");
-    }
-}
-
-
 
 
 

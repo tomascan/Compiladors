@@ -474,16 +474,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  31
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   98
+#define YYLAST   94
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  23
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  15
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  35
+#define YYNRULES  36
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  72
+#define YYNSTATES  73
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   277
@@ -535,9 +535,9 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    29,    29,    31,    32,    36,    37,    38,    39,    47,
-      48,    49,    50,    62,    69,    72,    86,    93,   101,   121,
-     128,   137,   138,   139,   143,   163,   165,   179,   181,   183,
-     184,   186,   186,   187,   187,   187
+      48,    49,    50,    60,    67,    70,    84,    92,   106,   114,
+     134,   141,   150,   151,   152,   156,   176,   178,   192,   194,
+     196,   197,   199,   199,   200,   200,   200
 };
 #endif
 
@@ -583,14 +583,14 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      17,    46,     6,    11,   -15,   -16,    16,     4,    46,    29,
-      17,   -16,   -16,   -16,   -16,   -16,    36,    41,    74,    28,
-     -16,   -16,    68,    46,    46,   -16,   -16,    30,    -5,   -16,
-      20,   -16,   -16,    26,   -16,   -16,   -16,    27,   -16,   -16,
-     -16,    27,    27,   -16,    71,    73,    34,    54,    49,    51,
-      17,    74,    28,   -16,   -16,   -16,    63,   -16,     3,    52,
-      -2,    53,    46,   -16,    46,    61,   -16,    56,    58,   -16,
-     -16,   -16
+      17,    46,     6,    15,   -15,   -16,    26,     4,    46,    33,
+      17,   -16,   -16,   -16,   -16,   -16,    36,    32,    74,    44,
+     -16,   -16,    68,    46,    46,   -16,   -16,    30,    -4,   -16,
+      42,   -16,   -16,    31,   -16,   -16,   -16,    28,   -16,   -16,
+     -16,    28,    28,   -16,    71,    73,    40,    54,    53,    63,
+      17,    74,    44,   -16,   -16,   -16,    65,   -16,     3,    10,
+      -2,    61,    46,   -16,    46,   -16,    66,   -16,    56,    58,
+     -16,   -16,   -16
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -598,21 +598,21 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     0,    30,    28,     0,     0,     0,
-       2,     4,     6,     9,    10,    11,     0,     0,    21,    25,
-      27,    28,     0,     0,     0,    19,    20,     0,     0,    12,
-      17,     1,     3,     0,    31,    32,     7,     0,    33,    34,
-      35,     0,     0,    29,     0,     0,     0,     0,     0,     0,
-       0,    18,    24,    26,    22,    23,     0,     5,     0,     0,
-       0,     0,     0,    16,     0,     0,    13,     0,     0,     8,
-      14,    15
+       0,     0,     0,     0,     0,    31,    29,     0,     0,     0,
+       2,     4,     6,     9,    10,    11,     0,     0,    22,    26,
+      28,    29,     0,     0,     0,    20,    21,     0,     0,    12,
+      18,     1,     3,     0,    32,    33,     7,     0,    34,    35,
+      36,     0,     0,    30,     0,     0,     0,     0,     0,     0,
+       0,    19,    25,    27,    23,    24,     0,     5,     0,     0,
+       0,     0,     0,    16,     0,    17,     0,    13,     0,     0,
+       8,    14,    15
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -16,   -16,    37,    -9,   -16,   -16,   -16,   -16,   -16,    -1,
-      55,    57,    48,   -16,   -16
+     -16,   -16,    43,    -9,   -16,   -16,   -16,   -16,   -16,    -1,
+      55,    49,    52,   -16,   -16
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -627,30 +627,30 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      22,    32,     1,    25,    26,    65,    62,    30,     2,     3,
-      23,     4,    28,    48,    49,    24,     5,     6,     7,    27,
-       8,     1,    44,    45,    63,    29,    47,     2,     3,    31,
-       4,     1,    34,    35,     1,     5,     6,     7,    46,     8,
-       2,     3,    33,     4,    42,     5,    21,    50,     5,    21,
-       1,    32,    56,    34,    35,    64,     2,     3,    58,     4,
-      59,    67,    36,    68,     5,    21,    34,    35,    34,    35,
-      34,    35,    61,    43,    66,    57,    54,    70,    55,    71,
-      34,    35,    69,    34,    35,    34,    35,    60,    38,    39,
-      53,    40,    51,     0,     0,     0,     0,     0,    52
+      22,    32,     1,    25,    26,    66,    62,    30,     2,     3,
+      23,     4,    28,    64,    48,    49,     5,     6,     7,    24,
+       8,     1,    44,    45,    63,    29,    47,     2,     3,    27,
+       4,    65,     1,    31,     1,     5,     6,     7,    46,     8,
+       2,     3,    33,     4,    34,    35,     5,    21,     5,    21,
+       1,    32,    50,    36,    34,    35,     2,     3,    56,     4,
+      42,    68,    58,    69,     5,    21,    34,    35,    34,    35,
+      34,    35,    59,    43,    61,    57,    54,    71,    55,    72,
+      34,    35,    67,    34,    35,    34,    35,    70,    38,    39,
+      52,    40,    51,    60,    53
 };
 
 static const yytype_int8 yycheck[] =
 {
        1,    10,     4,    18,    19,     7,     3,     8,    10,    11,
-       4,    13,     8,    18,    19,     4,    18,    19,    20,     3,
-      22,     4,    23,    24,    21,    21,    27,    10,    11,     0,
-      13,     4,    12,    13,     4,    18,    19,    20,     8,    22,
-      10,    11,     6,    13,    16,    18,    19,    21,    18,    19,
-       4,    60,    18,    12,    13,     3,    10,    11,     9,    13,
-       9,    62,    21,    64,    18,    19,    12,    13,    12,    13,
-      12,    13,     9,     5,    21,    21,     5,    21,     5,    21,
-      12,    13,    21,    12,    13,    12,    13,    50,    14,    15,
-      42,    17,    37,    -1,    -1,    -1,    -1,    -1,    41
+       4,    13,     8,     3,    18,    19,    18,    19,    20,     4,
+      22,     4,    23,    24,    21,    21,    27,    10,    11,     3,
+      13,    21,     4,     0,     4,    18,    19,    20,     8,    22,
+      10,    11,     6,    13,    12,    13,    18,    19,    18,    19,
+       4,    60,    21,    21,    12,    13,    10,    11,    18,    13,
+      16,    62,     9,    64,    18,    19,    12,    13,    12,    13,
+      12,    13,     9,     5,     9,    21,     5,    21,     5,    21,
+      12,    13,    21,    12,    13,    12,    13,    21,    14,    15,
+      41,    17,    37,    50,    42
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -663,26 +663,26 @@ static const yytype_int8 yystos[] =
       32,     0,    26,     6,    12,    13,    21,    36,    14,    15,
       17,    37,    16,     5,    32,    32,     8,    32,    18,    19,
       21,    33,    34,    35,     5,     5,    18,    21,     9,     9,
-      25,     9,     3,    21,     3,     7,    21,    32,    32,    21,
-      21,    21
+      25,     9,     3,    21,     3,    21,     7,    21,    32,    32,
+      21,    21,    21
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    23,    24,    25,    25,    26,    26,    26,    26,    27,
-      27,    27,    27,    28,    29,    29,    30,    31,    32,    32,
-      32,    32,    32,    32,    33,    33,    34,    34,    35,    35,
-      35,    36,    36,    37,    37,    37
+      27,    27,    27,    28,    29,    29,    30,    30,    31,    32,
+      32,    32,    32,    32,    32,    33,    33,    34,    34,    35,
+      35,    35,    36,    36,    37,    37,    37
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     1,     4,     1,     2,     6,     1,
-       1,     1,     2,     6,     7,     7,     5,     2,     3,     2,
-       2,     1,     4,     4,     3,     1,     3,     1,     1,     3,
-       1,     1,     1,     1,     1,     1
+       1,     1,     2,     6,     7,     7,     5,     5,     2,     3,
+       2,     2,     1,     4,     4,     3,     1,     3,     1,     1,
+       3,     1,     1,     1,     1,     1,     1
 };
 
 
@@ -1175,36 +1175,34 @@ yyreduce:
 
   case 12: /* array_exp: ARRAY_ID INTRO  */
 #line 50 "syntax.y"
-                {
-    estructura array_info;
-    if (sym_lookup((yyvsp[-1].var).string, &array_info) == SYMTAB_OK && array_info.tipo == ARRAY) {
-
-        // Aquí podrías iterar y generar instrucciones para imprimir cada elemento, si fuera apropiado
-    } else {
-        printf("El array %s no fue encontrado.\n", (yyvsp[-1].var).string);
-    }
-}
-#line 1188 "syntax.tab.c"
+                 { {if(sym_lookup((yyvsp[-1].var).string,&(yyval.var))==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
+			  else  (yyval.var).value = (yyvsp[-1].var).string;}
+			  generate(2,"PARAM ", (yyval.var).value);
+			  char* aux2 = malloc(sizeof(int));
+    			  sprintf(aux2, "%d", (yyval.var).arraySize);
+			  generate(2,"CALL PUTI, ", aux2);
+			   }
+#line 1186 "syntax.tab.c"
     break;
 
   case 13: /* array_declaration: ARITHMETIC_ID ASIGN LBRACKET VAR RBRACKET INTRO  */
-#line 62 "syntax.y"
+#line 60 "syntax.y"
                                                     {	 
         declare_array((yyvsp[-5].var).string, (yyvsp[-2].var).integer);
     }
-#line 1196 "syntax.tab.c"
+#line 1194 "syntax.tab.c"
     break;
 
   case 14: /* array_assignment: ARRAY_ID LBRACKET VAR RBRACKET ASIGN arithmetic_exp INTRO  */
-#line 69 "syntax.y"
+#line 67 "syntax.y"
                                                               {
-        assign_array((yyvsp[-6].var).string, (yyvsp[-4].var).integer, (yyvsp[-1].var).value);
+        assign_array((yyvsp[-6].var).string, (yyvsp[-4].var).integer, (yyvsp[-1].var));
     }
-#line 1204 "syntax.tab.c"
+#line 1202 "syntax.tab.c"
     break;
 
   case 15: /* array_assignment: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp INTRO  */
-#line 72 "syntax.y"
+#line 70 "syntax.y"
                                                                           {
     	estructura indexValue;
         if (sym_lookup((yyvsp[-4].var).string, &indexValue) == SYMTAB_NOT_FOUND) {
@@ -1212,32 +1210,50 @@ yyreduce:
         } else if (indexValue.tipo != INT) {
             yyerror("Variable de índice debe ser de tipo INT");
         } else {
-       	    assign_array((yyvsp[-6].var).string, (yyvsp[-4].var).integer, (yyvsp[-1].var).value);
+       	    assign_array((yyvsp[-6].var).string, (yyvsp[-4].var).integer, (yyvsp[-1].var));
         }
     }
-#line 1219 "syntax.tab.c"
+#line 1217 "syntax.tab.c"
     break;
 
   case 16: /* array_access: ARRAY_ID LBRACKET VAR RBRACKET INTRO  */
-#line 86 "syntax.y"
+#line 84 "syntax.y"
                                          {
-        access_array((yyvsp[-4].var).string, (yyvsp[-2].var).integer);
+        {if(sym_lookup((yyvsp[-4].var).string,&(yyval.var))==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
+			  else  (yyval.var).value = (yyvsp[-4].var).string;}
+			  char* aux2 = malloc(sizeof(int));
+    			  sprintf(aux2, "%d", (yyvsp[-2].var).integer);
+    			  generate(2,"PARAM ", (yyvsp[-4].var).string);
+    			  generate(2,"CALL PUTI, ", aux2);
     }
-#line 1227 "syntax.tab.c"
+#line 1230 "syntax.tab.c"
     break;
 
-  case 17: /* setup: REPEAT arithmetic_exp  */
-#line 93 "syntax.y"
+  case 17: /* array_access: ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET INTRO  */
+#line 92 "syntax.y"
+                                                     {
+        {if(sym_lookup((yyvsp[-4].var).string,&(yyval.var))==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
+			  else  (yyval.var).value = (yyvsp[-4].var).string;}
+			  char* aux2 = malloc(sizeof(int));
+    			  sprintf(aux2, "%d", (yyvsp[-2].var).integer);
+    			  generate(2,"PARAM ", (yyvsp[-4].var).string);
+    			  generate(2,"CALL PUTI, ", (yyvsp[-2].var).string);
+    }
+#line 1243 "syntax.tab.c"
+    break;
+
+  case 18: /* setup: REPEAT arithmetic_exp  */
+#line 106 "syntax.y"
                                 { (yyval.var).value = temporal(); 
 			       	generate(2, (yyval.var).value, " := 0");
 			  	(yyval.var).integer = next_quad; 
 			  	(yyval.var).string = (yyvsp[0].var).value;
 				}
-#line 1237 "syntax.tab.c"
+#line 1253 "syntax.tab.c"
     break;
 
-  case 18: /* arithmetic_exp: arithmetic_exp arithmetic_op1 mul  */
-#line 101 "syntax.y"
+  case 19: /* arithmetic_exp: arithmetic_exp arithmetic_op1 mul  */
+#line 114 "syntax.y"
                                       { if((yyvsp[-2].var).tipo != (yyvsp[0].var).tipo) 
 					{ if((yyvsp[-2].var).tipo == INT) 
 						{ 
@@ -1257,11 +1273,11 @@ yyreduce:
 				(yyval.var)=calculate((yyvsp[-2].var),(yyvsp[-1].var),(yyvsp[0].var));
 				(yyval.var).value = temporal(); 
 		       		generate(5, (yyval.var).value, " := ", (yyvsp[-2].var).value, (yyvsp[-1].var).string, (yyvsp[0].var).value);}
-#line 1261 "syntax.tab.c"
+#line 1277 "syntax.tab.c"
     break;
 
-  case 19: /* arithmetic_exp: SUB VAR  */
-#line 121 "syntax.y"
+  case 20: /* arithmetic_exp: SUB VAR  */
+#line 134 "syntax.y"
                   {
 			(yyvsp[0].var) = set_valor((yyvsp[0].var));
 			(yyval.var)=negate((yyvsp[0].var));
@@ -1269,11 +1285,11 @@ yyreduce:
 			(yyval.var).value = temporal(); 
     			generate(4, (yyval.var).value, " :=", (yyval.var).string, numero);
 		  }
-#line 1273 "syntax.tab.c"
+#line 1289 "syntax.tab.c"
     break;
 
-  case 20: /* arithmetic_exp: SUB ARITHMETIC_ID  */
-#line 128 "syntax.y"
+  case 21: /* arithmetic_exp: SUB ARITHMETIC_ID  */
+#line 141 "syntax.y"
                             { estructura r; if(sym_lookup((yyvsp[0].var).string,&r)==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
 				    else 
 					{ 
@@ -1282,23 +1298,23 @@ yyreduce:
     					  generate(4, (yyval.var).value, " :=", (yyval.var).string, (yyvsp[0].var).string);
 					} 
 			}
-#line 1286 "syntax.tab.c"
+#line 1302 "syntax.tab.c"
     break;
 
-  case 22: /* arithmetic_exp: TO_INT POPEN arithmetic_exp PCLOSE  */
-#line 138 "syntax.y"
+  case 23: /* arithmetic_exp: TO_INT POPEN arithmetic_exp PCLOSE  */
+#line 151 "syntax.y"
                                                { (yyval.var) = convert_to_int((yyvsp[-1].var)); }
-#line 1292 "syntax.tab.c"
+#line 1308 "syntax.tab.c"
     break;
 
-  case 23: /* arithmetic_exp: TO_FLOAT POPEN arithmetic_exp PCLOSE  */
-#line 139 "syntax.y"
+  case 24: /* arithmetic_exp: TO_FLOAT POPEN arithmetic_exp PCLOSE  */
+#line 152 "syntax.y"
                                                { (yyval.var) = convert_to_float((yyvsp[-1].var)); }
-#line 1298 "syntax.tab.c"
+#line 1314 "syntax.tab.c"
     break;
 
-  case 24: /* mul: mul arithmetic_op2 pow  */
-#line 143 "syntax.y"
+  case 25: /* mul: mul arithmetic_op2 pow  */
+#line 156 "syntax.y"
                             { 
 			if((yyvsp[-2].var).tipo != (yyvsp[0].var).tipo) 
 					{ if((yyvsp[-2].var).tipo == INT) 
@@ -1319,11 +1335,11 @@ yyreduce:
 		       (yyval.var)=calculate((yyvsp[-2].var),(yyvsp[-1].var),(yyvsp[0].var));
 		       (yyval.var).value = temporal(); 
 		       generate(5, (yyval.var).value, " := ", (yyvsp[-2].var).value, (yyvsp[-1].var).string, (yyvsp[0].var).value);}
-#line 1323 "syntax.tab.c"
+#line 1339 "syntax.tab.c"
     break;
 
-  case 26: /* pow: pow POW basic_exp  */
-#line 165 "syntax.y"
+  case 27: /* pow: pow POW basic_exp  */
+#line 178 "syntax.y"
                        {
 				char* temp = temporal();
 				generate(2, "i ", " := 1");
@@ -1338,30 +1354,30 @@ yyreduce:
 				sprintf(line, "%d" , linea);
 				generate(2, "GOTO ", line);     
 			     }
-#line 1342 "syntax.tab.c"
+#line 1358 "syntax.tab.c"
     break;
 
-  case 28: /* basic_exp: ARITHMETIC_ID  */
-#line 181 "syntax.y"
+  case 29: /* basic_exp: ARITHMETIC_ID  */
+#line 194 "syntax.y"
                          {if(sym_lookup((yyvsp[0].var).string,&(yyval.var))==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
 			  else  (yyval.var).value = (yyvsp[0].var).string;}
-#line 1349 "syntax.tab.c"
-    break;
-
-  case 29: /* basic_exp: POPEN arithmetic_exp PCLOSE  */
-#line 183 "syntax.y"
-                                      {(yyval.var) = (yyvsp[-1].var);}
-#line 1355 "syntax.tab.c"
-    break;
-
-  case 30: /* basic_exp: VAR  */
-#line 184 "syntax.y"
-              { (yyval.var) = set_valor((yyvsp[0].var));  }
-#line 1361 "syntax.tab.c"
-    break;
-
-
 #line 1365 "syntax.tab.c"
+    break;
+
+  case 30: /* basic_exp: POPEN arithmetic_exp PCLOSE  */
+#line 196 "syntax.y"
+                                      {(yyval.var) = (yyvsp[-1].var);}
+#line 1371 "syntax.tab.c"
+    break;
+
+  case 31: /* basic_exp: VAR  */
+#line 197 "syntax.y"
+              { (yyval.var) = set_valor((yyvsp[0].var));  }
+#line 1377 "syntax.tab.c"
+    break;
+
+
+#line 1381 "syntax.tab.c"
 
       default: break;
     }
@@ -1554,7 +1570,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 189 "syntax.y"
+#line 202 "syntax.y"
 
 
 void yyerror(char *err)

@@ -1,10 +1,26 @@
-// expressions
+// Conversion explicita
 x := 5.0
-a := [ 10 ]
+250.0
+int(x)
+a:= x + x
+float(x)
+//casting de a implicito
+b:= a - x 
+a
+b
+x
+//
+l := [ 10 ]
+t := [ 5 ]
+l[ 2 ] := 3
+l[ 2 ]
 n := 10
 i := 2
 repeat n - 1 do
- a[ i ] := i*i
+ l[ i ] := i*i
+ l[ i ]
  i := i + 1
 done
-a
+i
+l
+t

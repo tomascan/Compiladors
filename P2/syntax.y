@@ -47,15 +47,13 @@ array_exp:
 	array_declaration
 	| array_assignment
 	| array_access 
-| ARRAY_ID INTRO{
-    estructura array_info;
-    if (sym_lookup($1.string, &array_info) == SYMTAB_OK && array_info.tipo == ARRAY) {
-
-        // Aquí podrías iterar y generar instrucciones para imprimir cada elemento, si fuera apropiado
-    } else {
-        printf("El array %s no fue encontrado.\n", $1.string);
-    }
-}
+| ARRAY_ID INTRO { {if(sym_lookup($1.string,&$$)==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
+			  else  $$.value = $1.string;}
+			  generate(2,"PARAM ", $$.value);
+			  char* aux2 = malloc(sizeof(int));
+    			  sprintf(aux2, "%d", $$.arraySize);
+			  generate(2,"CALL PUTI, ", aux2);
+			   }
 ;
 
 array_declaration: 
@@ -67,7 +65,7 @@ array_declaration:
 
 array_assignment: 
     ARRAY_ID LBRACKET VAR RBRACKET ASIGN arithmetic_exp INTRO {
-        assign_array($1.string, $3.integer, $6.value);
+        assign_array($1.string, $3.integer, $6);
     }
     | ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET ASIGN arithmetic_exp INTRO {
     	estructura indexValue;
@@ -76,7 +74,7 @@ array_assignment:
         } else if (indexValue.tipo != INT) {
             yyerror("Variable de índice debe ser de tipo INT");
         } else {
-       	    assign_array($1.string, $3.integer, $6.value);
+       	    assign_array($1.string, $3.integer, $6);
         }
     }
 ;
@@ -84,8 +82,23 @@ array_assignment:
 
 array_access: 
     ARRAY_ID LBRACKET VAR RBRACKET INTRO {
-        access_array($1.string, $3.integer);
+        {if(sym_lookup($1.string,&$$)==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
+			  else  $$.value = $1.string;}
+			  char* aux2 = malloc(sizeof(int));
+    			  sprintf(aux2, "%d", $3.integer);
+    			  generate(2,"PARAM ", $1.string);
+    			  generate(2,"CALL PUTI, ", aux2);
     }
+    | ARRAY_ID LBRACKET ARITHMETIC_ID RBRACKET INTRO {
+        {if(sym_lookup($1.string,&$$)==SYMTAB_NOT_FOUND) yyerror("Error sintactico: El identificador no existe");
+			  else  $$.value = $1.string;}
+			  char* aux2 = malloc(sizeof(int));
+    			  sprintf(aux2, "%d", $3.integer);
+    			  generate(2,"PARAM ", $1.string);
+    			  generate(2,"CALL PUTI, ", $3.string);
+    }
+    
+    
 ;
 
 
