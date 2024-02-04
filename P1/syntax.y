@@ -39,6 +39,7 @@ instruction:
     | OCT_MODE INTRO                      { cambiar_modo_formato("octal"); }
     | HEX_MODE INTRO                      { cambiar_modo_formato("hexagesimal"); }
     | array_exp INTRO
+    | INTRO {}
     
 ;
 
@@ -134,7 +135,7 @@ array_declaration:
     ARITHMETIC_ID ASIGN LBRACKET VAR RBRACKET {
         if ($4.type != INT) { yyerror("El tamaño del array debe ser un entero");
         } else {   initializeArray($1.string, $4.integer);
-            printf("Type: ARRAY - VAR =%s, Size=%d\n", $1.string, $4.integer);}
+            printf("Type: ARRAY - VAR = %s, Size = %d\n", $1.string, $4.integer);}
     }
     ;
     
@@ -150,7 +151,26 @@ array_assignment:
             assignArrayElement($1.string, indexValue.integer, $6);
         }
     }
+
+    | ARITHMETIC_ID ASIGN ARRAY_ID LBRACKET VAR RBRACKET {
+        estructura arrayVar;
+        if (sym_lookup($3.string, &arrayVar) == SYMTAB_NOT_FOUND) {
+            yyerror("El identificador del array no se encuentra en la tabla de símbolos");
+        } else if (arrayVar.type != ARRAY) {
+            yyerror("El identificador no se refiere a un array");
+        } else {
+            int arrayIndex = $5.integer;
+            if (arrayIndex < 0 || arrayIndex >= arrayVar.arraySize) {
+                yyerror("Índice de array fuera de rango");
+            } else {
+                // Asigna el valor del elemento del array a la variable
+                $1 = ((estructura *)arrayVar.array)[arrayIndex];
+                
+            }
+        }
+    }
     ;
+
 
 array_access:
     ARRAY_ID LBRACKET VAR RBRACKET {int value = accessArrayElement($1.string, $3.integer);

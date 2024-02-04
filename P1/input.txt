@@ -2,6 +2,8 @@
 a:=[ 10 ]
 a[ 1 ] := 1
 a[ 2 ] := 2
+a[ 2 ]
+
 a[ 3 ] := "hola"
 a[ 4 ] := true
 a[ 5 ] := strlen("Compiladors")
@@ -10,8 +12,9 @@ a[ 7 ] := 7
 a[ 8 ] := 8
 a[ 9 ] := sin(90)
 a
+se:="AAAAAAA"
 on:=1 
-a[ on ] := 9
+a[ on ] := se
 on:=2
 a [ on ] := 8
 on:=3

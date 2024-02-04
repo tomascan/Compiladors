@@ -255,6 +255,9 @@ void assignArrayElement(const char* arrayName, int index, estructura value) {
         if (index >= 0 && index < arrayVar.arraySize) {
             estructura *arrayElement = &(((estructura *)arrayVar.array)[index]);
             *arrayElement = value;
+            if(value.type == INT) printf("Type: ARRAY - VAR: %s[%d] - Value: %d \n", arrayName, index, value.integer);
+            if(value.type == FLOAT) printf("Type: ARRAY - VAR: %s[%d] - Value: %f \n", arrayName, index, value.real);
+            if(value.type == STRING) printf("Type: ARRAY - VAR: %s[%d] - Value: %s \n", arrayName, index, value.string);
         } else {
             yyerror("Índice de array fuera de rango");
         }
